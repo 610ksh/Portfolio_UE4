@@ -12,8 +12,6 @@ ASH_CAttachment::ASH_CAttachment()
 	SH_CHelpers::CreateComponent<USceneComponent>(this, &Scene, "Scene");
 }
 
-
-
 void ASH_CAttachment::BeginPlay()
 {
 	OwnerCharacter = Cast<ACharacter>(GetOwner());
@@ -26,6 +24,8 @@ void ASH_CAttachment::BeginPlay()
 		component->OnComponentBeginOverlap.AddDynamic(this, &ASH_CAttachment::OnComponentBeginOverlap);
 		component->OnComponentEndOverlap.AddDynamic(this, &ASH_CAttachment::OnComponentEndOverlap);
 	}
+
+	OffCollision(); // 처음에 모든 충돌체 꺼두기
 
 	Super::BeginPlay();
 }
@@ -54,10 +54,16 @@ void ASH_CAttachment::OnCollision()
 {
 	for (UShapeComponent* component : ShapeComponents)
 		component->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+
+	if (OnAttachmentCollision.IsBound())
+		OnAttachmentCollision.Broadcast();
 }
 
 void ASH_CAttachment::OffCollision()
 {
 	for (UShapeComponent* component : ShapeComponents)
 		component->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	if (OffAttachmentCollision.IsBound())
+		OffAttachmentCollision.Broadcast();
 }

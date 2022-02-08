@@ -56,6 +56,9 @@ class THELASTRPG_API USH_CActionData : public UDataAsset
 public:
 	FORCEINLINE class ASH_CEquipment* GetEquipment() { return Equipment; }
 	FORCEINLINE class ASH_CDoAction* GetDoAction() { return DoAction; }
+	FORCEINLINE class ASH_CAttachment* GetAttachment() { return Attachment; }
+
+	FORCEINLINE FLinearColor GetEquipmentColor() { return EquipmentColor; }
 
 public: /// 바깥 에디터에서 넣어줄 데이터 ★
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)

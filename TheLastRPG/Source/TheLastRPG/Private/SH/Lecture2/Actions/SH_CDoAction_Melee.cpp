@@ -55,3 +55,35 @@ void ASH_CDoAction_Melee::End_DoActin()
 
 	Index = 0;
 }
+
+void ASH_CDoAction_Melee::OnAttachmentBeginOverlap(ACharacter * InAttacker, AActor * InAttackCauser, ACharacter * InOtherCharacter)
+{
+	Super::OnAttachmentBeginOverlap(InAttacker, InAttackCauser, InOtherCharacter);
+	CheckNull(InOtherCharacter); // 적이 없으면 무시
+	
+	for (const ACharacter* other : HittedCharacters)
+	{
+		if (InOtherCharacter == other)
+			return;
+	}
+	HittedCharacters.Add(InOtherCharacter);
+
+	FDamageEvent e;
+	InOtherCharacter->TakeDamage(Datas[Index].Power, e, OwnerCharacter->GetController(), this); // 적에게 TakeDamage를 수행함.
+}
+
+
+void ASH_CDoAction_Melee::OnAttachmentEndOverlap(ACharacter * InAttacker, AActor * InAttackCauser, ACharacter * InOtherCharacter)
+{
+
+}
+
+void ASH_CDoAction_Melee::OnAttachmentCollision()
+{
+
+}
+
+void ASH_CDoAction_Melee::OffAttachmentCollision()
+{
+	HittedCharacters.Empty();
+}

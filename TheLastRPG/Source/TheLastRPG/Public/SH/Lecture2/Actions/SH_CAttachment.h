@@ -7,6 +7,8 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FAttachmentBeginOverlap, class ACharacter*, InAttacker, class AActor*, InAttackCauser, class ACharacter*, InOtherCharacter);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FAttachmentEndOverlap, class ACharacter*, InAttacker, class AActor*, InAttackCauser, class ACharacter*, InOtherCharacter);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAttachmentCollision);
+
 UCLASS()
 class THELASTRPG_API ASH_CAttachment : public AActor
 {
@@ -60,4 +62,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 		FAttachmentEndOverlap OnAttachmentEndOverlap;
+
+	UPROPERTY(BlueprintAssignable)
+		FAttachmentCollision OnAttachmentCollision;
+	UPROPERTY(BlueprintAssignable)
+		FAttachmentCollision OffAttachmentCollision;
 };

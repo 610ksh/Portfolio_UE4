@@ -24,13 +24,3 @@ void ASH_CDoAction::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
-
-void ASH_CDoAction::OnAttachmentBeginOverlap(class ACharacter* InAttacker, class AActor* InAttackCauser, class ACharacter* InOtherCharacter)
-{
-
-}
-
-void ASH_CDoAction::OnAttachmentEndOverlap(class ACharacter* InAttacker, class AActor* InAttackCauser, class ACharacter* InOtherCharacter)
-{
-
-}

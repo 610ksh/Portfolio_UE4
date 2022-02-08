@@ -50,6 +50,11 @@ void USH_CMontagesComponent::PlayBackstep()
 	PlayAnimMontage(EStateType::Backstep);
 }
 
+void USH_CMontagesComponent::PlayHitted()
+{
+	PlayAnimMontage(EStateType::Hitted);
+}
+
 void USH_CMontagesComponent::PlayAnimMontage(EStateType InState)
 {
 	ACharacter* character = Cast<ACharacter>(GetOwner());

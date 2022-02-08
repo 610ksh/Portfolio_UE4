@@ -47,6 +47,9 @@ void USH_CActionData::BeginPlay(class ACharacter* InOwnerCharacter)
 		{
 			Attachment->OnAttachmentBeginOverlap.AddDynamic(DoAction, &ASH_CDoAction::OnAttachmentBeginOverlap);
 			Attachment->OnAttachmentEndOverlap.AddDynamic(DoAction, &ASH_CDoAction::OnAttachmentEndOverlap);
+
+			Attachment->OnAttachmentCollision.AddDynamic(DoAction, &ASH_CDoAction::OnAttachmentCollision);
+			Attachment->OffAttachmentCollision.AddDynamic(DoAction, &ASH_CDoAction::OffAttachmentCollision);
 		}
 	}
 }

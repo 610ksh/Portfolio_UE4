@@ -11,6 +11,8 @@ USH_CStatusComponent::USH_CStatusComponent()
 void USH_CStatusComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Health = MaxHealth;
 }
 
 void USH_CStatusComponent::SetMove()
@@ -21,4 +23,16 @@ void USH_CStatusComponent::SetMove()
 void USH_CStatusComponent::SetStop()
 {
 	bCanMove = false;
+}
+
+void USH_CStatusComponent::AddHealth(float InAmount)
+{
+	Health += InAmount;
+	Health = FMath::Clamp(Health, 0.0f, MaxHealth);
+}
+
+void USH_CStatusComponent::SubHealth(float InAmount)
+{
+	Health -= InAmount;
+	Health = FMath::Clamp(Health, 0.0f, MaxHealth);
 }

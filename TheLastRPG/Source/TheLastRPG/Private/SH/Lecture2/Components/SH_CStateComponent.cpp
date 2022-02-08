@@ -39,6 +39,12 @@ void USH_CStateComponent::SetActionMode()
 	ChangeType(EStateType::Action);
 }
 
+void USH_CStateComponent::SetHittedMode()
+{
+	ChangeType(EStateType::Hitted);
+}
+
+
 void USH_CStateComponent::ChangeType(EStateType InType)
 {
 	EStateType type = Type;
