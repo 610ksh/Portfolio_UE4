@@ -15,6 +15,7 @@ class THELASTRPG_API ASH_CEquipment : public AActor
 
 public:
 	FORCEINLINE void SetData(FEquipmentData InData) { Data = InData; }
+	FORCEINLINE void SetColor(FLinearColor InColor) { Color = InColor; }
 	
 public:	
 	ASH_CEquipment();
@@ -63,4 +64,5 @@ protected:
 
 private:
 	FEquipmentData Data; // for ActionData class
+	FLinearColor Color;
 };

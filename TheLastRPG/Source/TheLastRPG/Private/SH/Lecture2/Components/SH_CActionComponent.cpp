@@ -63,9 +63,15 @@ void USH_CActionComponent::SetUnarmedMode()
 	{
 		// 현재 자신의 타입의 장비에 대한 ActionData 정보를 가져온다.
 		ASH_CEquipment* equipment = Datas[(int32)Type]->GetEquipment();
-		if (!!equipment) // 관련 데이터 애셋이 존재한다면
-			equipment->Unequip(); // Unequip로 풀어준다. 
+		CheckNull(equipment);
+
+		equipment->Unequip(); // Unequip로 풀어준다. 
 	}
+
+	ASH_CEquipment* equipment = Datas[(int32)EActionType::Unarmed]->GetEquipment();
+	CheckNull(equipment);
+	
+	equipment->Equip(); // Unarmed로 장착
 
 	ChangeType(EActionType::Unarmed);
 }
@@ -82,11 +88,11 @@ void USH_CActionComponent::SetTwoHandMode()
 
 void USH_CActionComponent::DoAction()
 {
-	CheckTrue(IsUnarmedMode());
+	CheckTrue(IsUnarmedMode()); // 무기를 들지 않았을때만 통과
 
 	if (!!Datas[(int32)Type])
 	{
-		ASH_CDoAction* action = Datas[(int32)Type]->GetDoAction();
+		ASH_CDoAction* action = Datas[(int32)Type]->GetDoAction(); // 생성한 Action 컴포넌트 액터를 가져옴
 
 		if (!!action)
 			action->DoAction();

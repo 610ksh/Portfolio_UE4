@@ -11,6 +11,8 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Materials/MaterialInstanceConstant.h"
+#include "Materials/MaterialInstanceDynamic.h"
 
 ASH_CActionPlayer::ASH_CActionPlayer()
 {
@@ -34,7 +36,7 @@ ASH_CActionPlayer::ASH_CActionPlayer()
 	GetMesh()->SetSkeletalMesh(mesh);
 
 	TSubclassOf<UAnimInstance> animInstance;
-	SH_CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/SungHoon/Lectures/ActionRPG/Character/SH_ABP_CPlayer.SH_ABP_CPlayer_C'"); // _C
+	SH_CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/SungHoon/Lectures/ActionRPG/Character/SH_ABP_CActionPlayer.SH_ABP_CActionPlayer_C'"); // _C
 	GetMesh()->SetAnimClass(animInstance);
 
 	SpringArm->SetRelativeLocation(FVector(0, 0, 180));
@@ -53,6 +55,20 @@ void ASH_CActionPlayer::BeginPlay()
 	Super::BeginPlay();
 
 	State->OnStateTypeChanged.AddDynamic(this, &ASH_CActionPlayer::OnStateTypeChanged);
+
+	UMaterialInstanceConstant* body;
+	UMaterialInstanceConstant* logo;
+
+	SH_CHelpers::GetAssetDynamic<UMaterialInstanceConstant>(&body, "MaterialInstanceConstant'/Game/SungHoon/Lectures/ActionRPG/Character/Materials/SH_Action_Body_Inst.SH_Action_Body_Inst'");
+	SH_CHelpers::GetAssetDynamic<UMaterialInstanceConstant>(&logo, "MaterialInstanceConstant'/Game/SungHoon/Lectures/ActionRPG/Character/Materials/SH_Action_ChestLogo_Inst.SH_Action_ChestLogo_Inst'");
+
+	BodyMaterial = UMaterialInstanceDynamic::Create(body, this);
+	LogoMaterial = UMaterialInstanceDynamic::Create(logo, this);
+
+	GetMesh()->SetMaterial(0, BodyMaterial);
+	GetMesh()->SetMaterial(1, LogoMaterial);
+
+	Action->SetUnarmedMode(); // 시작전에 UnarmedMode로 지정
 }
 
 void ASH_CActionPlayer::Tick(float DeltaTime)
@@ -186,4 +202,10 @@ void ASH_CActionPlayer::OnOneHand()
 void ASH_CActionPlayer::OnDoAction()
 {
 	Action->DoAction();
+}
+
+void ASH_CActionPlayer::ChangeColor(FLinearColor InColor)
+{
+	BodyMaterial->SetVectorParameterValue("BodyColor", InColor);
+	LogoMaterial->SetVectorParameterValue("BodyColor", InColor);
 }
