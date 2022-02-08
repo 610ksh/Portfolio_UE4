@@ -12,10 +12,15 @@ class THELASTRPG_API ACPlayer_YH : public ACharacter, public IYH_IRifle
 {
 	GENERATED_BODY()
 
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
+		TSubclassOf<class UYH_CUserWidget_CrossHair> CrossHairClass;
 public:
 	
 	ACPlayer_YH();
+	void GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection) override;
 private:
+
 	UPROPERTY(VisibleDefaultsOnly)
 		class USpringArmComponent* SpringArm;
 
@@ -40,9 +45,9 @@ public: // 순수 가상함수 재정의
 public:	
 	
 	virtual void Tick(float DeltaTime) override;
-
-	
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	void OnFocus() override;
+	void OffFocus() override;
 
 private:
 	void OnMoveForward(float Axis);
@@ -58,6 +63,10 @@ private:
 
 	void OnAim();
 	void OffAim();
+
+	void OnFire();
+	void OffFire();
+
 public:
 	UFUNCTION(BlueprintCallable)
 		void ChangeColor(FLinearColor InColor);
@@ -68,4 +77,5 @@ private:
 
 private:
 	class AYH_CRifle* Rifle;
+	class UYH_CUserWidget_CrossHair* CrossHair;
 };

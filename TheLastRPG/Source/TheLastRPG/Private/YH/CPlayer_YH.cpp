@@ -8,7 +8,7 @@
 #include "Materials/MaterialInstanceConstant.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "YH/Global_YH.h"
-
+#include "YH/Widgets/YH_CUserWidget_CrossHair.h"
 // Sets default values
 ACPlayer_YH::ACPlayer_YH()
 {
@@ -50,8 +50,26 @@ ACPlayer_YH::ACPlayer_YH()
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->bUsePawnControlRotation = true;
 	SpringArm->SocketOffset = FVector(0, 60, 0);
+	CHelpers_YH::GetClass<UYH_CUserWidget_CrossHair>(&CrossHairClass, "WidgetBlueprint'/Game/YongHwan/BP/Widgets/YH_WB_CrossHair.YH_WB_CrossHair_C'");
+	
 }
 
+void ACPlayer_YH::GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection)
+{
+	OutDirection = Camera->GetForwardVector();
+	//카메라의 포워드벡터(총구방향 - 카메라 벡터으로 포워드벡터도 가능)
+	//절대공간의 위치
+	FTransform transform = Camera->GetComponentToWorld();
+	
+	FVector cameraLocation = transform.GetLocation();
+	//카메라의 위치에서 카메라가 바라보는 바로 앞 지점
+	OutStart = cameraLocation + OutDirection;
+	//콘다이렉션. 콘인디그리- 깔대기 모양(카메라 모양. 앞은 작고 뒤는 크다. 큰 원 어느 지점을 지나가는 direction이 리턴이 된다.(탄착군형성)-가로 회전, 세로크기 동일하지 않다-elliptical
+	FVector conDirection = UKismetMathLibrary::RandomUnitVectorInEllipticalConeInDegrees(OutDirection, 0.2f, 0.3f);
+	conDirection *= 3000.0f;
+	//cameraLocation 
+	OutEnd = cameraLocation + conDirection;
+}
 // Called when the game starts or when spawned
 void ACPlayer_YH::BeginPlay()
 {
@@ -70,7 +88,16 @@ void ACPlayer_YH::BeginPlay()
 	GetMesh()->SetMaterial(0, BodyMaterial);
 	GetMesh()->SetMaterial(1, LogoMaterial);
 	//등장은되는데 부착이 아직 없어
+
+	//Tsubclassof가 widget static class가 들어간다.
+	CrossHair = CreateWidget<UYH_CUserWidget_CrossHair, APlayerController>(GetController <APlayerController>(), CrossHairClass);
+	CrossHair->AddToViewport();
+	//C에 있는 컨트롤러를 플레이어의 컨트롤러로 바꿔줘라라는 뜻
+	CrossHair->SetVisibility(ESlateVisibility::Hidden);
+	
 	Rifle = AYH_CRifle::Spawn(GetWorld(), this);
+	
+	OnRifle();
 }
 
 // Called every frame
@@ -96,6 +123,19 @@ void ACPlayer_YH::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("Rifle", EInputEvent::IE_Pressed, this, &ACPlayer_YH::OnRifle);
 	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Pressed, this, &ACPlayer_YH::OnAim);
 	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &ACPlayer_YH::OffAim);
+
+	PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ACPlayer_YH::OnFire);
+	PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Released, this, &ACPlayer_YH::OffFire);
+}
+
+void ACPlayer_YH::OnFocus()
+{
+	CrossHair->OnFocus();
+}
+
+void ACPlayer_YH::OffFocus()
+{
+	CrossHair->OffFocus();
 }
 
 void ACPlayer_YH::OnMoveForward(float Axis)
@@ -162,6 +202,8 @@ void ACPlayer_YH::OnAim()
 	//Camera->FieldOfView = 40; 커브적용한다.
 	OnZoomIn();
 	Rifle->Begin_Aiming();
+
+	CrossHair->SetVisibility(ESlateVisibility::Visible);
 }
 
 void ACPlayer_YH::OffAim()
@@ -177,6 +219,17 @@ void ACPlayer_YH::OffAim()
 	//Camera->FieldOfView = 90;
 	OnZoomOut();
 	Rifle->End_Aiming();
+	CrossHair->SetVisibility(ESlateVisibility::Hidden);
+}
+
+void ACPlayer_YH::OnFire()
+{
+	Rifle->Begin_Fire();
+}
+
+void ACPlayer_YH::OffFire()
+{
+	Rifle->End_Fire();
 }
 
 void ACPlayer_YH::ChangeColor(FLinearColor InColor)

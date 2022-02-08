@@ -22,8 +22,14 @@ public:
 	void Begin_Unequip();
 	void End_Unequip();
 
+	//bAiming controll- t,f
 	void Begin_Aiming();
 	void End_Aiming();
+
+
+	void Begin_Fire();
+	void Firing();
+	void End_Fire();
 private:
 	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
 		class USkeletalMeshComponent* Mesh;
@@ -61,4 +67,6 @@ private:
 	bool bEquipped;
 	bool bEquipping;
 	bool bAiming;
+	bool bFiring;
+
 };

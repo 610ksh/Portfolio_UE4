@@ -22,6 +22,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 		bool bEquipped;
+	
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
+		float Pitch;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 		bool bAiming;

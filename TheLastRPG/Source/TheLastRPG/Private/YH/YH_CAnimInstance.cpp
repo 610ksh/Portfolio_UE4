@@ -20,7 +20,10 @@ void UYH_CAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	//게임프레임워크에 있다.
 	Speed = OwnerCharacter->GetVelocity().Size2D();
 	//벡터랭쓰이다.
-	
+	//pitch블프에서 가져오기위한 C 코드
+	Direction = CalculateDirection(OwnerCharacter->GetVelocity(), OwnerCharacter->GetControlRotation());
+	Pitch = OwnerCharacter->GetBaseAimRotation().Pitch;
+
 	IYH_IRifle* rifle = Cast<IYH_IRifle>(OwnerCharacter);
 	if (!!rifle)
 	{
