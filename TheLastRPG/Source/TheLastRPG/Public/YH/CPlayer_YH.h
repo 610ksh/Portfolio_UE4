@@ -15,12 +15,13 @@ class THELASTRPG_API ACPlayer_YH : public ACharacter, public IYH_IRifle
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Widgets")
 		TSubclassOf<class UYH_CUserWidget_CrossHair> CrossHairClass;
+	UPROPERTY(EditDefaultsOnly, Category = "Camera")
+		TSubclassOf<class UMatineeCameraShake> CameraShakeClass;
 public:
-	
 	ACPlayer_YH();
 	void GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection) override;
 private:
-
+	
 	UPROPERTY(VisibleDefaultsOnly)
 		class USpringArmComponent* SpringArm;
 
@@ -48,6 +49,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	void OnFocus() override;
 	void OffFocus() override;
+	void PlayCameraShake();
 
 private:
 	void OnMoveForward(float Axis);

@@ -45,6 +45,27 @@ private:
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
 		class UAnimMontage* UngrabMontage;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+		class UAnimMontage* FireMontage;
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+		class UParticleSystem* FlashParticle;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+		class UParticleSystem* EjectParticle;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+		class UParticleSystem* ImpactParticle;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+		class USoundCue* FireSoundCue;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+		TSubclassOf<class AYH_CBullet> BulletClass;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+		class UMaterialInstanceConstant* DecalMaterial;
+
 public: 
 	//스판하는것. 누가받을것인가.
 	static AYH_CRifle* Spawn(class UWorld* InWorld, class ACharacter* InOwner);
