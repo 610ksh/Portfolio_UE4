@@ -51,11 +51,15 @@ void ASH_CEquipment::Begin_Equip_Implementation()
 
 void ASH_CEquipment::End_Equip_Implementation()
 {
+	bEquipped = true;
+
 	State->SetIdleMode();
 }
 
 void ASH_CEquipment::Unequip_Implementation()
 {
+	bEquipped = false;
+
 	if (OnUnequipmentDelegate.IsBound())
 		OnUnequipmentDelegate.Broadcast();
 

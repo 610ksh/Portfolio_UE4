@@ -50,7 +50,7 @@ void USH_CActionComponent::SetMode(EActionType InType)
 void USH_CActionComponent::ChangeType(EActionType InNewType)
 {
 	/// Q. 아래 InNewType으로 하던데, Type으로 미리 저장해두는게 맞지 않나?
-	EActionType prevType = InNewType; // 강의는 InNewType이었음.
+	EActionType prevType = Type; // 강의는 InNewType이었음.
 	Type = InNewType; // 새롭게 수정
 
 	if (OnActionTypeChanged.IsBound())
@@ -68,12 +68,17 @@ void USH_CActionComponent::SetUnarmedMode()
 		equipment->Unequip(); // Unequip로 풀어준다. 
 	}
 
-	ASH_CEquipment* equipment = Datas[(int32)EActionType::Unarmed]->GetEquipment();
+	ASH_CEquipment* equipment = Datas[(int32)EActionType::Unarmed]->GetEquipment(); // 여기서 잘 터짐.
 	CheckNull(equipment);
 	
 	equipment->Equip(); // Unarmed로 장착
 
 	ChangeType(EActionType::Unarmed);
+}
+
+void USH_CActionComponent::SetFistMode()
+{
+	SetMode(EActionType::Fist);
 }
 
 void USH_CActionComponent::SetOneHandMode()
@@ -84,6 +89,11 @@ void USH_CActionComponent::SetOneHandMode()
 void USH_CActionComponent::SetTwoHandMode()
 {
 	SetMode(EActionType::TwoHand);
+}
+
+void USH_CActionComponent::SetWarpMode()
+{
+	SetMode(EActionType::Warp);
 }
 
 void USH_CActionComponent::DoAction()

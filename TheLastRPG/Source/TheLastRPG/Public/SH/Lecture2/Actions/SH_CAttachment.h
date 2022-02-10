@@ -14,13 +14,15 @@ class THELASTRPG_API ASH_CAttachment : public AActor
 {
 	GENERATED_BODY()
 	
-private:
-	UPROPERTY(VisibleDefaultsOnly)
+protected:
+	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
 		class USceneComponent* Scene;
 
 protected:
 	UFUNCTION(BlueprintCallable)
 		void AttachTo(FName InSocketName);
+	UFUNCTION(BlueprintCallable)
+		void AttachToCollision(class UShapeComponent* InComponent, FName InSocketName);
 
 public:	
 	ASH_CAttachment();

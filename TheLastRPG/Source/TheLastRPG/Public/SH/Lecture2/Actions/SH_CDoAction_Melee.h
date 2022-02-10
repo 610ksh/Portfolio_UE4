@@ -26,6 +26,10 @@ public:
 	virtual void OffAttachmentCollision() override;
 
 private:
+	UFUNCTION()
+		void RestoreDilation();
+
+private:
 	bool bExist; // 콤보 실행여부
 	bool bEnable; // 콤보 입력 여부
 	bool bLast; // 마지막 콤보인지

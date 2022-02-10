@@ -87,7 +87,12 @@ void ASH_CActionPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAxis("LookUp", this, &ASH_CActionPlayer::OnVerticalLook);
 
 	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnAvoid);
-	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnOneHand);
+
+	PlayerInputComponent->BindAction("Fist", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnFist); // 1
+	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnOneHand); // 2
+	PlayerInputComponent->BindAction("TwoHand", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnTwoHand); // 3
+	PlayerInputComponent->BindAction("Warp", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnWarp); // F
+
 	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnDoAction);
 }
 
@@ -192,11 +197,32 @@ void ASH_CActionPlayer::End_Backstep()
 	State->SetIdleMode();
 }
 
+void ASH_CActionPlayer::OnFist()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetFistMode();
+}
+
 void ASH_CActionPlayer::OnOneHand()
 {
 	CheckFalse(State->IsIdleMode());
 
 	Action->SetOneHandMode();
+}
+
+void ASH_CActionPlayer::OnTwoHand()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetTwoHandMode();
+}
+
+void ASH_CActionPlayer::OnWarp()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetWarpMode();
 }
 
 void ASH_CActionPlayer::OnDoAction()

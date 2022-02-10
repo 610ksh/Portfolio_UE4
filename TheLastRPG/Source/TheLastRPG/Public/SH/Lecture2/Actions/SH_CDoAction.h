@@ -12,6 +12,7 @@ class THELASTRPG_API ASH_CDoAction : public AActor
 	
 public:
 	FORCEINLINE void SetDatas(TArray<FDoActionData> InDatas) { Datas = InDatas; }
+	FORCEINLINE void SetEquipped(const bool* InEquipped) { bEquipped = InEquipped; }
 
 public:	
 	ASH_CDoAction();
@@ -49,6 +50,7 @@ protected:
 		class USH_CStatusComponent* Status;
 
 protected:
+	const bool* bEquipped;
 	TArray<FDoActionData> Datas;
 
 };
