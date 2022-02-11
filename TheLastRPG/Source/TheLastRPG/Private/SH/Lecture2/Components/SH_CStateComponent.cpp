@@ -15,7 +15,6 @@ void USH_CStateComponent::BeginPlay()
 
 void USH_CStateComponent::SetIdleMode()
 {
-	SH_CLog::Print("SetIdleMode");
 	ChangeType(EStateType::Idle);
 }
 
@@ -39,13 +38,19 @@ void USH_CStateComponent::SetActionMode()
 	ChangeType(EStateType::Action);
 }
 
+void USH_CStateComponent::SetHittedMode()
+{
+	ChangeType(EStateType::Hitted);
+}
+
+
 void USH_CStateComponent::ChangeType(EStateType InType)
 {
-	EStateType type = Type;
+	EStateType prevType = Type;
 	Type = InType;
 
 	if (OnStateTypeChanged.IsBound())
 	{
-		OnStateTypeChanged.Broadcast(type, InType);
+		OnStateTypeChanged.Broadcast(prevType, InType);
 	}
 }

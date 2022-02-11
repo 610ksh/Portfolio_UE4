@@ -2,10 +2,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "SH/Lecture2/Components/SH_CStateComponent.h"
+#include "SH/Lecture2/SH_ICharacter.h"
 #include "SH_CActionPlayer.generated.h"
 
 UCLASS()
-class THELASTRPG_API ASH_CActionPlayer : public ACharacter
+class THELASTRPG_API ASH_CActionPlayer : public ACharacter, public ISH_ICharacter
 {
 	GENERATED_BODY()
 
@@ -59,6 +60,17 @@ public:
 	void End_Backstep();
 
 private:
+	void OnFist();
 	void OnOneHand();
+	void OnTwoHand();
+	void OnWarp();
+
 	void OnDoAction();
+
+public:
+	virtual void ChangeColor(FLinearColor InColor) override;
+
+private:
+	class UMaterialInstanceDynamic* BodyMaterial;
+	class UMaterialInstanceDynamic* LogoMaterial;
 };

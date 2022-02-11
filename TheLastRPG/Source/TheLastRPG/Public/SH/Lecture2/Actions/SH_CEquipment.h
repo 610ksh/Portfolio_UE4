@@ -15,6 +15,8 @@ class THELASTRPG_API ASH_CEquipment : public AActor
 
 public:
 	FORCEINLINE void SetData(FEquipmentData InData) { Data = InData; }
+	FORCEINLINE void SetColor(FLinearColor InColor) { Color = InColor; }
+	FORCEINLINE const bool* GetEquipped() { return &bEquipped; }
 	
 public:	
 	ASH_CEquipment();
@@ -62,5 +64,7 @@ protected:
 		class USH_CStatusComponent* Status;
 
 private:
+	bool bEquipped;
 	FEquipmentData Data; // for ActionData class
+	FLinearColor Color;
 };

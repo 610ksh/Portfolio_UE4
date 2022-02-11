@@ -1,7 +1,9 @@
 #include "SH/Lecture2/Actions/SH_CEquipment.h"
+#include "SH/Lecture2/SH_ICharacter.h"
 #include "SH/Lecture2/Components/SH_CStateComponent.h"
 #include "SH/Lecture2/Components/SH_CStatusComponent.h"
 #include "SH/SH_Global.h"
+
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -28,17 +30,17 @@ void ASH_CEquipment::Equip_Implementation()
 	else
 		End_Equip();
 
-	OwnerCharacter->bUseControllerRotationYaw = true;
-	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = false;
-}
+	if (Data.bPawnControl == true)
+	{
+		OwnerCharacter->bUseControllerRotationYaw = true; // 마우스 회전에 따라 카메라도 같이 돈다.
+		// 회전 방향으로 캐릭터 메시가 돌지 못한다. 메시는 항상 정면
+		OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = false; // 메시를 돌지 못하게함
+	}
 
-void ASH_CEquipment::Unequip_Implementation()
-{
-	if (OnUnequipmentDelegate.IsBound())
-		OnUnequipmentDelegate.Broadcast();
-
-	OwnerCharacter->bUseControllerRotationYaw = false;
-	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = true;
+	/// 무기 장착시 색상 변경
+	ISH_ICharacter* character = Cast<ISH_ICharacter>(OwnerCharacter);
+	CheckNull(character);
+	character->ChangeColor(Color);
 }
 
 void ASH_CEquipment::Begin_Equip_Implementation()
@@ -49,5 +51,18 @@ void ASH_CEquipment::Begin_Equip_Implementation()
 
 void ASH_CEquipment::End_Equip_Implementation()
 {
+	bEquipped = true;
+
 	State->SetIdleMode();
+}
+
+void ASH_CEquipment::Unequip_Implementation()
+{
+	bEquipped = false;
+
+	if (OnUnequipmentDelegate.IsBound())
+		OnUnequipmentDelegate.Broadcast();
+
+	OwnerCharacter->bUseControllerRotationYaw = false;
+	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = true;
 }

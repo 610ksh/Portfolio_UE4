@@ -21,6 +21,9 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		bool bCanMove = true;
+
+	UPROPERTY(EditAnywhere)
+		bool bPawnControl = true;
 };
 
 USTRUCT(BlueprintType)
@@ -53,16 +56,22 @@ class THELASTRPG_API USH_CActionData : public UDataAsset
 public:
 	FORCEINLINE class ASH_CEquipment* GetEquipment() { return Equipment; }
 	FORCEINLINE class ASH_CDoAction* GetDoAction() { return DoAction; }
+	FORCEINLINE class ASH_CAttachment* GetAttachment() { return Attachment; }
 
-public:
+	FORCEINLINE FLinearColor GetEquipmentColor() { return EquipmentColor; }
+
+public: /// 바깥 에디터에서 넣어줄 데이터 ★
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		TSubclassOf<class ASH_CAttachment> AttachmentClass;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-		TSubclassOf<class ASH_CEquipment> EquipmentClass; // 바깥 에디터에서 넣어줄거임
+		TSubclassOf<class ASH_CEquipment> EquipmentClass;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-		FEquipmentData EquipmentData; // 바깥 에디터에서 넣어줄거임
+		FEquipmentData EquipmentData;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		FLinearColor EquipmentColor;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		TSubclassOf<class ASH_CDoAction> DoActionClass;
@@ -72,6 +81,9 @@ public:
 
 public:
 	void BeginPlay(class ACharacter* InOwnerCharacter);
+
+private:
+	FString GetLableName(class ACharacter* InOwnerCharacter, FString InName);
 
 private:
 	class ASH_CEquipment* Equipment;

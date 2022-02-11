@@ -7,7 +7,7 @@
 UENUM(BlueprintType)
 enum class EActionType : uint8
 {
-	Unarmed, OneHand, TwoHand, Max,
+	Unarmed, Fist, OneHand, TwoHand, Warp, Max,
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FActionTypeChanged, EActionType, InPrevType, EActionType, InNewType);
@@ -19,7 +19,7 @@ class THELASTRPG_API USH_CActionComponent : public UActorComponent
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
-		class USH_CActionData* Datas[(int32)EActionType::Max]; // Player BP 에디터에서 넣어줄거임.
+		class USH_CActionData* Datas[(int32)EActionType::Max]; // Player BP 에디터에서 넣어줄 ActionData를 받는 배열
 
 public:
 	UFUNCTION(BlueprintPure)
@@ -29,16 +29,22 @@ public:
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsUnarmedMode() { return Type == EActionType::Unarmed; }
 	UFUNCTION(BlueprintPure)
+		FORCEINLINE bool IsFistMode() { return Type == EActionType::Fist; }
+	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsOneHandMode() { return Type == EActionType::OneHand; }
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsTwoHandMode() { return Type == EActionType::TwoHand; }
+	UFUNCTION(BlueprintPure)
+		FORCEINLINE bool IsWarpMode() { return Type == EActionType::Warp; }
 
 public:	
 	USH_CActionComponent();
-
+	
 	void SetUnarmedMode();
+	void SetFistMode();
 	void SetOneHandMode();
 	void SetTwoHandMode();
+	void SetWarpMode();
 
 public:
 	void DoAction();
