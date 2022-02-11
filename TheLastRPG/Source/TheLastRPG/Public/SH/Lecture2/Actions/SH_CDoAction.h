@@ -12,6 +12,7 @@ class THELASTRPG_API ASH_CDoAction : public AActor
 	
 public:
 	FORCEINLINE void SetDatas(TArray<FDoActionData> InDatas) { Datas = InDatas; }
+	FORCEINLINE void SetEquipped(const bool* InEquipped) { bEquipped = InEquipped; }
 
 public:	
 	ASH_CDoAction();
@@ -27,6 +28,17 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 
+public:
+	UFUNCTION()
+		virtual void OnAttachmentBeginOverlap(class ACharacter* InAttacker, class AActor* InAttackCauser, class ACharacter* InOtherCharacter) {}
+	UFUNCTION()
+		virtual void OnAttachmentEndOverlap(class ACharacter* InAttacker, class AActor* InAttackCauser, class ACharacter* InOtherCharacter) {}
+	
+	UFUNCTION()
+		virtual void OnAttachmentCollision() {}
+	UFUNCTION()
+		virtual void OffAttachmentCollision(){}
+
 protected:
 	UPROPERTY(BlueprintReadOnly)
 		class ACharacter* OwnerCharacter;
@@ -38,6 +50,7 @@ protected:
 		class USH_CStatusComponent* Status;
 
 protected:
+	const bool* bEquipped;
 	TArray<FDoActionData> Datas;
 
 };

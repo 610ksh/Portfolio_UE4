@@ -7,10 +7,10 @@ void USH_CActionAnimInstance::NativeBeginPlay()
 {
 	Super::NativeBeginPlay();
 
-	ACharacter* character = Cast< ACharacter>(TryGetPawnOwner());
+	ACharacter* character = Cast<ACharacter>(TryGetPawnOwner());
 	CheckNull(character);
 
-	USH_CActionComponent* action = SH_CHelpers::GetComponent< USH_CActionComponent>(character);
+	USH_CActionComponent* action = SH_CHelpers::GetComponent<USH_CActionComponent>(character);
 	CheckNull(action);
 
 	action->OnActionTypeChanged.AddDynamic(this, &USH_CActionAnimInstance::OnActionTypeChanged);
