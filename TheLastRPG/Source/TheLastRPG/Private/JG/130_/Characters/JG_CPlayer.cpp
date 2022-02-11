@@ -3,13 +3,20 @@
 
 #include "JG/130_/Characters/JG_CPlayer.h"
 #include "JG/JG_Global.h"
+
+#include "JG/130_/Weapons/JG_CSword.h"
+
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Animation/AnimInstance.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/InputComponent.h"
-#include "Animation/AnimInstance.h"
 #include "JG/130_/Components/JG_COptionComponent.h"
+#include "JG/130_/Components/JG_CStatusComponent.h"
+#include "JG/130_/Components/JG_CStateComponent.h"
+#include "JG/130_/Components/JG_CMontagesComponent.h"
+
 // Sets default values
 AJG_CPlayer::AJG_CPlayer()
 {
@@ -19,7 +26,10 @@ AJG_CPlayer::AJG_CPlayer()
 	JG_Helpers::CreateComponent<USpringArmComponent>(this, &SpringArm, "SpringArm", GetMesh());
 	JG_Helpers::CreateComponent<UCameraComponent>(this, &Camera, "Camera", SpringArm);
 	
+	JG_Helpers::CreateActorComponent<UJG_CMontagesComponent>(this, &Montages, "Montages");
 	JG_Helpers::CreateActorComponent<UJG_COptionComponent>(this, &Option, "Option");
+	JG_Helpers::CreateActorComponent<UJG_CStatusComponent>(this, &Status, "Status");
+	JG_Helpers::CreateActorComponent<UJG_CStateComponent>(this, &State, "State");
 
 	bUseControllerRotationYaw = false;
 
@@ -54,6 +64,12 @@ void AJG_CPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// 칼 생성 - 맵에 등장만하고 캐릭터한테 붙이진 않음
+	Sword = AJG_CSword::Spawn(GetWorld(), this);
+
+
+
+	State->OnStateTypeChanged.AddDynamic(this, &AJG_CPlayer::OnStateTypeChanged);
 }
 
 // Called every frame
@@ -70,34 +86,97 @@ void AJG_CPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AJG_CPlayer::OnMoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AJG_CPlayer::OnMoveRight);
-	PlayerInputComponent->BindAxis("HorizontalLook", this, &AJG_CPlayer::OnHorizontalLook);
-	PlayerInputComponent->BindAxis("VerticalLook", this, &AJG_CPlayer::OnVerticalLook);
+	PlayerInputComponent->BindAxis("Turn", this, &AJG_CPlayer::OnHorizontalLook);
+	PlayerInputComponent->BindAxis("LookUp", this, &AJG_CPlayer::OnVerticalLook);
+
+
+	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &AJG_CPlayer::OnAvoid);
+	//PlayerInputComponent->BindAction("Sword", EInputEvent::IE_Pressed, this, &AJG_CPlayer::OnSword);
 
 }
 
-void AJG_CPlayer::OnMoveForward(float Axis)
+void AJG_CPlayer::OnMoveForward(float InAxis)
 {
+	CheckFalse(Status->CanMove());
+
 	FRotator rotator = FRotator(0, GetControlRotation().Yaw, 0);
 	FVector direction = FQuat(rotator).GetForwardVector().GetSafeNormal2D();
 
-	AddMovementInput(direction, Axis);
+	AddMovementInput(direction, InAxis);
 }
 
-void AJG_CPlayer::OnMoveRight(float Axis)
+void AJG_CPlayer::OnMoveRight(float InAxis)
 {
 	FRotator rotator = FRotator(0, GetControlRotation().Yaw, 0);
 	FVector direction = FQuat(rotator).GetRightVector().GetSafeNormal2D();
 
-	AddMovementInput(direction, Axis);
+	AddMovementInput(direction, InAxis);
 }
 
-void AJG_CPlayer::OnHorizontalLook(float Axis)
+void AJG_CPlayer::OnHorizontalLook(float InAxis)
 {
-
+	float rate = Option->GetHorizontalLookRate();
+	AddControllerYawInput(InAxis * rate * GetWorld()->GetDeltaSeconds());
 }
 
-void AJG_CPlayer::OnVerticalLook(float Axis)
+void AJG_CPlayer::OnVerticalLook(float InAxis)
 {
+	float rate = Option->GetVecticalLookRate();
+	AddControllerPitchInput(InAxis * rate * GetWorld()->GetDeltaSeconds());
+}
+
+void AJG_CPlayer::OnAvoid()
+{
+	CheckFalse(Status->CanMove());
+	CheckFalse(State->IsIdleMode());
+
+	if (InputComponent->GetAxisValue("MoveForward") < 0.0f)
+	{
+		State->SetBackstepMode();
+
+		return;
+	}
+
+	State->SetRollMode();
 
 }
 
+void AJG_CPlayer::OnStateTypeChanged(EStateType_JG InPrevType, EStateType_JG InNewType)
+{
+	switch (InNewType)
+	{
+	case EStateType_JG::Roll: Begin_Roll(); break;
+	case EStateType_JG::Backstep: Begin_Backstep(); break;
+
+	}
+}
+
+void AJG_CPlayer::Begin_Roll()
+{
+	bUseControllerRotationYaw = false; // 컨트롤러 꺼놓기 (구르는 방향으로만 움직이기 위함)
+	GetCharacterMovement()->bOrientRotationToMovement = true; // 구르는 방향으로 잡아놓음
+
+	FVector start = GetActorLocation();
+	FVector from = start + GetVelocity().GetSafeNormal2D(); 
+	SetActorRotation(UKismetMathLibrary::FindLookAtRotation(start, from)); 
+
+	Montages->PlayRoll();
+}
+
+void AJG_CPlayer::End_Roll()
+{
+	State->SetIdleMode();
+}
+
+void AJG_CPlayer::Begin_Backstep()
+{
+	bUseControllerRotationYaw = true; // 컨트롤러를 켜놓긴 하는데 게임에서 어떻게 구현하느냐에 따라 끌수도 있을듯
+	GetCharacterMovement()->bOrientRotationToMovement = false;
+
+	Montages->PlayBackstep();
+}
+
+void AJG_CPlayer::End_Backstep()
+{
+	State->SetIdleMode();
+}
