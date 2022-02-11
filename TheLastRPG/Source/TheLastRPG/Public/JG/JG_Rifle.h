@@ -27,6 +27,29 @@ private:
 	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
 	class UAnimMontage* UngrabMontage;
 
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+	class UAnimMontage* FireMontage;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+	class UParticleSystem* FlashParticle;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+	class UParticleSystem* EjectParticle;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+	class UParticleSystem* ImpactParticle;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+	class USoundCue* FireSoundCue;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+	TSubclassOf<class AJG_Bullet> BulletClass;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+	class UMaterialInstanceConstant* DecalMaterial;
+
+
+
 public:
 	// 팩토리 구조 : 어떤것을 스폰시킬때 내부적으로 처리해서 리턴시켜주는 방식
 	// 공통적인 부분만 관리할 수 있기 때문에 외부에서 처리하는것보다 편함
@@ -39,6 +62,7 @@ public:
 	// 언리얼은 인라인 함수를 사용할 것을 권장함
 	FORCEINLINE bool GetEquipped() { return bEquipped; }
 	FORCEINLINE bool GetEquipping() { return bEquipping; }
+	FORCEINLINE bool GetAiming() { return bAiming; }
 
 public:	
 	// Sets default values for this actor's properties
@@ -52,6 +76,13 @@ public:
 	void Begin_Unequip();
 	void End_Unequip();
 
+	void Begin_Aiming();
+	void End_Aiming();
+
+	// 연사를 위해서 함수 3개 만듦
+	void Begin_Fire();
+	void Firing();
+	void End_Fire();
 
 protected:
 	// Called when the game starts or when spawned
@@ -66,4 +97,6 @@ private:
 
 	bool bEquipped;
 	bool bEquipping;
+	bool bAiming;
+	bool bFiring;
 };

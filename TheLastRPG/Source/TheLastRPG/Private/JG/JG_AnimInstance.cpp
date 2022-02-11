@@ -20,10 +20,13 @@ void UJG_AnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	CheckNull(OwnerCharacter); 
 
 	Speed = OwnerCharacter->GetVelocity().Size2D();
+	Direction = CalculateDirection(OwnerCharacter->GetVelocity(), OwnerCharacter->GetControlRotation());
+	Pitch = OwnerCharacter->GetBaseAimRotation().Pitch;
 
 	IJG_IRifle* rifle = Cast<IJG_IRifle>(OwnerCharacter);
 	if (!!rifle)
 	{
 		bEquipped = rifle->GetRifle()->GetEquipped();
+		bAiming = rifle->GetRifle()->GetAiming();
 	}
 }

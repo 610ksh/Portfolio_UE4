@@ -10,6 +10,11 @@ AJG_GameMode::AJG_GameMode()
 	if (pawn.Succeeded())
 		DefaultPawnClass = pawn.Class;*/
 
-	FString url = "Blueprint'/Game/JongGyun/Character/BP_JG_Player.BP_JG_Player_C'";
-	JG_Helpers::GetClass<APawn>(&DefaultPawnClass, url);
+	//~129°­
+	/*FString url = "Blueprint'/Game/JongGyun/Character/BP_JG_Player.BP_JG_Player_C'";
+	JG_Helpers::GetClass<APawn>(&DefaultPawnClass, url);*/
+
+	//130°­~
+	JG_Helpers::GetClass<APawn>(&DefaultPawnClass, "Blueprint'/Game/JongGyun/130_/Player/BP_JG_CPlayer.BP_JG_CPlayer_C'");
+	
 }

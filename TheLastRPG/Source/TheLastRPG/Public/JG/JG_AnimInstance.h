@@ -15,7 +15,16 @@ protected: //블루프린트는 상속받아서 접근하기 때문에 private X
 	float Speed;	
 	
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
+	float Direction;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
+	float Pitch;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 	bool bEquipped;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
+	bool bAiming;
 
 public:
 	virtual void NativeBeginPlay() override;

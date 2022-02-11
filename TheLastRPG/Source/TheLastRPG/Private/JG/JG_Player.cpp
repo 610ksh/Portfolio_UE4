@@ -7,9 +7,11 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Camera/CameraShakeBase.h"
 #include "Components/CapsuleComponent.h"
 #include "Materials/MaterialInstanceConstant.h"
 #include "Materials/MaterialInstanceDynamic.h"
+#include "JG/Widgets/JG_UserWidget_CrossHair.h"
 
 
 AJG_Player::AJG_Player()
@@ -47,6 +49,22 @@ AJG_Player::AJG_Player()
 	SpringArm->bUsePawnControlRotation = true;
 	SpringArm->SocketOffset = FVector(0, 60,0);
 
+	JG_Helpers::GetClass<UJG_UserWidget_CrossHair>(&CrossHairClass, "WidgetBlueprint'/Game/JongGyun/Widgets/JG_WB_CrossHair.JG_WB_CrossHair_C'");
+	JG_Helpers::GetClass<UMatineeCameraShake>(&CameraShakeClass, "Blueprint'/Game/JongGyun/Character/BP_JG_MatineeCameraShake.BP_JG_MatineeCameraShake_C'");
+}
+
+void AJG_Player::GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection)
+{
+	OutDirection = Camera->GetForwardVector();
+
+	FTransform transform = Camera->GetComponentToWorld();
+	FVector cameraLocation = transform.GetLocation();
+	OutStart = cameraLocation + OutDirection;
+
+	FVector conDirection = UKismetMathLibrary::RandomUnitVectorInEllipticalConeInDegrees(OutDirection, 0.2f, 0.3f);
+	conDirection *= 3000.0f;
+
+	OutEnd = cameraLocation + conDirection;
 }
 
 // Called when the game starts or when spawned
@@ -64,6 +82,11 @@ void AJG_Player::BeginPlay()
 	LogoMaterial = UMaterialInstanceDynamic::Create(logoMaterial, this);
 	GetMesh()->SetMaterial(0, BodyMaterial);
 	GetMesh()->SetMaterial(1, LogoMaterial);
+
+
+	CrossHair = CreateWidget<UJG_UserWidget_CrossHair,APlayerController>(GetController<APlayerController>(),CrossHairClass);
+	CrossHair->AddToViewport();
+	CrossHair->SetVisibility(ESlateVisibility::Hidden);
 
 	Rifle = AJG_Rifle::Spawn(GetWorld(), this);
 
@@ -91,9 +114,29 @@ void AJG_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction("Running", EInputEvent::IE_Released, this, &AJG_Player::OffRunning);
 
 	PlayerInputComponent->BindAction("Rifle", EInputEvent::IE_Pressed, this, &AJG_Player::OnRifle);
+	
 	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Pressed, this, &AJG_Player::OnAim);
 	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &AJG_Player::OffAim);
 
+	PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &AJG_Player::OnFire);
+	PlayerInputComponent->BindAction("Fire", EInputEvent::IE_Released, this, &AJG_Player::OffFire);
+
+}
+
+void AJG_Player::OnFocus()
+{
+	CrossHair->OnFocus();
+}
+
+void AJG_Player::OffFocus()
+{
+	CrossHair->OffFocus();
+}
+
+void AJG_Player::PlayCameraShake()
+{
+	//카메라 매니저는 플레이어 컨트롤러에 있음
+	GetController<APlayerController>()->PlayerCameraManager->PlayCameraShake(CameraShakeClass);
 }
 
 void AJG_Player::OnMoveForward(float Axis)
@@ -124,12 +167,12 @@ void AJG_Player::OnVerticalLook(float Axis)
 
 void AJG_Player::OnRunning()
 {
-	GetCharacterMovement()->MaxWalkSpeed = 600;
+	GetCharacterMovement()->MaxWalkSpeed = 800;
 }
 
 void AJG_Player::OffRunning()
 {
-	GetCharacterMovement()->MaxWalkSpeed = 200;
+	GetCharacterMovement()->MaxWalkSpeed = 300;
 }
 
 void AJG_Player::OnRifle()
@@ -155,7 +198,11 @@ void AJG_Player::OnAim()
 
 	SpringArm->TargetArmLength = 100;
 	SpringArm->SocketOffset = FVector(0, 30, 10);
-	Camera->FieldOfView = 40;
+	//Camera->FieldOfView = 40;
+	OnZoomIn();
+
+	Rifle->Begin_Aiming();
+	CrossHair->SetVisibility(ESlateVisibility::Visible);
 
 }
 
@@ -169,7 +216,21 @@ void AJG_Player::OffAim()
 
 	SpringArm->TargetArmLength = 200;
 	SpringArm->SocketOffset = FVector(0, 60, 0);
-	Camera->FieldOfView = 90;
+	//Camera->FieldOfView = 90;
+	OnZoomOut();
+	Rifle->End_Aiming();
+	CrossHair->SetVisibility(ESlateVisibility::Hidden);
+
+}
+
+void AJG_Player::OnFire()
+{
+	Rifle->Begin_Fire();
+}
+
+void AJG_Player::OffFire()
+{
+	Rifle->End_Fire();
 }
 
 

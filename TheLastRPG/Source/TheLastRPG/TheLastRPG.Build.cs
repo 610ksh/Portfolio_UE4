@@ -10,6 +10,8 @@ public class TheLastRPG : ModuleRules
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay" });
 
+        // Include °æ·Î
+        PrivateIncludePaths.Add(ModuleDirectory);
         PublicIncludePaths.Add(ModuleDirectory);
     }
 }

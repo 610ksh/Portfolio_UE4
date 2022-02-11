@@ -1,7 +1,7 @@
 #include "SH/Lectures/Notifies/SH_CAnimNotifyState_Unequip.h"
+#include "SH/Lectures/SH_IRifle.h"
+#include "SH/Lectures/SH_CRifle.h"
 #include "SH/SH_Global.h"
-#include "SH/SH_IRifle.h"
-#include "SH/SH_CRifle.h"
 
 
 FString USH_CAnimNotifyState_Unequip::GetNotifyName_Implementation() const

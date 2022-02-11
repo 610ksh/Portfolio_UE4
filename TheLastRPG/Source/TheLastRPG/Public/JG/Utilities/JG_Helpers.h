@@ -32,6 +32,7 @@ public:
 		*OutClass = asset.Class;
 	}
 
+	// sceneComponent에 대해서
 	template<typename T>
 	static void CreateComponent(AActor* InActor, T** InComponent, FName InName, USceneComponent* InParent = NULL)
 	{
@@ -43,6 +44,14 @@ public:
 			return;
 		}
 		InActor->SetRootComponent((*InComponent));
+	}
+
+	// Actor에 대해서
+	template<typename T>
+	static void CreateActorComponent(AActor* InActor, T** InComponent, FName InName)
+	{
+		*InComponent = InActor->CreateDefaultSubobject<T>(InName);
+
 	}
 
 	template<typename T>
