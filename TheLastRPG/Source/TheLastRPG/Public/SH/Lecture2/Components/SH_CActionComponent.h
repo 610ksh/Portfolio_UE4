@@ -7,7 +7,7 @@
 UENUM(BlueprintType)
 enum class EActionType : uint8
 {
-	Unarmed, Fist, OneHand, TwoHand, Warp, Max,
+	Unarmed, Fist, OneHand, TwoHand, Warp, FireStorm, Max,
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FActionTypeChanged, EActionType, InPrevType, EActionType, InNewType);
@@ -36,6 +36,8 @@ public:
 		FORCEINLINE bool IsTwoHandMode() { return Type == EActionType::TwoHand; }
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsWarpMode() { return Type == EActionType::Warp; }
+	UFUNCTION(BlueprintPure)
+		FORCEINLINE bool IsFireStormMode() { return Type == EActionType::FireStorm; }
 
 public:	
 	USH_CActionComponent();
@@ -45,6 +47,9 @@ public:
 	void SetOneHandMode();
 	void SetTwoHandMode();
 	void SetWarpMode();
+	void SetFireStormMode();
+
+	void OffAllCollision();
 
 public:
 	void DoAction();

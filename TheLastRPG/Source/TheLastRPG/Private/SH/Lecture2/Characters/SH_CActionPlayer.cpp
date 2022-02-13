@@ -1,4 +1,5 @@
 #include "SH/Lecture2/Characters/SH_CActionPlayer.h"
+#include "SH/Lecture2/Components/SH_CTargetComponent.h"
 #include "SH/Lecture2/Components/SH_CActionComponent.h"
 #include "SH/Lecture2/Components/SH_COptionActorComponent.h"
 #include "SH/Lecture2/Components/SH_CStatusComponent.h"
@@ -22,6 +23,7 @@ ASH_CActionPlayer::ASH_CActionPlayer()
 	SH_CHelpers::CreateComponent<UCameraComponent>(this, &Camera, "Camera", SpringArm);
 
 	SH_CHelpers::CreateActorComponent<USH_CActionComponent>(this, &Action, "Action");
+	SH_CHelpers::CreateActorComponent<USH_CTargetComponent>(this, &Target, "Target");
 	SH_CHelpers::CreateActorComponent<USH_CMontagesComponent>(this, &Montages, "Montages");
 	SH_CHelpers::CreateActorComponent<USH_COptionActorComponent>(this, &Option, "Option");
 	SH_CHelpers::CreateActorComponent<USH_CStatusComponent>(this, &Status, "Status");
@@ -92,8 +94,13 @@ void ASH_CActionPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnOneHand); // 2
 	PlayerInputComponent->BindAction("TwoHand", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnTwoHand); // 3
 	PlayerInputComponent->BindAction("Warp", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnWarp); // F
+	PlayerInputComponent->BindAction("FireStorm", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnFireStorm); // F
 
 	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnDoAction);
+
+	PlayerInputComponent->BindAction("Target", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnTarget); // Tab
+	PlayerInputComponent->BindAction("TargetLeft", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnTargetLeft); // Tab
+	PlayerInputComponent->BindAction("TargetRight", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnTargetRight); // Tab
 }
 
 void ASH_CActionPlayer::OnMoveForward(float Axis)
@@ -140,7 +147,6 @@ void ASH_CActionPlayer::OnAvoid()
 	}
 	State->SetRollMode(); // 뒤로가는거 아니면 Roll
 }
-
 
 void ASH_CActionPlayer::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 {
@@ -225,9 +231,31 @@ void ASH_CActionPlayer::OnWarp()
 	Action->SetWarpMode();
 }
 
+void ASH_CActionPlayer::OnFireStorm()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetFireStormMode();
+}
+
 void ASH_CActionPlayer::OnDoAction()
 {
 	Action->DoAction();
+}
+
+void ASH_CActionPlayer::OnTarget()
+{
+	Target->ToggleTarget();
+}
+
+void ASH_CActionPlayer::OnTargetLeft()
+{
+	Target->ChangeTargetLeft();
+}
+
+void ASH_CActionPlayer::OnTargetRight()
+{
+	Target->ChangeTargetRight();
 }
 
 void ASH_CActionPlayer::ChangeColor(FLinearColor InColor)

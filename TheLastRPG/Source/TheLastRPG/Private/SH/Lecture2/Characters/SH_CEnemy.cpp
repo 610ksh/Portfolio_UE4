@@ -9,6 +9,7 @@
 
 #include "Animation/AnimInstance.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Materials/MaterialInstanceConstant.h"
@@ -102,6 +103,9 @@ void ASH_CEnemy::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 	case EStateType::Hitted:
 		Hitted();
 		break;
+	case EStateType::Dead:
+		Dead();
+		break;
 	}
 }
 
@@ -123,6 +127,14 @@ void ASH_CEnemy::Hitted()
 	DamageValue = 0.0f;
 
 	Status->SetStop();
+
+	/// Dead
+	if (Status->GetHealth() <= 0.0f)
+	{
+		State->SetDeadMode();
+		return;
+	}
+
 	Montages->PlayHitted();
 
 	FVector start = GetActorLocation(); // Enemy
@@ -136,6 +148,23 @@ void ASH_CEnemy::Hitted()
 	ChangeColor(FLinearColor(1, 0, 0, 1));
 
 	UKismetSystemLibrary::K2_SetTimer(this, "RestoreColor", 0.1f, false);
+}
+
+void ASH_CEnemy::Dead()
+{
+	CheckFalse(State->IsDeadMode());
+	Montages->PlayDead();
+}
+
+void ASH_CEnemy::Begin_Dead()
+{
+	Action->OffAllCollision();
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void ASH_CEnemy::End_Dead()
+{
+	Destroy();
 }
 
 void ASH_CEnemy::RestoreColor()

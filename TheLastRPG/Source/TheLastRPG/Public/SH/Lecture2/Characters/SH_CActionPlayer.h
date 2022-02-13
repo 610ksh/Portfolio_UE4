@@ -1,4 +1,5 @@
 #pragma once
+
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "SH/Lecture2/Components/SH_CStateComponent.h"
@@ -19,6 +20,8 @@ private: // Scene Component
 private: // Actor Component
 	UPROPERTY(VisibleDefaultsOnly)
 		class USH_CActionComponent* Action;
+	UPROPERTY(VisibleDefaultsOnly)
+		class USH_CTargetComponent* Target;
 	UPROPERTY(VisibleDefaultsOnly)
 		class USH_CMontagesComponent* Montages;
 	UPROPERTY(VisibleDefaultsOnly)
@@ -64,8 +67,13 @@ private:
 	void OnOneHand();
 	void OnTwoHand();
 	void OnWarp();
+	void OnFireStorm();
 
 	void OnDoAction();
+
+	void OnTarget();
+	void OnTargetLeft();
+	void OnTargetRight();
 
 public:
 	virtual void ChangeColor(FLinearColor InColor) override;

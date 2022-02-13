@@ -1,5 +1,6 @@
 #include "SH/Lecture2/Components/SH_CActionComponent.h"
 #include "SH/Lecture2/Actions/SH_CActionData.h"
+#include "SH/Lecture2/Actions/SH_CAttachment.h"
 #include "SH/Lecture2/Actions/SH_CEquipment.h"
 #include "SH/Lecture2/Actions/SH_CDoAction.h"
 #include "SH/SH_Global.h"
@@ -20,6 +21,31 @@ void USH_CActionComponent::BeginPlay()
 		if (!!Datas[i])
 			Datas[i]->BeginPlay(character);
 	}
+}
+
+void USH_CActionComponent::SetFistMode()
+{
+	SetMode(EActionType::Fist);
+}
+
+void USH_CActionComponent::SetOneHandMode()
+{
+	SetMode(EActionType::OneHand);
+}
+
+void USH_CActionComponent::SetTwoHandMode()
+{
+	SetMode(EActionType::TwoHand);
+}
+
+void USH_CActionComponent::SetWarpMode()
+{
+	SetMode(EActionType::Warp);
+}
+
+void USH_CActionComponent::SetFireStormMode()
+{
+	SetMode(EActionType::FireStorm);
 }
 
 void USH_CActionComponent::SetMode(EActionType InType)
@@ -68,32 +94,13 @@ void USH_CActionComponent::SetUnarmedMode()
 		equipment->Unequip(); // Unequip로 풀어준다. 
 	}
 
+	// Enemy도 똑같이 동작하므로 주의하자. 플레이어와 Enemy 모두 문제없는지 확인해야함. 주로 DA(데이터 애셋)을 넣어줄때 터짐
 	ASH_CEquipment* equipment = Datas[(int32)EActionType::Unarmed]->GetEquipment(); // 여기서 잘 터짐.
 	CheckNull(equipment);
 	
 	equipment->Equip(); // Unarmed로 장착
 
 	ChangeType(EActionType::Unarmed);
-}
-
-void USH_CActionComponent::SetFistMode()
-{
-	SetMode(EActionType::Fist);
-}
-
-void USH_CActionComponent::SetOneHandMode()
-{
-	SetMode(EActionType::OneHand);
-}
-
-void USH_CActionComponent::SetTwoHandMode()
-{
-	SetMode(EActionType::TwoHand);
-}
-
-void USH_CActionComponent::SetWarpMode()
-{
-	SetMode(EActionType::Warp);
 }
 
 void USH_CActionComponent::DoAction()
@@ -109,3 +116,15 @@ void USH_CActionComponent::DoAction()
 	}
 }
 
+void USH_CActionComponent::OffAllCollision()
+{
+	for (USH_CActionData* data : Datas)
+	{
+		if (!!data == false)
+			continue;
+		if (!!data->GetAttachment() == false)
+			continue;
+
+		data->GetAttachment()->OffCollision();
+	}
+}
