@@ -17,5 +17,15 @@ public:
 	virtual void Begin_DoAction() override;
 	virtual void End_DoActin() override;
 
+	virtual void OnAim() override;
+	virtual void OffAim() override;
+
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	UFUNCTION()
+		void OnThrowBeginOverlap(FHitResult InHitResult);
+
+private:
+	class USH_CAim* Aim;
 };

@@ -41,14 +41,14 @@ ASH_CEnemy::ASH_CEnemy()
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
 
 	TSubclassOf<USH_CUserWidget_Name> nameClass;
-	SH_CHelpers::GetClass<USH_CUserWidget_Name>(&nameClass, "WidgetBlueprint'/Game/SungHoon/Lectures/ActionRPG/Widgets/WB_Name.WB_Name_C'"); // _C
+	SH_CHelpers::GetClass<USH_CUserWidget_Name>(&nameClass, "WidgetBlueprint'/Game/SungHoon/Lectures/ActionRPG/Widgets/SH_WB_Name.SH_WB_Name_C'"); // _C
 	NameWidget->SetWidgetClass(nameClass);
 	NameWidget->SetRelativeLocation(FVector(0, 0, 240));
 	NameWidget->SetDrawSize(FVector2D(240, 30));
 	NameWidget->SetWidgetSpace(EWidgetSpace::Screen);
 
 	TSubclassOf<USH_CUserWidget_Health> healthClass;
-	SH_CHelpers::GetClass<USH_CUserWidget_Health>(&healthClass, "WidgetBlueprint'/Game/SungHoon/Lectures/ActionRPG/Widgets/WB_Health.WB_Health_C'"); // _C
+	SH_CHelpers::GetClass<USH_CUserWidget_Health>(&healthClass, "WidgetBlueprint'/Game/SungHoon/Lectures/ActionRPG/Widgets/SH_WB_Health.SH_WB_Health_C'"); // _C
 	HealthWidget->SetWidgetClass(healthClass);
 	HealthWidget->SetRelativeLocation(FVector(0, 0, 190));
 	HealthWidget->SetDrawSize(FVector2D(120, 20));

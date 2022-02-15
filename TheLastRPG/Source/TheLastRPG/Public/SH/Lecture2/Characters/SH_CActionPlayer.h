@@ -11,6 +11,10 @@ class THELASTRPG_API ASH_CActionPlayer : public ACharacter, public ISH_ICharacte
 {
 	GENERATED_BODY()
 
+private:
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class USH_CUserWidget_ActionList> ActionListClass;
+
 private: // Scene Component
 	UPROPERTY(VisibleDefaultsOnly)
 		class USpringArmComponent* SpringArm;
@@ -32,12 +36,15 @@ private: // Actor Component
 		class USH_CStateComponent* State;
 
 public:
+	FORCEINLINE class USH_CUserWidget_ActionList* GetActionList() { return ActionList; }
+
+public:
 	ASH_CActionPlayer();
 
 protected:
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -57,17 +64,24 @@ private:
 private:
 	void Begin_Roll();
 	void Begin_Backstep();
-	
+
 public:
 	void End_Roll();
 	void End_Backstep();
 
 private:
-	void OnFist();
-	void OnOneHand();
-	void OnTwoHand();
-	void OnWarp();
-	void OnFireStorm();
+	UFUNCTION()
+		void OnFist();
+	UFUNCTION()
+		void OnOneHand();
+	UFUNCTION()
+		void OnTwoHand();
+	UFUNCTION()
+		void OnWarp();
+	UFUNCTION()
+		void OnFireStorm();
+	UFUNCTION()
+		void OnIceBall();
 
 	void OnDoAction();
 
@@ -75,10 +89,19 @@ private:
 	void OnTargetLeft();
 	void OnTargetRight();
 
+	void OnAim();
+	void OffAim();
+
+	void OnViewActionList();
+	void OffViewActionList();
+
 public:
 	virtual void ChangeColor(FLinearColor InColor) override;
 
 private:
 	class UMaterialInstanceDynamic* BodyMaterial;
 	class UMaterialInstanceDynamic* LogoMaterial;
+
+private:
+	class USH_CUserWidget_ActionList* ActionList;
 };
