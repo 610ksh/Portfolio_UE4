@@ -29,6 +29,8 @@ private: // Actor Component
 	UPROPERTY(VisibleDefaultsOnly)
 		class USH_CMontagesComponent* Montages;
 	UPROPERTY(VisibleDefaultsOnly)
+		class USH_CFeetComponent* Feet;
+	UPROPERTY(VisibleDefaultsOnly)
 		class USH_COptionActorComponent* Option;
 	UPROPERTY(VisibleDefaultsOnly)
 		class USH_CStatusComponent* Status;
@@ -53,6 +55,8 @@ private:
 	void OnMoveRight(float Axis);
 	void OnHorizontalLook(float Axis);
 	void OnVerticalLook(float Axis);
+	void OnZoom(float Axis);
+
 
 private:
 	void OnAvoid();

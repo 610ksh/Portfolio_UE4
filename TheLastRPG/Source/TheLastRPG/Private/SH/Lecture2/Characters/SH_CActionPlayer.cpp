@@ -5,6 +5,7 @@
 #include "SH/Lecture2/Components/SH_CStatusComponent.h"
 #include "SH/Lecture2/Components/SH_CStateComponent.h"
 #include "SH/Lecture2/Components/SH_CMontagesComponent.h"
+#include "SH/Lecture2/Components/SH_CFeetComponent.h"
 #include "SH/Lecture2/Widgets/SH_CUserWidget_ActionList.h"
 #include "SH/SH_Global.h"
 
@@ -26,6 +27,7 @@ ASH_CActionPlayer::ASH_CActionPlayer()
 	SH_CHelpers::CreateActorComponent<USH_CActionComponent>(this, &Action, "Action");
 	SH_CHelpers::CreateActorComponent<USH_CTargetComponent>(this, &Target, "Target");
 	SH_CHelpers::CreateActorComponent<USH_CMontagesComponent>(this, &Montages, "Montages");
+	SH_CHelpers::CreateActorComponent<USH_CFeetComponent>(this, &Feet, "Feet");
 	SH_CHelpers::CreateActorComponent<USH_COptionActorComponent>(this, &Option, "Option");
 	SH_CHelpers::CreateActorComponent<USH_CStatusComponent>(this, &Status, "Status");
 	SH_CHelpers::CreateActorComponent<USH_CStateComponent>(this, &State, "State");
@@ -102,6 +104,7 @@ void ASH_CActionPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAxis("MoveRight", this, &ASH_CActionPlayer::OnMoveRight);
 	PlayerInputComponent->BindAxis("Turn", this, &ASH_CActionPlayer::OnHorizontalLook);
 	PlayerInputComponent->BindAxis("LookUp", this, &ASH_CActionPlayer::OnVerticalLook);
+	PlayerInputComponent->BindAxis("Zoom", this, &ASH_CActionPlayer::OnZoom);
 
 	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnAvoid); // space
 
@@ -155,6 +158,12 @@ void ASH_CActionPlayer::OnVerticalLook(float Axis)
 {
 	float rate = Option->GetVerticalLookRate();
 	AddControllerPitchInput(Axis * rate * GetWorld()->GetDeltaSeconds());
+}
+
+void ASH_CActionPlayer::OnZoom(float Axis)
+{
+	SpringArm->TargetArmLength += (2000.0f * Axis * GetWorld()->GetDeltaSeconds());
+	SpringArm->TargetArmLength = FMath::Clamp(SpringArm->TargetArmLength, 50.0f, 500.0f);
 }
 
 void ASH_CActionPlayer::OnAvoid()
