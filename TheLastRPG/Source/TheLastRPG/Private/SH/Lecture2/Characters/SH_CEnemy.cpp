@@ -71,9 +71,7 @@ void ASH_CEnemy::BeginPlay()
 
 	State->OnStateTypeChanged.AddDynamic(this, &ASH_CEnemy::OnStateTypeChanged);
 
-
 	Super::BeginPlay();
-
 
 	NameWidget->InitWidget();
 	Cast<USH_CUserWidget_Name>(NameWidget->GetUserWidgetObject())->SetNameText(GetActorLabel());
@@ -81,7 +79,7 @@ void ASH_CEnemy::BeginPlay()
 	HealthWidget->InitWidget();
 	Cast<USH_CUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());
 
-	Action->SetUnarmedMode();
+	//Action->SetUnarmedMode();
 }
 
 void ASH_CEnemy::Tick(float DeltaTime)

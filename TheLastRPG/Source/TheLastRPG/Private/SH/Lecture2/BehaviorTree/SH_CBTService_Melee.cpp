@@ -4,6 +4,7 @@
 #include "SH/Lecture2/Characters/SH_CAIController.h"
 #include "SH/Lecture2/Components/SH_CBehaviorComponent.h"
 #include "SH/Lecture2/Components/SH_CStateComponent.h"
+#include "SH/Lecture2/Components/SH_CPatrolComponent.h"
 #include "SH/SH_Global.h"
 
 USH_CBTService_Melee::USH_CBTService_Melee()
@@ -20,6 +21,7 @@ void USH_CBTService_Melee::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * 
 
 	ASH_CEnemy_AI* ai = Cast<ASH_CEnemy_AI>(controller->GetPawn());
 	USH_CStateComponent* state = SH_CHelpers::GetComponent<USH_CStateComponent>(ai);
+	USH_CPatrolComponent* patrol = SH_CHelpers::GetComponent<USH_CPatrolComponent>(ai);
 
 	if (state->IsHittedMode())
 	{
@@ -31,7 +33,12 @@ void USH_CBTService_Melee::TickNode(UBehaviorTreeComponent & OwnerComp, uint8 * 
 	if (target == NULL)
 	{
 		// TODO 패트롤 모드
-		
+		if (patrol != NULL && patrol->IsValid())
+		{
+			behavior->SetPatrolMode();
+			return;
+		}
+
 		behavior->SetWaitMode();
 		return;
 	}

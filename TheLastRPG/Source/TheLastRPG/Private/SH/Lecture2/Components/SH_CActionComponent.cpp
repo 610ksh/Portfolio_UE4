@@ -1,4 +1,5 @@
 #include "SH/Lecture2/Components/SH_CActionComponent.h"
+#include "SH/Lecture2/Actions/SH_CAction.h"
 #include "SH/Lecture2/Actions/SH_CActionData.h"
 #include "SH/Lecture2/Actions/SH_CAttachment.h"
 #include "SH/Lecture2/Actions/SH_CEquipment.h"
@@ -19,8 +20,8 @@ void USH_CActionComponent::BeginPlay()
 	ACharacter* character = Cast<ACharacter>(GetOwner());
 	for (int32 i = 0; i < (int32)EActionType::Max; ++i)
 	{
-		if (!!Datas[i])
-			Datas[i]->BeginPlay(character);
+		if (!!DataAssets[i])
+			DataAssets[i]->BeginPlay(character, &Datas[i]);
 	}
 }
 
@@ -155,7 +156,7 @@ void USH_CActionComponent::SetAimMode(bool InAim)
 
 void USH_CActionComponent::OffAllCollision()
 {
-	for (USH_CActionData* data : Datas)
+	for (USH_CAction* data : Datas)
 	{
 		if (!!data == false)
 			continue;

@@ -19,11 +19,11 @@ class THELASTRPG_API USH_CActionComponent : public UActorComponent
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
-		class USH_CActionData* Datas[(int32)EActionType::Max]; // Player BP 에디터에서 넣어줄 ActionData를 받는 배열
+		class USH_CActionData* DataAssets[(int32)EActionType::Max]; // Player BP 에디터에서 넣어줄 ActionData를 받는 배열
 
 public:
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE class USH_CActionData* GetCurrent() { return Datas[(int32)Type]; }
+		FORCEINLINE class USH_CAction* GetCurrent() { return Datas[(int32)Type]; }
 
 public:
 	UFUNCTION(BlueprintPure)
@@ -79,5 +79,5 @@ public:
 
 private:
 	EActionType Type;
-
+	class USH_CAction* Datas[(int32)EActionType::Max];
 };

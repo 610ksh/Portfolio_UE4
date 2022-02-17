@@ -15,6 +15,10 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 		uint8 TeamID = 1;
 
+private:
+	UPROPERTY(VisibleDefaultsOnly)
+		class USH_CPatrolComponent* Patrol;
+
 public:
 	FORCEINLINE class UBehaviorTree* GetBehaviorTree() { return BehaviorTree; }
 	FORCEINLINE uint8 GetTeamID() { return TeamID; }
