@@ -22,8 +22,9 @@ protected: // Scene Component
 		class UWidgetComponent* HealthWidget;
 
 protected: // Actor Component
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
 		class USH_CActionComponent* Action;
+private:
 	UPROPERTY(VisibleDefaultsOnly)
 		class USH_CMontagesComponent* Montages;
 	UPROPERTY(VisibleDefaultsOnly)

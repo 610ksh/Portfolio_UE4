@@ -4,16 +4,20 @@
 #include "GameFramework/Character.h"
 #include "SH/Lecture2/Components/SH_CStateComponent.h"
 #include "SH/Lecture2/SH_ICharacter.h"
+#include "GenericTeamAgentInterface.h"
 #include "SH_CActionPlayer.generated.h"
 
 UCLASS()
-class THELASTRPG_API ASH_CActionPlayer : public ACharacter, public ISH_ICharacter
+class THELASTRPG_API ASH_CActionPlayer : public ACharacter, public ISH_ICharacter, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
 
 private:
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<class USH_CUserWidget_ActionList> ActionListClass;
+
+	UPROPERTY(EditDefaultsOnly)
+		uint8 TeamId = 0;
 
 private: // Scene Component
 	UPROPERTY(VisibleDefaultsOnly)
@@ -49,6 +53,7 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual FGenericTeamId GetGenericTeamId() const override;
 
 private:
 	void OnMoveForward(float Axis);

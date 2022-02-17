@@ -8,7 +8,15 @@ public class TheLastRPG : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay" });
+		PublicDependencyModuleNames.AddRange(new string[] {
+            "Core",
+            "CoreUObject",
+            "Engine",
+            "InputCore",
+            "HeadMountedDisplay",
+            "AIModule",
+            "GameplayTasks",
+        });
 
         // Include °æ·Î
         PrivateIncludePaths.Add(ModuleDirectory);

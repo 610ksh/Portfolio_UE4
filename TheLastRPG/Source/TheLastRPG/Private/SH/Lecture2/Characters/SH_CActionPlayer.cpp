@@ -128,6 +128,11 @@ void ASH_CActionPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAction("ViewActionList", EInputEvent::IE_Released, this, &ASH_CActionPlayer::OffViewActionList); // left Ctrl
 }
 
+FGenericTeamId ASH_CActionPlayer::GetGenericTeamId() const
+{
+	return FGenericTeamId(TeamId);
+}
+
 void ASH_CActionPlayer::OnMoveForward(float Axis)
 {
 	CheckFalse(Status->CanMove());
