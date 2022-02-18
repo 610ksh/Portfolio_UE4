@@ -1,4 +1,5 @@
 #include "SH/Lecture2/Actions/SH_CActionData.h"
+
 #include "SH/Lecture2/Actions/SH_CAttachment.h"
 #include "SH/Lecture2/Actions/SH_CEquipment.h"
 #include "SH/Lecture2/Actions/SH_CDoAction.h"
@@ -7,56 +8,65 @@
 #include "GameFramework/Character.h"
 #include "Components/SkeletalMeshComponent.h"
 
-void USH_CActionData::BeginPlay(class ACharacter* InOwnerCharacter)
+void USH_CActionData::BeginPlay(class ACharacter* InOwnerCharacter, class USH_CAction** OutAction)
 {
 	FTransform transform;
 
+	ASH_CAttachment* attachment = NULL;
 	if (!!AttachmentClass) // Attachment 
 	{
-		Attachment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ASH_CAttachment>(AttachmentClass, transform, InOwnerCharacter); // 캐릭터에 부착됨
-		Attachment->SetActorLabel(GetLableName(InOwnerCharacter, "_Attachment"));
-		UGameplayStatics::FinishSpawningActor(Attachment, transform); // 최종적으로 확정
+		attachment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ASH_CAttachment>(AttachmentClass, transform, InOwnerCharacter); // 캐릭터에 부착됨
+		attachment->SetActorLabel(GetLableName(InOwnerCharacter, "_Attachment"));
+		UGameplayStatics::FinishSpawningActor(attachment, transform); // 최종적으로 확정
 	}
 
+	ASH_CEquipment* equipment = NULL;
 	if (!!EquipmentClass) // Equipment
 	{
-		Equipment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ASH_CEquipment>(EquipmentClass, transform, InOwnerCharacter); // 생성
-		Equipment->SetActorLabel(GetLableName(InOwnerCharacter, "_Equipment"));
-		Equipment->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true)); // 캐릭터에 장착
-		Equipment->SetData(EquipmentData); // 데이터 업로드
-		Equipment->SetColor(EquipmentColor);
+		equipment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ASH_CEquipment>(EquipmentClass, transform, InOwnerCharacter); // 생성
+		equipment->SetActorLabel(GetLableName(InOwnerCharacter, "_Equipment"));
+		equipment->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true)); // 캐릭터에 장착
+		equipment->SetData(EquipmentData); // 데이터 업로드
+		equipment->SetColor(EquipmentColor);
 
-		UGameplayStatics::FinishSpawningActor(Equipment, transform); // 최종적으로 확정
-		if (!!Attachment)
+		UGameplayStatics::FinishSpawningActor(equipment, transform); // 최종적으로 확정
+		if (!!attachment)
 		{
-			Equipment->OnEquipmentDelegate.AddDynamic(Attachment, &ASH_CAttachment::OnEquip);
-			Equipment->OnUnequipmentDelegate.AddDynamic(Attachment, &ASH_CAttachment::OnUnequip);
+			equipment->OnEquipmentDelegate.AddDynamic(attachment, &ASH_CAttachment::OnEquip);
+			equipment->OnUnequipmentDelegate.AddDynamic(attachment, &ASH_CAttachment::OnUnequip);
 		}
 	}
 
+	ASH_CDoAction* doAction = NULL;
 	if (!!DoActionClass) // DoAction
 	{
-		DoAction = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ASH_CDoAction>(DoActionClass, transform, InOwnerCharacter); // 생성
-		DoAction->SetActorLabel(GetLableName(InOwnerCharacter, "_DoAction"));
-		DoAction->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true)); // 캐릭터에 장착
-		DoAction->SetDatas(DoActionDatas);
+		doAction = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ASH_CDoAction>(DoActionClass, transform, InOwnerCharacter); // 생성
+		doAction->SetActorLabel(GetLableName(InOwnerCharacter, "_DoAction"));
+		doAction->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true)); // 캐릭터에 장착
+		doAction->SetDatas(DoActionDatas);
 
-		UGameplayStatics::FinishSpawningActor(DoAction, transform); // 최종적으로 확정
+		UGameplayStatics::FinishSpawningActor(doAction, transform); // 최종적으로 확정
 
-		if (!!Equipment)
+		if (!!equipment)
 		{
-			DoAction->SetEquipped(Equipment->GetEquipped());
+			doAction->SetEquipped(equipment->GetEquipped());
 		}
 
-		if (!!Attachment)
+		if (!!attachment)
 		{
-			Attachment->OnAttachmentBeginOverlap.AddDynamic(DoAction, &ASH_CDoAction::OnAttachmentBeginOverlap);
-			Attachment->OnAttachmentEndOverlap.AddDynamic(DoAction, &ASH_CDoAction::OnAttachmentEndOverlap);
-
-			Attachment->OnAttachmentCollision.AddDynamic(DoAction, &ASH_CDoAction::OnAttachmentCollision);
-			Attachment->OffAttachmentCollision.AddDynamic(DoAction, &ASH_CDoAction::OffAttachmentCollision);
+			attachment->OnAttachmentBeginOverlap.AddDynamic(doAction, &ASH_CDoAction::OnAttachmentBeginOverlap);
+			attachment->OnAttachmentEndOverlap.AddDynamic(doAction, &ASH_CDoAction::OnAttachmentEndOverlap);
+			
+			attachment->OnAttachmentCollision.AddDynamic(doAction, &ASH_CDoAction::OnAttachmentCollision);
+			attachment->OffAttachmentCollision.AddDynamic(doAction, &ASH_CDoAction::OffAttachmentCollision);
 		}
 	}
+
+	*OutAction = NewObject<USH_CAction>();
+	(*OutAction)->Attachment = attachment;
+	(*OutAction)->Equipment = equipment;
+	(*OutAction)->DoAction = doAction;
+	(*OutAction)->EquipmentColor = EquipmentColor;
 }
 
 FString USH_CActionData::GetLableName(class ACharacter* InOwnerCharacter, FString InName)

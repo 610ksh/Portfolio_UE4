@@ -1,9 +1,12 @@
 #include "SH/Lecture2/Characters/SH_CActionPlayer.h"
+#include "SH/Lecture2/Components/SH_CTargetComponent.h"
 #include "SH/Lecture2/Components/SH_CActionComponent.h"
 #include "SH/Lecture2/Components/SH_COptionActorComponent.h"
 #include "SH/Lecture2/Components/SH_CStatusComponent.h"
 #include "SH/Lecture2/Components/SH_CStateComponent.h"
 #include "SH/Lecture2/Components/SH_CMontagesComponent.h"
+#include "SH/Lecture2/Components/SH_CFeetComponent.h"
+#include "SH/Lecture2/Widgets/SH_CUserWidget_ActionList.h"
 #include "SH/SH_Global.h"
 
 #include "Animation/AnimInstance.h"
@@ -22,7 +25,9 @@ ASH_CActionPlayer::ASH_CActionPlayer()
 	SH_CHelpers::CreateComponent<UCameraComponent>(this, &Camera, "Camera", SpringArm);
 
 	SH_CHelpers::CreateActorComponent<USH_CActionComponent>(this, &Action, "Action");
+	SH_CHelpers::CreateActorComponent<USH_CTargetComponent>(this, &Target, "Target");
 	SH_CHelpers::CreateActorComponent<USH_CMontagesComponent>(this, &Montages, "Montages");
+	SH_CHelpers::CreateActorComponent<USH_CFeetComponent>(this, &Feet, "Feet");
 	SH_CHelpers::CreateActorComponent<USH_COptionActorComponent>(this, &Option, "Option");
 	SH_CHelpers::CreateActorComponent<USH_CStatusComponent>(this, &Status, "Status");
 	SH_CHelpers::CreateActorComponent<USH_CStateComponent>(this, &State, "State");
@@ -48,6 +53,9 @@ ASH_CActionPlayer::ASH_CActionPlayer()
 
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+
+
+	SH_CHelpers::GetClass<USH_CUserWidget_ActionList>(&ActionListClass, "WidgetBlueprint'/Game/SungHoon/Lectures/ActionRPG/Widgets/SH_WB_ActionList.SH_WB_ActionList_C'"); // _C
 }
 
 void ASH_CActionPlayer::BeginPlay()
@@ -69,6 +77,17 @@ void ASH_CActionPlayer::BeginPlay()
 	GetMesh()->SetMaterial(1, LogoMaterial);
 
 	Action->SetUnarmedMode(); // 시작전에 UnarmedMode로 지정
+
+	ActionList = CreateWidget<USH_CUserWidget_ActionList, APlayerController>(GetController<APlayerController>(), ActionListClass);
+	ActionList->AddToViewport();
+	ActionList->SetVisibility(ESlateVisibility::Hidden);
+
+	ActionList->GetData(0).OnUserWidget_ActionItem_Clicked.AddDynamic(this, &ASH_CActionPlayer::OnFist);
+	ActionList->GetData(1).OnUserWidget_ActionItem_Clicked.AddDynamic(this, &ASH_CActionPlayer::OnOneHand);
+	ActionList->GetData(2).OnUserWidget_ActionItem_Clicked.AddDynamic(this, &ASH_CActionPlayer::OnTwoHand);
+	ActionList->GetData(3).OnUserWidget_ActionItem_Clicked.AddDynamic(this, &ASH_CActionPlayer::OnWarp);
+	ActionList->GetData(4).OnUserWidget_ActionItem_Clicked.AddDynamic(this, &ASH_CActionPlayer::OnFireStorm);
+	ActionList->GetData(5).OnUserWidget_ActionItem_Clicked.AddDynamic(this, &ASH_CActionPlayer::OnIceBall);
 }
 
 void ASH_CActionPlayer::Tick(float DeltaTime)
@@ -85,15 +104,33 @@ void ASH_CActionPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAxis("MoveRight", this, &ASH_CActionPlayer::OnMoveRight);
 	PlayerInputComponent->BindAxis("Turn", this, &ASH_CActionPlayer::OnHorizontalLook);
 	PlayerInputComponent->BindAxis("LookUp", this, &ASH_CActionPlayer::OnVerticalLook);
+	PlayerInputComponent->BindAxis("Zoom", this, &ASH_CActionPlayer::OnZoom);
 
-	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnAvoid);
+	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnAvoid); // space
 
 	PlayerInputComponent->BindAction("Fist", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnFist); // 1
 	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnOneHand); // 2
 	PlayerInputComponent->BindAction("TwoHand", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnTwoHand); // 3
 	PlayerInputComponent->BindAction("Warp", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnWarp); // F
+	PlayerInputComponent->BindAction("FireStorm", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnFireStorm); // F
+	PlayerInputComponent->BindAction("IceBall", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnIceBall); // F
 
-	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnDoAction);
+	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnDoAction); // left mouse
+
+	PlayerInputComponent->BindAction("Target", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnTarget); // Tab
+	PlayerInputComponent->BindAction("TargetLeft", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnTargetLeft); // Tab
+	PlayerInputComponent->BindAction("TargetRight", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnTargetRight); // Tab
+
+	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnAim); // right mouse
+	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &ASH_CActionPlayer::OffAim); // right mouse
+
+	PlayerInputComponent->BindAction("ViewActionList", EInputEvent::IE_Pressed, this, &ASH_CActionPlayer::OnViewActionList); // left Ctrl
+	PlayerInputComponent->BindAction("ViewActionList", EInputEvent::IE_Released, this, &ASH_CActionPlayer::OffViewActionList); // left Ctrl
+}
+
+FGenericTeamId ASH_CActionPlayer::GetGenericTeamId() const
+{
+	return FGenericTeamId(TeamId);
 }
 
 void ASH_CActionPlayer::OnMoveForward(float Axis)
@@ -128,6 +165,12 @@ void ASH_CActionPlayer::OnVerticalLook(float Axis)
 	AddControllerPitchInput(Axis * rate * GetWorld()->GetDeltaSeconds());
 }
 
+void ASH_CActionPlayer::OnZoom(float Axis)
+{
+	SpringArm->TargetArmLength += (2000.0f * Axis * GetWorld()->GetDeltaSeconds());
+	SpringArm->TargetArmLength = FMath::Clamp(SpringArm->TargetArmLength, 50.0f, 500.0f);
+}
+
 void ASH_CActionPlayer::OnAvoid()
 {
 	CheckFalse(Status->CanMove()); // 움직일수 없으면 return
@@ -140,7 +183,6 @@ void ASH_CActionPlayer::OnAvoid()
 	}
 	State->SetRollMode(); // 뒤로가는거 아니면 Roll
 }
-
 
 void ASH_CActionPlayer::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 {
@@ -225,9 +267,70 @@ void ASH_CActionPlayer::OnWarp()
 	Action->SetWarpMode();
 }
 
+void ASH_CActionPlayer::OnFireStorm()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetFireStormMode();
+}
+
+void ASH_CActionPlayer::OnIceBall()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetIceBallMode();
+}
+
 void ASH_CActionPlayer::OnDoAction()
 {
 	Action->DoAction();
+}
+
+void ASH_CActionPlayer::OnTarget()
+{
+	Target->ToggleTarget();
+}
+
+void ASH_CActionPlayer::OnTargetLeft()
+{
+	Target->ChangeTargetLeft();
+}
+
+void ASH_CActionPlayer::OnTargetRight()
+{
+	Target->ChangeTargetRight();
+}
+
+void ASH_CActionPlayer::OnAim()
+{
+	Action->DoAim();
+}
+
+void ASH_CActionPlayer::OffAim()
+{
+	Action->UndoAim();
+}
+
+void ASH_CActionPlayer::OnViewActionList()
+{
+	CheckFalse(State->IsIdleMode());
+
+	ActionList->SetVisibility(ESlateVisibility::Visible);
+
+	GetController<APlayerController>()->bShowMouseCursor = true;
+	GetController<APlayerController>()->SetInputMode(FInputModeGameAndUI());
+
+	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 0.1f); // 10배 느리게
+}
+
+void ASH_CActionPlayer::OffViewActionList()
+{
+	ActionList->SetVisibility(ESlateVisibility::Hidden);
+
+	GetController<APlayerController>()->bShowMouseCursor = false;
+	GetController<APlayerController>()->SetInputMode(FInputModeGameOnly());
+
+	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1.0f); // 원상복구
 }
 
 void ASH_CActionPlayer::ChangeColor(FLinearColor InColor)

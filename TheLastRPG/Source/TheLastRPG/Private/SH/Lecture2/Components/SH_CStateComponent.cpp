@@ -43,6 +43,10 @@ void USH_CStateComponent::SetHittedMode()
 	ChangeType(EStateType::Hitted);
 }
 
+void USH_CStateComponent::SetDeadMode()
+{
+	ChangeType(EStateType::Dead);
+}
 
 void USH_CStateComponent::ChangeType(EStateType InType)
 {

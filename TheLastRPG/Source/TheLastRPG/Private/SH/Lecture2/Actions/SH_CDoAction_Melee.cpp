@@ -87,7 +87,7 @@ void ASH_CDoAction_Melee::OnAttachmentBeginOverlap(ACharacter * InAttacker, AAct
 
 	TSubclassOf<UMatineeCameraShake> shake = Datas[Index].ShakeClass;
 	if (shake != NULL)
-		UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager->StartCameraShake(shake);
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager->StartCameraShake(shake);// PlayCameraShake is deprecated
 
 	FDamageEvent e;
 	InOtherCharacter->TakeDamage(Datas[Index].Power, e, OwnerCharacter->GetController(), this); // 적에게 TakeDamage를 수행함.

@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
 #include "SH/Lecture2/Components/SH_CActionComponent.h" // for EActionType
+#include "SH/Lecture2/Components/SH_CFeetComponent.h" // for FFeetData
 #include "SH_CActionAnimInstance.generated.h"
 
 UCLASS()
@@ -18,6 +19,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		EActionType ActionType;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		FFeetData FeetData;
 
 public:
 	virtual void NativeBeginPlay() override;

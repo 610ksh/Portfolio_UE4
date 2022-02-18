@@ -25,6 +25,10 @@ void USH_CActionAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	Speed = character->GetVelocity().Size2D();
 	Direction = CalculateDirection(character->GetVelocity(), character->GetControlRotation());
+
+	USH_CFeetComponent* feet = SH_CHelpers::GetComponent<USH_CFeetComponent>(character);
+	if (!!feet)
+		FeetData = feet->GetData();
 }
 
 void USH_CActionAnimInstance::OnActionTypeChanged(EActionType InPrevType, EActionType InNewType)

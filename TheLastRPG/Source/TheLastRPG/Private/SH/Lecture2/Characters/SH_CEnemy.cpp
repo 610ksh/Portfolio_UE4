@@ -9,6 +9,7 @@
 
 #include "Animation/AnimInstance.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Materials/MaterialInstanceConstant.h"
@@ -40,14 +41,14 @@ ASH_CEnemy::ASH_CEnemy()
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
 
 	TSubclassOf<USH_CUserWidget_Name> nameClass;
-	SH_CHelpers::GetClass<USH_CUserWidget_Name>(&nameClass, "WidgetBlueprint'/Game/SungHoon/Lectures/ActionRPG/Widgets/WB_Name.WB_Name_C'"); // _C
+	SH_CHelpers::GetClass<USH_CUserWidget_Name>(&nameClass, "WidgetBlueprint'/Game/SungHoon/Lectures/ActionRPG/Widgets/SH_WB_Name.SH_WB_Name_C'"); // _C
 	NameWidget->SetWidgetClass(nameClass);
 	NameWidget->SetRelativeLocation(FVector(0, 0, 240));
 	NameWidget->SetDrawSize(FVector2D(240, 30));
 	NameWidget->SetWidgetSpace(EWidgetSpace::Screen);
 
 	TSubclassOf<USH_CUserWidget_Health> healthClass;
-	SH_CHelpers::GetClass<USH_CUserWidget_Health>(&healthClass, "WidgetBlueprint'/Game/SungHoon/Lectures/ActionRPG/Widgets/WB_Health.WB_Health_C'"); // _C
+	SH_CHelpers::GetClass<USH_CUserWidget_Health>(&healthClass, "WidgetBlueprint'/Game/SungHoon/Lectures/ActionRPG/Widgets/SH_WB_Health.SH_WB_Health_C'"); // _C
 	HealthWidget->SetWidgetClass(healthClass);
 	HealthWidget->SetRelativeLocation(FVector(0, 0, 190));
 	HealthWidget->SetDrawSize(FVector2D(120, 20));
@@ -70,9 +71,7 @@ void ASH_CEnemy::BeginPlay()
 
 	State->OnStateTypeChanged.AddDynamic(this, &ASH_CEnemy::OnStateTypeChanged);
 
-
 	Super::BeginPlay();
-
 
 	NameWidget->InitWidget();
 	Cast<USH_CUserWidget_Name>(NameWidget->GetUserWidgetObject())->SetNameText(GetActorLabel());
@@ -80,7 +79,7 @@ void ASH_CEnemy::BeginPlay()
 	HealthWidget->InitWidget();
 	Cast<USH_CUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());
 
-	Action->SetUnarmedMode();
+	//Action->SetUnarmedMode();
 }
 
 void ASH_CEnemy::Tick(float DeltaTime)
@@ -101,6 +100,9 @@ void ASH_CEnemy::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 	{
 	case EStateType::Hitted:
 		Hitted();
+		break;
+	case EStateType::Dead:
+		Dead();
 		break;
 	}
 }
@@ -123,6 +125,14 @@ void ASH_CEnemy::Hitted()
 	DamageValue = 0.0f;
 
 	Status->SetStop();
+
+	/// Dead
+	if (Status->GetHealth() <= 0.0f)
+	{
+		State->SetDeadMode();
+		return;
+	}
+
 	Montages->PlayHitted();
 
 	FVector start = GetActorLocation(); // Enemy
@@ -136,6 +146,23 @@ void ASH_CEnemy::Hitted()
 	ChangeColor(FLinearColor(1, 0, 0, 1));
 
 	UKismetSystemLibrary::K2_SetTimer(this, "RestoreColor", 0.1f, false);
+}
+
+void ASH_CEnemy::Dead()
+{
+	CheckFalse(State->IsDeadMode());
+	Montages->PlayDead();
+}
+
+void ASH_CEnemy::Begin_Dead()
+{
+	Action->OffAllCollision();
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void ASH_CEnemy::End_Dead()
+{
+	Destroy();
 }
 
 void ASH_CEnemy::RestoreColor()
