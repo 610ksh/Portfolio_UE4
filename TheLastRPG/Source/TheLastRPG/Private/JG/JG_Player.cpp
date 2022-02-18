@@ -136,7 +136,7 @@ void AJG_Player::OffFocus()
 void AJG_Player::PlayCameraShake()
 {
 	//카메라 매니저는 플레이어 컨트롤러에 있음
-	GetController<APlayerController>()->PlayerCameraManager->PlayCameraShake(CameraShakeClass);
+	GetController<APlayerController>()->PlayerCameraManager->StartCameraShake(CameraShakeClass);
 }
 
 void AJG_Player::OnMoveForward(float Axis)

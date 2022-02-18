@@ -27,8 +27,8 @@ AJG_CSword::AJG_CSword()
 	JG_Helpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/Lectures/Character2_Action/Weapons/Sword/SK_Straight_Sword.SK_Straight_Sword'");
 	Mesh->SetSkeletalMesh(mesh);
 
-	JG_Helpers::GetAsset<UAnimMontage>(&GrabMontage, "AnimMontage'/Game/JongGyun/130_/Player/Char/Sword_Grab_Montage.Sword_Grab_Montage'");
-	JG_Helpers::GetAsset<UAnimMontage>(&UngrabMontage, "AnimMontage'/Game/JongGyun/130_/Player/Char/Sword_Ungrab_Montage.Sword_Ungrab_Montage'");
+	//JG_Helpers::GetAsset<UAnimMontage>(&GrabMontage, "AnimMontage'/Game/JongGyun/130_/Player/Char/Sword_Grab_Montage.Sword_Grab_Montage'");
+	//JG_Helpers::GetAsset<UAnimMontage>(&UngrabMontage, "AnimMontage'/Game/JongGyun/130_/Player/Char/Sword_Ungrab_Montage.Sword_Ungrab_Montage'");
 
 }
 
