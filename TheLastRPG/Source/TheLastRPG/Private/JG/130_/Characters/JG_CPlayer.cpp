@@ -4,7 +4,7 @@
 #include "JG/130_/Characters/JG_CPlayer.h"
 #include "JG/JG_Global.h"
 
-#include "JG/130_/Weapons/JG_CSword.h"
+//#include "JG/130_/Weapons/JG_CSword.h"
 
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -48,7 +48,7 @@ AJG_CPlayer::AJG_CPlayer()
 
 	SpringArm->SetRelativeLocation(FVector(0, 0, 140));
 	SpringArm->SetRelativeRotation(FRotator(0, 90, 0));
-	SpringArm->TargetArmLength = 200.0f;
+	SpringArm->TargetArmLength = 300.0f;
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->bUsePawnControlRotation = true;
 	SpringArm->bEnableCameraLag = true;
@@ -65,7 +65,7 @@ void AJG_CPlayer::BeginPlay()
 	Super::BeginPlay();
 	
 	// 칼 생성 - 맵에 등장만하고 캐릭터한테 붙이진 않음
-	Sword = AJG_CSword::Spawn(GetWorld(), this);
+//	Sword = AJG_CSword::Spawn(GetWorld(), this);
 
 
 
