@@ -22,6 +22,8 @@ private:
 		FName BehaviorKey = "Behavior";
 	UPROPERTY(EditAnywhere)
 		FName PlayerKey = "Player";
+	UPROPERTY(EditAnywhere)
+		FName WarpKey = "Warp";
 
 public:
 	UFUNCTION(BlueprintPure)
@@ -51,6 +53,7 @@ public:
 	void SetAvoidMode();
 
 	class ASH_CActionPlayer* GetTargetPlayer(); // Character·Î ÇØµµ µÊ
+	FVector GetWarpLocation();
 
 protected:
 	virtual void BeginPlay() override;

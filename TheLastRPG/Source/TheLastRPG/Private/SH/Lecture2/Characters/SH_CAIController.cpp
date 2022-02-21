@@ -45,7 +45,7 @@ void ASH_CAIController::Tick(float DeltaTime)
 	FVector center = OwnerEnemy->GetActorLocation();
 	center.Z -= AdjustCircleHeight;
 	DrawDebugCircle(GetWorld(), center, Sight->SightRadius, 300, FColor::Green, false, -1, 0, 0, FVector::RightVector, FVector::ForwardVector);
-	DrawDebugCircle(GetWorld(), center, MeleeActionRange, 300, FColor::Red, false, -1, 0, 0, FVector::RightVector, FVector::ForwardVector);
+	DrawDebugCircle(GetWorld(), center, BehaviorRange, 300, FColor::Red, false, -1, 0, 0, FVector::RightVector, FVector::ForwardVector);
 }
 
 void ASH_CAIController::OnPossess(APawn * InPawn)

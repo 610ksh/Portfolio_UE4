@@ -88,6 +88,11 @@ ASH_CActionPlayer * USH_CBehaviorComponent::GetTargetPlayer()
 	return Cast<ASH_CActionPlayer>(Blackboard->GetValueAsObject(PlayerKey));
 }
 
+FVector USH_CBehaviorComponent::GetWarpLocation()
+{
+	return Blackboard->GetValueAsVector(WarpKey);
+}
+
 EBehaviorType USH_CBehaviorComponent::GetType()
 {
 	return (EBehaviorType)Blackboard->GetValueAsEnum(BehaviorKey);

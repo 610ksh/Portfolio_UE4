@@ -48,13 +48,15 @@ public:
 		void SetUnarmedMode();
 	UFUNCTION(BlueprintCallable)
 		void SetTwoHandMode();
+	UFUNCTION(BlueprintCallable)
+		void SetWarpMode();
+	UFUNCTION(BlueprintCallable)
+		void SetIceBallMode();
 
 	void SetFistMode();
 	void SetOneHandMode();
-	void SetWarpMode();
 	void SetFireStormMode();
-	void SetIceBallMode();
-
+	
 	void OffAllCollision();
 
 public:

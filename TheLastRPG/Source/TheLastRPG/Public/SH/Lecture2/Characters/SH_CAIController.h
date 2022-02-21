@@ -11,7 +11,7 @@ class THELASTRPG_API ASH_CAIController : public AAIController
 	
 private:
 	UPROPERTY(EditAnywhere)
-		float MeleeActionRange = 150.0f; // 공격범위
+		float BehaviorRange = 150.0f; // 공격범위
 	UPROPERTY(EditAnywhere)
 		bool bDrawDebug = true; // 디버그 모드
 	UPROPERTY(EditAnywhere)
@@ -24,7 +24,7 @@ private:
 		class USH_CBehaviorComponent* Behavior;
 
 public:
-	FORCEINLINE float GetMeleeActionRange() { return MeleeActionRange; }
+	FORCEINLINE float GetBehaviorRange() { return BehaviorRange; }
 
 public:
 	ASH_CAIController();
