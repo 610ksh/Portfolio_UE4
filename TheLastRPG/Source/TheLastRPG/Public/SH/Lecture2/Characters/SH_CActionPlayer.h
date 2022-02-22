@@ -55,6 +55,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual FGenericTeamId GetGenericTeamId() const override;
 
+	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
 private:
 	void OnMoveForward(float Axis);
 	void OnMoveRight(float Axis);
@@ -104,6 +106,14 @@ private:
 	void OnViewActionList();
 	void OffViewActionList();
 
+private:
+	void Hitted();
+	void Dead();
+
+public:
+	virtual void Begin_Dead() override;
+	virtual void End_Dead() override;
+
 public:
 	virtual void ChangeColor(FLinearColor InColor) override;
 
@@ -113,4 +123,8 @@ private:
 
 private:
 	class USH_CUserWidget_ActionList* ActionList;
+
+private:
+	class AController* DamageInstigator;
+	float DamageValue;
 };

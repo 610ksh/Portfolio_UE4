@@ -166,3 +166,19 @@ void USH_CActionComponent::OffAllCollision()
 		data->GetAttachment()->OffCollision();
 	}
 }
+
+void USH_CActionComponent::DestroyAllActions()
+{
+	for (USH_CAction* data : Datas)
+	{
+		if (!!data == false)
+			continue;
+
+		if (!!data->GetAttachment())
+			data->GetAttachment()->Destroy();
+		if (!!data->GetEquipment())
+			data->GetEquipment()->Destroy();
+		if (!!data->GetDoAction())
+			data->GetDoAction()->Destroy();
+	}
+}

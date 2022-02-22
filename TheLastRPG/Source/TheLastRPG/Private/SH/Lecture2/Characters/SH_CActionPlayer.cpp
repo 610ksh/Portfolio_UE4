@@ -194,7 +194,56 @@ void ASH_CActionPlayer::OnStateTypeChanged(EStateType InPrevType, EStateType InN
 	case EStateType::Backstep:
 		Begin_Backstep();
 		break;
+	case EStateType::Hitted:
+		Hitted();
+		break;
+	case EStateType::Dead:
+		Dead();
+		break;
 	}
+}
+
+float ASH_CActionPlayer::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	DamageInstigator = EventInstigator; // 타격을 준 대상 = Player
+	DamageValue = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+	SH_CLog::Log(Damage);
+
+	State->SetHittedMode();
+
+	return Status->GetHealth();
+}
+
+void ASH_CActionPlayer::Hitted()
+{
+	Status->SubHealth(DamageValue);
+	DamageValue = 0.0f;
+
+	/// Dead
+	if (Status->GetHealth() <= 0.0f)
+	{
+		State->SetDeadMode();
+		return;
+	}
+
+	Montages->PlayHitted();
+}
+
+void ASH_CActionPlayer::Dead()
+{
+	CheckFalse(State->IsDeadMode());
+	Montages->PlayDead();
+}
+
+void ASH_CActionPlayer::Begin_Dead()
+{
+	Action->OffAllCollision();
+	Action->DestroyAllActions();
+}
+
+void ASH_CActionPlayer::End_Dead()
+{
+	UKismetSystemLibrary::QuitGame(GetWorld(), GetController<APlayerController>(), EQuitPreference::Quit, false);
 }
 
 void ASH_CActionPlayer::Begin_Roll()

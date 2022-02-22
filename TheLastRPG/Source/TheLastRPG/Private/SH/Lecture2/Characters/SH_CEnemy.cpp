@@ -157,6 +157,7 @@ void ASH_CEnemy::Dead()
 void ASH_CEnemy::Begin_Dead()
 {
 	Action->OffAllCollision();
+	Action->DestroyAllActions();
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 

@@ -58,6 +58,7 @@ public:
 	void SetFireStormMode();
 	
 	void OffAllCollision();
+	void DestroyAllActions();
 
 public:
 	void DoAction();
