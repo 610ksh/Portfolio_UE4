@@ -17,13 +17,15 @@ void UJG_CActionData::BeginPlay(class ACharacter* InOwnerCharacter)
 	// Attachment 
 	{
 		Attachment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<AJG_CAttachment>(AttachmentClass, transform, InOwnerCharacter); 
-		UGameplayStatics::FinishSpawningActor(Attachment, transform); 
+		Attachment->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Attachment");
+		UGameplayStatics::FinishSpawningActor(Equipment, transform); 
 	}
-
+	 
 	// Equipment
 	{
 		Equipment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<AJG_CEquipment>(EquipmentClass, transform, InOwnerCharacter); 
 		Equipment->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true)); 
+		Attachment->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Equipment");
 		Equipment->SetData(EquipmentData); 
 		UGameplayStatics::FinishSpawningActor(Equipment, transform);
 

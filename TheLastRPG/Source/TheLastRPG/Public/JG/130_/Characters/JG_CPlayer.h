@@ -77,5 +77,7 @@ public:
 //	void OnSword();
 //	// 버그픽스용
 
+private:
+	void OnOneHand();
 
 };
