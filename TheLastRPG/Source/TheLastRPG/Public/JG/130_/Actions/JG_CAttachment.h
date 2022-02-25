@@ -11,6 +11,10 @@ class THELASTRPG_API AJG_CAttachment : public AActor
 {
 	GENERATED_BODY()
 	
+	protected:
+	UFUNCTION(BlueprintCallable)
+	void AttachTo(FName InSocketName);
+	
 public:	
 	// Sets default values for this actor's properties
 	AJG_CAttachment();

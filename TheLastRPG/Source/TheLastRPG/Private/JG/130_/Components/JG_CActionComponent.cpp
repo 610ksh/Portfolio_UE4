@@ -4,6 +4,10 @@
 #include "JG/130_/Components/JG_CActionComponent.h"
 #include "JG/JG_Global.h"
 
+#include "JG/130_/Actions/JG_CActionData.h"
+#include "JG/130_/Actions/JG_CAttachment.h"
+#include "JG/130_/Actions/JG_CEquipment.h"
+
 // Sets default values for this component's properties
 UJG_CActionComponent::UJG_CActionComponent()
 {
@@ -20,7 +24,15 @@ void UJG_CActionComponent::BeginPlay()
 
 void UJG_CActionComponent::SetUnarmedMode()
 {
-	SetMode(EActionType_JG::Unarmed);
+	if (!!Datas[(int32)Type]) 
+	{
+		
+		AJG_CEquipment* equipment = Datas[(int32)Type]->GetEquipment();
+		CheckNull(equipment);
+
+		equipment->Unequip(); 
+	}
+	ChangeType(EActionType_JG::Unarmed);
 }
 
 
@@ -36,27 +48,27 @@ void UJG_CActionComponent::SetTwoHandMode()
 
 void UJG_CActionComponent::SetMode(EActionType_JG InType)
 {
-	//if (Type == InType) 
-	//{
-	//	SetUnarmedMode();
+	if (Type == InType) 
+	{
+		SetUnarmedMode();
 
-	//	return;
-	//}
-	//else if (IsUnarmedMode() == false) 
-	//{
-	//	
-	//	ASH_CEquipment* equipment = Datas[(int32)Type]->GetEquipment();
-	//	CheckNull(equipment);
+		return;
+	}
+	else if (IsUnarmedMode() == false) 
+	{
+		
+		AJG_CEquipment* equipment = Datas[(int32)Type]->GetEquipment();
+		CheckNull(equipment);
 
-	//	equipment->Unequip();
-	//}
+		equipment->Unequip();
+	}
 
-	//ASH_CEquipment* equipment = Datas[(int32)InType]->GetEquipment();
-	//CheckNull(equipment);
+	AJG_CEquipment* equipment = Datas[(int32)InType]->GetEquipment();
+	CheckNull(equipment);
 
-	//equipment->Equip(); 
+	equipment->Equip(); 
 
-	//ChangeType(InType);
+	ChangeType(InType);
 }
 
 

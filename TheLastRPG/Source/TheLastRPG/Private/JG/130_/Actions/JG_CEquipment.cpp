@@ -28,3 +28,41 @@ void AJG_CEquipment::BeginPlay()
 	
 }
 
+void AJG_CEquipment::Equip_Implementation()
+{
+	State->SetEquipMode();
+
+	if (Data.AnimMontage != NULL)
+		OwnerCharacter->PlayAnimMontage(Data.AnimMontage, Data.PlayRatio, Data.StartSection);
+	else
+		End_Equip();
+
+
+		OwnerCharacter->bUseControllerRotationYaw = true; 
+		OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = false; 
+	
+}
+
+void AJG_CEquipment::Begin_Equip_Implementation()
+{
+	if (OnEquipmentDelegate.IsBound())
+		OnEquipmentDelegate.Broadcast();
+}
+
+void AJG_CEquipment::End_Equip_Implementation()
+{
+	bEquipped = true;
+
+	State->SetIdleMode();
+}
+
+void AJG_CEquipment::Unequip_Implementation()
+{
+	bEquipped = false;
+
+	if (OnUnequipmentDelegate.IsBound())
+		OnUnequipmentDelegate.Broadcast();
+
+	OwnerCharacter->bUseControllerRotationYaw = false;
+	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = true;
+}

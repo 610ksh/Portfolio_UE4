@@ -19,6 +19,14 @@ class THELASTRPG_API UJG_CActionComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
+		class UJG_CActionData* Datas[(int32)EActionType_JG::Max];
+
+public:
+	UFUNCTION(BlueprintPure)
+	FORCEINLINE class UJG_CActionData* GetCurrent(){return Datas[(int32)Type]; }
+
 public:
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsUnarmedMode() { return Type == EActionType_JG::Unarmed; }
@@ -27,7 +35,7 @@ public:
 		FORCEINLINE bool IsOneHandMode() { return Type == EActionType_JG::OneHand; }
 
 	UFUNCTION(BlueprintPure)
-	FORCEINLINE bool IsTwoHandMode() { return Type == EActionType_JG::TwoHand; }
+		FORCEINLINE bool IsTwoHandMode() { return Type == EActionType_JG::TwoHand; }
 
 public:
 	// Sets default values for this component's properties
@@ -47,7 +55,7 @@ private:
 
 public:
 	UPROPERTY(BlueprintAssignable)
-	FActionTypeChanged_JG OnActionTypeChanged;
+		FActionTypeChanged_JG OnActionTypeChanged;
 
 private:
 	EActionType_JG Type;

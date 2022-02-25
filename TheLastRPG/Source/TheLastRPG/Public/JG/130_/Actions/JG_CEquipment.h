@@ -25,25 +25,25 @@ public:
 
 public:
 	//// ÀåÂø ¸í·É
-	//UFUNCTION(BlueprintNativeEvent)
-	//	void Equip();
-	//void Equip_Implementation();
+	UFUNCTION(BlueprintNativeEvent)
+	void Equip();
+	void Equip_Implementation();
 
-	//// ÀåÂø °³½Ã
-	//UFUNCTION(BlueprintNativeEvent)
-	//	void Begin_Equip();
-	//void Begin_Equip_Implementation();
+	// ÀåÂø °³½Ã
+	UFUNCTION(BlueprintNativeEvent)
+		void Begin_Equip();
+	void Begin_Equip_Implementation();
 
-	//// ÀåÂø ¿Ï·á
-	//UFUNCTION(BlueprintNativeEvent)
-	//	void End_Equip();
-	//void End_Equip_Implementation();
+	// ÀåÂø ¿Ï·á
+	UFUNCTION(BlueprintNativeEvent)
+		void End_Equip();
+	void End_Equip_Implementation();
 
 
-	//// ÇØÁ¦ ¸í·É
-	//UFUNCTION(BlueprintNativeEvent)
-	//	void Unequip();
-	//void Unequip_Implementation();
+	// ÇØÁ¦ ¸í·É
+	UFUNCTION(BlueprintNativeEvent)
+		void Unequip();
+	void Unequip_Implementation();
 
 protected:
 	virtual void BeginPlay() override;
