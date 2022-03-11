@@ -20,6 +20,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
+	bool UseCursorLocation();
 	bool GetCursorLocationAndRotation(FVector& OutLocation, FRotator& OutRotator);
 
 private:

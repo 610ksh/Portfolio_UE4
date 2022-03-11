@@ -1,3 +1,3 @@
 ,Type,AnimMontage,PlayRatio,StartSection
-1,Roll,AnimMontage'/Game/JongGyun/130_/Player/Char/Roll_Montage.Roll_Montage',1.25,
-2,Backstep,AnimMontage'/Game/JongGyun/130_/Player/Char/BackStep_Montage.BackStep_Montage',1.25,
+1,Roll,AnimMontage'/Game/JongGyun/130_/Player/Char/Roll_Montage.Roll_Montage',1.75,
+2,Backstep,AnimMontage'/Game/JongGyun/130_/Player/Char/BackStep_Montage.BackStep_Montage',1.5,

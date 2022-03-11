@@ -70,10 +70,14 @@ public:
 	void Begin_Backstep();
 	void End_Backstep();
 
-private:
-	class AJG_CSword* Sword;
+//private:
+//	class AJG_CSword* Sword;
+//
+//private:
+//	void OnSword();
+//	// 버그픽스용
 
 private:
-	void OnSword();
-	// 버그픽스용
+	void OnOneHand();
+
 };

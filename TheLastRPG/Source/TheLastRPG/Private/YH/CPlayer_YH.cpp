@@ -52,7 +52,7 @@ ACPlayer_YH::ACPlayer_YH()
 	SpringArm->bUsePawnControlRotation = true;
 	SpringArm->SocketOffset = FVector(0, 60, 0);
 	CHelpers_YH::GetClass<UYH_CUserWidget_CrossHair>(&CrossHairClass, "WidgetBlueprint'/Game/YongHwan/BP/Widgets/YH_WB_CrossHair.YH_WB_CrossHair_C'");
-	CHelpers_YH::GetClass<UCameraShake>(&CameraShakeClass, "Blueprint'/Game/YongHwan/BP/YH_BP_CameraShake.YH_BP_CameraShake_C'");
+	CHelpers_YH::GetClass<UMatineeCameraShake>(&CameraShakeClass, "Blueprint'/Game/YongHwan/BP/YH_BP_CameraShake.YH_BP_CameraShake_C'");
 	
 }
 
@@ -142,7 +142,7 @@ void ACPlayer_YH::OffFocus()
 
 void ACPlayer_YH::PlayCameraShake()
 {
-	GetController<APlayerController>()->PlayerCameraManager->PlayCameraShake(CameraShakeClass);
+	GetController<APlayerController>()->PlayerCameraManager->StartCameraShake(CameraShakeClass);
 }
 
 void ACPlayer_YH::OnMoveForward(float Axis)

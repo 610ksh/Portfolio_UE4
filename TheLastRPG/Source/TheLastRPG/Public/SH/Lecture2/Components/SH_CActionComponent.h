@@ -7,7 +7,7 @@
 UENUM(BlueprintType)
 enum class EActionType : uint8
 {
-	Unarmed, Fist, OneHand, TwoHand, Warp, Max,
+	Unarmed, Fist, OneHand, TwoHand, Warp, FireStorm, IceBall, Max,
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FActionTypeChanged, EActionType, InPrevType, EActionType, InNewType);
@@ -19,11 +19,11 @@ class THELASTRPG_API USH_CActionComponent : public UActorComponent
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
-		class USH_CActionData* Datas[(int32)EActionType::Max]; // Player BP 에디터에서 넣어줄 ActionData를 받는 배열
+		class USH_CActionData* DataAssets[(int32)EActionType::Max]; // Player BP 에디터에서 넣어줄 ActionData를 받는 배열
 
 public:
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE class USH_CActionData* GetCurrent() { return Datas[(int32)Type]; }
+		FORCEINLINE class USH_CAction* GetCurrent() { return Datas[(int32)Type]; }
 
 public:
 	UFUNCTION(BlueprintPure)
@@ -36,18 +36,38 @@ public:
 		FORCEINLINE bool IsTwoHandMode() { return Type == EActionType::TwoHand; }
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsWarpMode() { return Type == EActionType::Warp; }
+	UFUNCTION(BlueprintPure)
+		FORCEINLINE bool IsFireStormMode() { return Type == EActionType::FireStorm; }
+	UFUNCTION(BlueprintPure)
+		FORCEINLINE bool IsIceBallMode() { return Type == EActionType::IceBall; }
 
 public:	
 	USH_CActionComponent();
 	
-	void SetUnarmedMode();
+	UFUNCTION(BlueprintCallable)
+		void SetUnarmedMode();
+	UFUNCTION(BlueprintCallable)
+		void SetTwoHandMode();
+	UFUNCTION(BlueprintCallable)
+		void SetWarpMode();
+	UFUNCTION(BlueprintCallable)
+		void SetIceBallMode();
+
 	void SetFistMode();
 	void SetOneHandMode();
-	void SetTwoHandMode();
-	void SetWarpMode();
+	void SetFireStormMode();
+	
+	void OffAllCollision();
+	void DestroyAllActions();
 
 public:
 	void DoAction();
+
+	void DoAim();
+	void UndoAim();
+
+private:
+	void SetAimMode(bool InAim);
 
 protected:
 	virtual void BeginPlay() override;
@@ -62,5 +82,5 @@ public:
 
 private:
 	EActionType Type;
-
+	class USH_CAction* Datas[(int32)EActionType::Max];
 };

@@ -21,7 +21,7 @@ void USH_CMontagesComponent::BeginPlay()
 	{
 		if (!!data)
 		{
-			SH_CLog::Print(data->AnimMontage->GetPathName());
+			//SH_CLog::Print(data->AnimMontage->GetPathName());
 			SH_CLog::Log(data->AnimMontage->GetPathName());
 		}
 	}
@@ -53,6 +53,11 @@ void USH_CMontagesComponent::PlayBackstep()
 void USH_CMontagesComponent::PlayHitted()
 {
 	PlayAnimMontage(EStateType::Hitted);
+}
+
+void USH_CMontagesComponent::PlayDead()
+{
+	PlayAnimMontage(EStateType::Dead);
 }
 
 void USH_CMontagesComponent::PlayAnimMontage(EStateType InState)

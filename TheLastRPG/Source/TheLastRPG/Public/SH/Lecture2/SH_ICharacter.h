@@ -17,4 +17,7 @@ class THELASTRPG_API ISH_ICharacter
 
 public:
 	virtual void ChangeColor(FLinearColor InColor) = 0;
+
+	virtual void Begin_Dead() {}
+	virtual void End_Dead() {}
 };

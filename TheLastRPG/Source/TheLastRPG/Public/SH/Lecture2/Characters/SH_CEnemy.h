@@ -22,8 +22,9 @@ protected: // Scene Component
 		class UWidgetComponent* HealthWidget;
 
 protected: // Actor Component
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
 		class USH_CActionComponent* Action;
+private:
 	UPROPERTY(VisibleDefaultsOnly)
 		class USH_CMontagesComponent* Montages;
 	UPROPERTY(VisibleDefaultsOnly)
@@ -52,6 +53,11 @@ private:
 
 private:
 	void Hitted();
+	void Dead();
+
+public:
+	virtual void Begin_Dead() override;
+	virtual void End_Dead() override;
 
 private:
 	class UMaterialInstanceDynamic* BodyMaterial;

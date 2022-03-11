@@ -38,9 +38,9 @@ AJG_Rifle::AJG_Rifle()
 	JG_Helpers::GetAsset<UAnimMontage>(&GrabMontage, "AnimMontage'/Game/JongGyun/Character/Animation/Montage/Rifle_Grab_Montage.Rifle_Grab_Montage'");
 	JG_Helpers::GetAsset<UAnimMontage>(&UngrabMontage, "AnimMontage'/Game/JongGyun/Character/Animation/Montage/Rifle_Ungrab_Montage.Rifle_Ungrab_Montage'");
 	JG_Helpers::GetAsset<UAnimMontage>(&FireMontage, "AnimMontage'/Game/JongGyun/Character/Animation/Montage/Rifle_Fire_Montage.Rifle_Fire_Montage'");
-	JG_Helpers::GetAsset<UParticleSystem>(&FlashParticle, "ParticleSystem'/Game/JongGyun/etc/Particles_Rifle/Particles/VFX_Muzzleflash.VFX_Muzzleflash'");
-	JG_Helpers::GetAsset<UParticleSystem>(&EjectParticle, "ParticleSystem'/Game/JongGyun/etc/Particles_Rifle/Particles/VFX_Eject_bullet.VFX_Eject_bullet'");
-	JG_Helpers::GetAsset<UParticleSystem>(&ImpactParticle, "ParticleSystem'/Game/JongGyun/etc/Particles_Rifle/Particles/VFX_Impact_Default.VFX_Impact_Default'");
+	JG_Helpers::GetAsset<UParticleSystem>(&FlashParticle, "ParticleSystem'/Game/Lectures/Particles_Rifle/Particles/VFX_Muzzleflash.VFX_Muzzleflash'");
+	JG_Helpers::GetAsset<UParticleSystem>(&EjectParticle, "ParticleSystem'/Game/Lectures/Particles_Rifle/Particles/VFX_Eject_bullet.VFX_Eject_bullet'");
+	JG_Helpers::GetAsset<UParticleSystem>(&ImpactParticle, "ParticleSystem'/Game/Lectures/Particles_Rifle/Particles/VFX_Impact_Default.VFX_Impact_Default'");
 	JG_Helpers::GetAsset<USoundCue>(&FireSoundCue, "SoundCue'/Game/JongGyun/etc/Sound/S_RifleShoot_Cue.S_RifleShoot_Cue'");
 	JG_Helpers::GetClass<AJG_Bullet>(&BulletClass, "Blueprint'/Game/JongGyun/Actor/BP_JG_Bullet.BP_JG_Bullet_C'");
 	JG_Helpers::GetAsset<UMaterialInstanceConstant>(&DecalMaterial, "MaterialInstanceConstant'/Game/JongGyun/etc/129/Texture/M_Hole_Inst.M_Hole_Inst'");

@@ -22,6 +22,9 @@ public:
 	virtual void Begin_DoAction() {}
 	virtual void End_DoActin() {}
 
+	virtual void OnAim() {}
+	virtual void OffAim() {}
+	
 protected:
 	virtual void BeginPlay() override;
 

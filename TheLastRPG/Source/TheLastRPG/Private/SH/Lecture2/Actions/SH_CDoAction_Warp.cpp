@@ -1,7 +1,9 @@
 #include "SH/Lecture2/Actions/SH_CDoAction_Warp.h"
 #include "SH/Lecture2/Actions/SH_CAttachment.h"
+#include "SH/Lecture2/Components/SH_CBehaviorComponent.h"
 #include "SH/Lecture2/Components/SH_CStateComponent.h"
 #include "SH/Lecture2/Components/SH_CStatusComponent.h"
+#include "SH/Lecture2/Characters/SH_CAIController.h"
 
 #include "SH/SH_Global.h"
 #include "GameFramework/Character.h"
@@ -24,16 +26,25 @@ void ASH_CDoAction_Warp::BeginPlay()
 void ASH_CDoAction_Warp::DoAction()
 {
 	CheckFalse(*bEquipped);
+	CheckFalse(State->IsIdleMode());
 
-	FRotator rotator;
-	CheckFalse(GetCursorLocationAndRotation(Location, rotator));
+	if (UseCursorLocation()) // Player
+	{
+		FRotator rotator;
+		CheckFalse(GetCursorLocationAndRotation(Location, rotator));
+	}
+	else // AI
+	{
+		ASH_CAIController* controller = OwnerCharacter->GetController<ASH_CAIController>();
+		USH_CBehaviorComponent* behavior = SH_CHelpers::GetComponent<USH_CBehaviorComponent>(controller);
+		
+		Location = behavior->GetWarpLocation();
+		Decal->SetVisibility(false);
+	}
+
 	State->SetActionMode();
 
-	Decal->SetWorldLocation(Location);
-	Decal->SetWorldRotation(rotator);
-
 	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
-
 	Datas[0].bCanMove ? Status->SetMove() : Status->SetStop();
 }
 
@@ -58,6 +69,12 @@ void ASH_CDoAction_Warp::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	CheckFalse(*bEquipped);
 
+	if (UseCursorLocation() == false)
+	{
+		Decal->SetVisibility(false);
+		return;
+	}
+
 	FVector location;
 	FRotator rotator;
 	if (GetCursorLocationAndRotation(location, rotator))
@@ -65,11 +82,15 @@ void ASH_CDoAction_Warp::Tick(float DeltaTime)
 		Decal->SetVisibility(true);
 		Decal->SetWorldLocation(location);
 		Decal->SetWorldRotation(rotator);
-
 		return;
 	}
+	else
+		Decal->SetVisibility(false);
+}
 
-	Decal->SetVisibility(false);
+bool ASH_CDoAction_Warp::UseCursorLocation()
+{
+	return OwnerCharacter->GetController<ASH_CAIController>() == NULL;
 }
 
 bool ASH_CDoAction_Warp::GetCursorLocationAndRotation(FVector& OutLocation, FRotator& OutRotator)

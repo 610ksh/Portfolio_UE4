@@ -4,7 +4,6 @@
 #include "JG/130_/Characters/JG_CPlayer.h"
 #include "JG/JG_Global.h"
 
-#include "JG/130_/Weapons/JG_CSword.h"
 
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -12,10 +11,12 @@
 #include "Animation/AnimInstance.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/InputComponent.h"
+
 #include "JG/130_/Components/JG_COptionComponent.h"
 #include "JG/130_/Components/JG_CStatusComponent.h"
 #include "JG/130_/Components/JG_CStateComponent.h"
 #include "JG/130_/Components/JG_CMontagesComponent.h"
+#include "JG/130_/Components/JG_CActionComponent.h"
 
 // Sets default values
 AJG_CPlayer::AJG_CPlayer()
@@ -48,7 +49,7 @@ AJG_CPlayer::AJG_CPlayer()
 
 	SpringArm->SetRelativeLocation(FVector(0, 0, 140));
 	SpringArm->SetRelativeRotation(FRotator(0, 90, 0));
-	SpringArm->TargetArmLength = 200.0f;
+	SpringArm->TargetArmLength = 300.0f;
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->bUsePawnControlRotation = true;
 	SpringArm->bEnableCameraLag = true;
@@ -65,7 +66,7 @@ void AJG_CPlayer::BeginPlay()
 	Super::BeginPlay();
 	
 	// 칼 생성 - 맵에 등장만하고 캐릭터한테 붙이진 않음
-	Sword = AJG_CSword::Spawn(GetWorld(), this);
+//	Sword = AJG_CSword::Spawn(GetWorld(), this);
 
 
 
@@ -91,7 +92,7 @@ void AJG_CPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 
 	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &AJG_CPlayer::OnAvoid);
-	//PlayerInputComponent->BindAction("Sword", EInputEvent::IE_Pressed, this, &AJG_CPlayer::OnSword);
+	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &AJG_CPlayer::OnOneHand);
 
 }
 
@@ -159,12 +160,18 @@ void AJG_CPlayer::Begin_Roll()
 	FVector start = GetActorLocation();
 	FVector from = start + GetVelocity().GetSafeNormal2D(); 
 	SetActorRotation(UKismetMathLibrary::FindLookAtRotation(start, from)); 
-
+	 
 	Montages->PlayRoll();
 }
 
 void AJG_CPlayer::End_Roll()
 {
+	//if (Action->IsUnarmedMode() == false)
+	//{
+	//	bUseControllerRotationYaw = true;
+	//	GetCharacterMovement()->bOrientRotationToMovement = false;
+	//}
+
 	State->SetIdleMode();
 }
 
@@ -178,5 +185,19 @@ void AJG_CPlayer::Begin_Backstep()
 
 void AJG_CPlayer::End_Backstep()
 {
+	//if (Action->IsUnarmedMode()) 
+	//{
+	//	bUseControllerRotationYaw = false;
+	//	GetCharacterMovement()->bOrientRotationToMovement = true;
+	//}
+
 	State->SetIdleMode();
+}
+
+
+void AJG_CPlayer::OnOneHand()
+{
+	CheckFalse(State->IsIdleMode());
+
+	//Action->SetOneHandMode();
 }
