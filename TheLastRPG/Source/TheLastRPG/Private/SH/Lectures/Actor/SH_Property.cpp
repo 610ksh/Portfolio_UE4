@@ -13,7 +13,6 @@ ASH_Property::ASH_Property()
 void ASH_Property::BeginPlay()
 {
 	Super::BeginPlay();
-	
 	//FString str; // F는 구조체. String은 예외로 F가 붙음.
 	//str.Append("A : ");
 	//str.Append(FString::FromInt(A));
