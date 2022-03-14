@@ -26,7 +26,7 @@ ASH_Player::ASH_Player()
 	SH_CHelpers::CreateComponent<USpringArmComponent>(this, &SpringArm, "SpringArm", GetCapsuleComponent());
 	SH_CHelpers::CreateComponent<UCameraComponent>(this, &Camera, "Camera", SpringArm);
 
-	bUseControllerRotationYaw = false; // 
+	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true; // 이동하는 방향으로 회전가능
 	GetCharacterMovement()->MaxWalkSpeed = 500.0f;
 
@@ -138,7 +138,7 @@ void ASH_Player::OnMoveForward(float Axis)
 {
 	FRotator rotator = FRotator(0, GetControlRotation().Yaw, 0);
 	FVector direction = FQuat(rotator).GetForwardVector().GetSafeNormal2D();
-
+	
 	AddMovementInput(direction, Axis);
 }
 
@@ -152,13 +152,13 @@ void ASH_Player::OnMoveRight(float Axis)
 
 void ASH_Player::OnHorizontalLook(float Axis)
 {
-	// 좌우
+	// 좌우 카메라 회전
 	AddControllerYawInput(Axis);
 }
 
 void ASH_Player::OnVerticalLook(float Axis)
 {
-	// 위아래
+	// 위아래 카메라 회전
 	AddControllerPitchInput(Axis);
 }
 

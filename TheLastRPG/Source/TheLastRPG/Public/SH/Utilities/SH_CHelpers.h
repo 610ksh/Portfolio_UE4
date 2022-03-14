@@ -39,13 +39,13 @@ public:
 	{
 		*InComponent = InActor->CreateDefaultSubobject<T>(InName);
 
-		if (!!InParent) // 있다면
+		if (!!InParent) // 부모 지정이 있다면
 		{
 			(*InComponent)->SetupAttachment(InParent);
 			return;
 		}
 
-		InActor->SetRootComponent(*InComponent);
+		InActor->SetRootComponent(*InComponent); // 루트 컴포넌트에 추가
 	}
 
 	template<typename T>

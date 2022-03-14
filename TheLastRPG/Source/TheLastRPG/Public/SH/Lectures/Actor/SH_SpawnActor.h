@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -26,6 +24,7 @@ protected:
 private:
 	UFUNCTION()
 		void ChangeColor();
+
 private:
 	class UMaterialInstanceDynamic* Material;
 

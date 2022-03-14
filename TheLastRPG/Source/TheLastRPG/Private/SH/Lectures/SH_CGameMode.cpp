@@ -4,7 +4,7 @@
 
 ASH_CGameMode::ASH_CGameMode()
 {
-	DefaultPawnClass = APlayerCharacter::StaticClass();
+	//DefaultPawnClass = APlayerCharacter::StaticClass();
 	
 	/*ConstructorHelpers::FClassFinder<APawn> pawn(L"Blueprint'/Game/SungHoon/Blueprints/BP_SH_Player.BP_SH_Player_C'");
 	if (pawn.Succeeded())

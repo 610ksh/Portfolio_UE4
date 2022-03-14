@@ -19,7 +19,7 @@ public class TheLastRPG : ModuleRules
         });
 
         // Include °æ·Î
-        PrivateIncludePaths.Add(ModuleDirectory);
+        //PrivateIncludePaths.Add(ModuleDirectory);
         PublicIncludePaths.Add(ModuleDirectory);
     }
 }
