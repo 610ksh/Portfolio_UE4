@@ -32,6 +32,7 @@ void ASH_MulticastTrigger::ActorBeginOverlap(AActor * OverlappedActor, AActor * 
 {
 	if (OnMultiLightBeginOverlap.IsBound())
 	{
+		// 0, 1, 2 ÃÑ 3°³ÀÇ int32Çü °ªÀ» ¹ñ¾îÁØ´Ù.
 		int32 index = UKismetMathLibrary::RandomIntegerInRange(0, 2);
 
 		FLinearColor color;
@@ -46,5 +47,6 @@ void ASH_MulticastTrigger::ActorBeginOverlap(AActor * OverlappedActor, AActor * 
 
 void ASH_MulticastTrigger::ActorEndOverlap(AActor * OverlappedActor, AActor * OtherActor)
 {
-	
+	if (OnMultiLightEndOverlap.IsBound())
+		OnMultiLightEndOverlap.Broadcast();
 }

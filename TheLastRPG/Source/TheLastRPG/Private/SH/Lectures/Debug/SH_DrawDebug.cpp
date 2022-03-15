@@ -22,8 +22,8 @@ void ASH_DrawDebug::BeginPlay()
 {
 	Super::BeginPlay();
 
-	for (int32 i = 0; i < 5; ++i)
-		Location[i] = InitLocation[i] + GetActorLocation();
+	/*for (int32 i = 0; i < 5; ++i)
+		Location[i] = InitLocation[i] + GetActorLocation();*/
 
 	//DrawDebugBox(GetWorld(), Location[0] + Box.GetCenter(), Box.GetExtent(), FColor::Red, true);
 }
@@ -36,10 +36,12 @@ void ASH_DrawDebug::Tick(float DeltaTime)
 	for (int32 i = 0; i < 5; ++i)
 		Location[i] = InitLocation[i] + GetActorLocation();
 
+	DrawDebugBox(GetWorld(), Location[0] + Location[0].UpVector * 200, Box.GetExtent(), FColor::Cyan, true);
+
 	DrawDebugSolidBox(GetWorld(), Location[0] + Box.GetCenter(), Box.GetExtent(), FColor::Red);
 	DrawDebugPoint(GetWorld(), Location[1], 100, FColor::Yellow);
-	DrawDebugSphere(GetWorld(), Location[2], 100, 50, FColor::Green);
-	DrawDebugCircle(GetWorld(), Location[3], 100, 80, FColor::Blue);
+	DrawDebugSphere(GetWorld(), Location[2], 100, 30, FColor::Green);
+	DrawDebugCircle(GetWorld(), Location[3], 100, 50, FColor::Blue);
 
 	DrawDebugLine(GetWorld(), Location[2], Location[3], FColor::Magenta, false, -1, 0, 2); // 0Àº ¾Ï±â
 

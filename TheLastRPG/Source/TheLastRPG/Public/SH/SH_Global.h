@@ -7,5 +7,5 @@
 #include "Kismet/KismetSystemLibrary.h" // Timer
 
 #include "Utilities/SH_CHelpers.h"
-#include "Utilities/SH_CLog.h"
-#include "Utilities/SH_Defines.h"
+#include "Utilities/SH_CLog.h" // LOG
+#include "Utilities/SH_Defines.h" // CHECK

@@ -29,7 +29,7 @@ void ASH_EventTrigger::BeginPlay()
 
 void ASH_EventTrigger::ActorBeginOverlap(AActor * OverlappedActor, AActor * OtherActor)
 {
-	if(OnEventTrigger.IsBound())
+	if (OnEventTrigger.IsBound())
 	{
 		int32 index = UKismetMathLibrary::RandomIntegerInRange(0, 2);
 

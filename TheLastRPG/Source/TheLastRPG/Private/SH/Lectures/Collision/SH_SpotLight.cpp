@@ -16,7 +16,6 @@ ASH_SpotLight::ASH_SpotLight()
 	Text->HorizontalAlignment = EHorizTextAligment::EHTA_Center;
 	Text->Text = FText::FromString(GetName());
 
-	
 	for (int32 i = 0; i < 3; ++i)
 	{
 		FString str;
@@ -29,7 +28,6 @@ ASH_SpotLight::ASH_SpotLight()
 		SpotLights[i]->SetRelativeRotation(FRotator(-90,0,0)); // 위에서 아래로
 		SpotLights[i]->Intensity = 1e+5f;
 		SpotLights[i]->OuterConeAngle = 25.0f;
-
 	}
 }
 

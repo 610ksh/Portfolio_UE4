@@ -20,7 +20,6 @@ ASH_Trigger::ASH_Trigger()
 	Text->Text = FText::FromString(GetName()); // 객체의 이름, String을 Text로 변환해줌.
 }
 
-// Called when the game starts or when spawned
 void ASH_Trigger::BeginPlay()
 {
 	Super::BeginPlay();
@@ -34,16 +33,16 @@ void ASH_Trigger::ActorBeginOverlap(AActor * OverlappedActor, AActor * OtherActo
 	if (OnBoxLightBeginOverlap.IsBound()) // 어떤 연결된 함수가 있느냐
 		OnBoxLightBeginOverlap.Execute(); // 실행하라.
 
-	if (OnBoxLightRandomBeginOverlap.IsBound())
-	{
-		FLinearColor color;
+	if (OnBoxLightRandomBeginOverlap.IsBound()) 
+	{ // 만약 OnBoxLightRandomBeginOverlap에 연결된게 있다면
+		FLinearColor color; 
 		color.R = UKismetMathLibrary::RandomFloatInRange(0, 1);
 		color.G = UKismetMathLibrary::RandomFloatInRange(0, 1);
 		color.B = UKismetMathLibrary::RandomFloatInRange(0, 1);
-		color.A = 1.0f;
+		color.A = 1.0f; // 랜덤 색상 하나 뽑아냄
 
 		FString str = OnBoxLightRandomBeginOverlap.Execute(color);
-		SH_CLog::Log(str);
+		SH_CLog::Log(str); // 받아낸 FString을 Log에 찍어보자.
 	}
 }
 

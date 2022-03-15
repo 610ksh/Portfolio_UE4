@@ -16,16 +16,15 @@ ASH_Particles::ASH_Particles()
 	Text->HorizontalAlignment = EHorizTextAligment::EHTA_Center;
 	Text->Text = FText::FromString(GetName());
 
-	SH_CHelpers::GetAsset<UParticleSystem>(&Particles[0],"ParticleSystem'/Game/ParagonCountess/FX/Particles/Abilities/RollingDark/FX/p_RollingDark_SegmentFX.p_RollingDark_SegmentFX'");
-	SH_CHelpers::GetAsset<UParticleSystem>(&Particles[1], "ParticleSystem'/Game/ParagonCountess/FX/Particles/Abilities/RollingDark/FX/p_RollingDark_ImpactFX.p_RollingDark_ImpactFX'");
-	SH_CHelpers::GetAsset<UParticleSystem>(&Particles[2], "ParticleSystem'/Game/ParagonCountess/FX/Particles/Abilities/Primary/FX/p_CountessImpact.p_CountessImpact'");
-
+	SH_CHelpers::GetAsset<UParticleSystem>(&Particles[0], "ParticleSystem'/Game/Lectures/Effects/P_AOE_Ice_CircleAttack.P_AOE_Ice_CircleAttack'");
+	SH_CHelpers::GetAsset<UParticleSystem>(&Particles[1], "ParticleSystem'/Game/Lectures/Effects/P_Cube_Mesh_Test.P_Cube_Mesh_Test'");
+	SH_CHelpers::GetAsset<UParticleSystem>(&Particles[2], "ParticleSystem'/Game/Lectures/Effects/P_Explosion2.P_Explosion2'");
 }
 
 void ASH_Particles::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	TArray<ASH_EventTrigger*> triggers;
 	SH_CHelpers::FindActors<ASH_EventTrigger>(GetWorld(), triggers);
 	triggers[0]->OnEventTrigger.AddUFunction(this, "PlayParticle"); //BindUFunction¿Ã æ∆¥‘
@@ -38,7 +37,7 @@ void ASH_Particles::BeginPlay()
 void ASH_Particles::PlayParticle(int32 InIndex)
 {
 	FTransform transform;
-	transform.SetLocation(GetActorLocation());
+	transform.SetLocation(GetActorLocation()); 
 
 	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Particles[InIndex], transform);
 }

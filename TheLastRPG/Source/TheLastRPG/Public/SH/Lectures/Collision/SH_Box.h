@@ -8,7 +8,7 @@ UCLASS()
 class THELASTRPG_API ASH_Box : public AActor
 {
 	GENERATED_BODY()
-	
+
 private:
 	UPROPERTY(VisibleDefaultsOnly)
 		class USceneComponent* Scene;
@@ -19,7 +19,7 @@ private:
 	UPROPERTY(VisibleDefaultsOnly)
 		class UStaticMeshComponent* Mesh[3];
 
-public:	
+public:
 	ASH_Box();
 
 protected:
@@ -27,10 +27,11 @@ protected:
 
 private:
 	UFUNCTION()
-	void OnPhysics(int32 InIndex, FLinearColor InColor);
+		void OnPhysics(int32 InIndex, FLinearColor InColor);
+	UFUNCTION()
+		void OffPhysics();
 
 private:
 	UMaterialInstanceDynamic* Materials[3];
 	FVector WorldLocation[3];
-	
 };

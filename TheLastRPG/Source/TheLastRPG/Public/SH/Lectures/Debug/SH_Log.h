@@ -6,21 +6,23 @@
 #include "GameFramework/Actor.h"
 #include "SH_Log.generated.h"
 
+/*
+	Test를 위한 Log클래스임.
+	CLog 클래스에 있는 Log기능을 활용함.
+*/
+
 UCLASS()
 class THELASTRPG_API ASH_Log : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ASH_Log();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 private:

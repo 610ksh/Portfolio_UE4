@@ -34,7 +34,7 @@ public:
 		*OutClass = asset.Class;
 	}
 
-	template<typename T> // 어느 액터, 부착할 컴포넌트 종류, 변수명, 씬 컴포넌트
+	template<typename T> // 어느 액터에 붙일지(this), 부착할 컴포넌트 종류, 변수명, 씬 컴포넌트
 	static void CreateComponent(AActor* InActor, T** InComponent, FName InName, USceneComponent* InParent = NULL)
 	{
 		*InComponent = InActor->CreateDefaultSubobject<T>(InName);
@@ -63,7 +63,7 @@ public:
 	template<typename T>
 	static void FindActors(class UWorld* InWorld, TArray<T*>& OutActors)
 	{
-		OutActors.Empty();
+		OutActors.Empty(); // 비워주기 clear
 
 		TArray<AActor*> actors;
 		// T유형을 모두다 찾아와서 Actor 타입으로 actor에 기록함.

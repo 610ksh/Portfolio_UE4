@@ -9,7 +9,7 @@ ASH_ActorBeginOverlap::ASH_ActorBeginOverlap()
 	SH_CHelpers::CreateComponent<UBoxComponent>(this, &Box, "Box", Scene);
 	SH_CHelpers::CreateComponent<UTextRenderComponent>(this, &Text, "Text", Scene);
 
-	Box->SetRelativeScale3D(FVector(3)); // x,y,z에 3배씩 들어감
+	Box->SetRelativeScale3D(FVector(3)); // Scale 값 x,y,z에 3씩 들어감.
 	Box->bHiddenInGame = false; // 지역변수를 사용하는게 더 좋음. Set이 있어도
 
 	Text->SetRelativeLocation(FVector(0, 0, 100));
@@ -24,7 +24,7 @@ void ASH_ActorBeginOverlap::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//다이나믹 델리게이트 : (어느객체에 있는 함수를 호출할지, 함수의 주소), parameter 반드시 일치해야한다.
+	// 다이나믹 델리게이트 : (어느객체에 있는 함수를 호출할지, 함수의 주소), parameter 반드시 일치해야한다.
 	// Dynamic은 이름까지도 일치해야한다. 그게 아닐때는 파라미터만 일치하면 됨.
 	OnActorBeginOverlap.AddDynamic(this, &ASH_ActorBeginOverlap::ActorBeginOverlap);
 	OnActorEndOverlap.AddDynamic(this, &ASH_ActorBeginOverlap::ActorEndOverlap);

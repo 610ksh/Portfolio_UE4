@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -11,10 +9,8 @@ class THELASTRPG_API ASH_EventTrigger : public AActor
 {
 	GENERATED_BODY()
 
-
-public:
+public: // 이벤트는 델리게이트와 다르게 클래스 내부에서 선언한다!
 	DECLARE_EVENT_OneParam(ASH_EventTrigger, FEventTrigger, int32);
-
 	
 private:
 	UPROPERTY(VisibleDefaultsOnly)

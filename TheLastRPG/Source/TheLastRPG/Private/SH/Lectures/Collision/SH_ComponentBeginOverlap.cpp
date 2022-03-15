@@ -36,10 +36,10 @@ void ASH_ComponentBeginOverlap::BeginPlay()
 
 void ASH_ComponentBeginOverlap::ComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	PointLight->SetVisibility(true); // Ã³À½¿£ ÄÔ
+	PointLight->SetVisibility(true); // µé¾î¿À¸é ÄÑ°í
 }
 
 void ASH_ComponentBeginOverlap::ComponentEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	PointLight->SetVisibility(false); // Ã³À½¿£ ²û
+	PointLight->SetVisibility(false); // ³ª°¥¶© ²û
 }

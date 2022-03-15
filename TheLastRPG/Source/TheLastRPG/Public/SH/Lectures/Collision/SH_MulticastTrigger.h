@@ -5,6 +5,7 @@
 #include "SH_MulticastTrigger.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_TwoParams(FMultiLightBeginOverlap, int32, FLinearColor);
+DECLARE_MULTICAST_DELEGATE(FMultiLightEndOverlap);
 
 UCLASS()
 class THELASTRPG_API ASH_MulticastTrigger : public AActor
@@ -35,4 +36,5 @@ private:
 
 public:
 	FMultiLightBeginOverlap OnMultiLightBeginOverlap;
+	FMultiLightEndOverlap OnMultiLightEndOverlap;
 };

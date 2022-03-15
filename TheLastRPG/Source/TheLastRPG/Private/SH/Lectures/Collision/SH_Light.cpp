@@ -18,15 +18,16 @@ ASH_Light::ASH_Light()
 	Text->HorizontalAlignment = EHorizTextAligment::EHTA_Center;
 	Text->Text = FText::FromString(GetName()); // 객체의 이름, String을 Text로 변환해줌.
 
-	Light->Intensity = 1e+4f; // e : 지수 -> 10^4 표기법임. 10,000
+	Light->SetRelativeLocation(FVector(0, -100, 0)); // 왼쪽으로 -100
 	//1e-6f = 10^-6 = 0.000001 : 5개의 0 1개는 1
+	Light->Intensity = 1e+4f; // e : 지수 -> 10^4 표기법임. 10,000
 	Light->AttenuationRadius = 200; // 반경
 	Light->LightColor = FColor(255, 128, 50); // (255,255,255) char
 
-	Light2->SetRelativeLocation(FVector(0, 200, 0)); // 오른쪽으로 200만큼
+	Light2->SetRelativeLocation(FVector(0, 100, 0)); // 오른쪽으로 100만큼
 	Light2->Intensity = 1e+4f;
 	Light2->AttenuationRadius = 200;
-	Light2->LightColor = FColor(255, 128, 50);
+	Light2->LightColor = FColor(0, 255, 255);
 }
 
 void ASH_Light::BeginPlay()
@@ -60,8 +61,9 @@ void ASH_Light::OffLight()
 
 FString ASH_Light::OnRandomLight(FLinearColor InColor)
 {
-	Light2->SetVisibility(true);
-	Light2->SetLightColor(InColor);
+	Light2->SetLightColor(InColor); // 색깔 지정
+	Light2->SetVisibility(true); // 켜준다
 
-	return InColor.ToString();
+	// float 255
+	return InColor.ToString(); // 현재 색상의 번호를 넘겨준다.
 }

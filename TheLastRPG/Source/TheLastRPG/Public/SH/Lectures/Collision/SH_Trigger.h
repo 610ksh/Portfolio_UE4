@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -8,6 +6,7 @@
 
 DECLARE_DELEGATE(FBoxLightBeginOverlap); // void __(void) : 델리게이트 자료형 선언
 DECLARE_DELEGATE(FBoxLightEndOverlap);
+// 싱글캐스트, Return 타입 있고, 1개의 파라미터 사용. (반환형 타입, 원하는 델리게이트 타입 이름지정, 매개변수 타입)
 DECLARE_DELEGATE_RetVal_OneParam(FString, FBoxLightRandomBeginOverlap, FLinearColor);
 
 UCLASS()
@@ -26,11 +25,9 @@ private:
 		class UTextRenderComponent* Text;
 
 public:	
-	// Sets default values for this actor's properties
 	ASH_Trigger();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	
 private:
