@@ -35,20 +35,16 @@ public:
 	FORCEINLINE class ASH_CRifle* GetRifle() override { return Rifle; } // about interface
 
 public:
-	// Sets default values for this character's properties
 	ASH_Player();
 
 	void GetLocationAndDirection(FVector& OutStart, FVector& OutEnd, FVector& OutDirection) override; // about interface
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void OnFocus() override; // about interface

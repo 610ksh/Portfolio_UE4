@@ -14,19 +14,19 @@ class THELASTRPG_API USH_CAnimInstance : public UAnimInstance
 
 protected:
 	// EditAnywhere는 액터에 붙는거 아니라면, 에디터에서 보이려면 해야함
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation") // BP에서 읽기 전용
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 		float Speed;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation") // BP에서 읽기 전용
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 		float Direction;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation") // BP에서 읽기 전용
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 		float Pitch;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation") // BP에서 읽기 전용
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 		bool bEquipped;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation") // BP에서 읽기 전용
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 		bool bAiming;
 
 public:

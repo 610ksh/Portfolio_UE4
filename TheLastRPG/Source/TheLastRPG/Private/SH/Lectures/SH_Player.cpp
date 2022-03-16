@@ -198,8 +198,8 @@ void ASH_Player::OnAim()
 
 	SpringArm->TargetArmLength = 100; // 길이 당김
 	SpringArm->SocketOffset = FVector(0, 30, 10); // 소켓 위치 변경
-	Camera->FieldOfView = 40; // 시야 좁힘
-
+	
+	//Camera->FieldOfView = 40; // 시야 좁힘. Curve가 해줄거임
 	OnZoomIn(); // BP에서 이벤트 노드로 재정의함
 	Rifle->Begin_Aiming();
 	CrossHair->SetVisibility(ESlateVisibility::Visible);
@@ -217,7 +217,7 @@ void ASH_Player::OffAim()
 	SpringArm->TargetArmLength = 200;
 	SpringArm->SocketOffset = FVector(0, 60, 0);
 
-	//Camera->FieldOfView = 90; // 원상 복구
+	//Camera->FieldOfView = 90; // 원상 복구. Curve가 해줄거임
 	OnZoomOut(); // BP에서 이벤트 노드로 재정의함
 	Rifle->End_Aiming();
 	CrossHair->SetVisibility(ESlateVisibility::Hidden);
