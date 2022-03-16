@@ -17,13 +17,11 @@ private:
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
 		FName HandSocket = "Hand_Rifle";
-
 	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
 		FName HolsterSocket = "Holster_Rifle";
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
 		class UAnimMontage* GrabMontage;
-
 	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
 		class UAnimMontage* UngrabMontage;
 
@@ -59,13 +57,16 @@ public:
 	void Equip();
 	void Begin_Equip();
 	void End_Equip();
+
 	/// Unequip
 	void Unequip();
 	void Begin_Unequip();
 	void End_Unequip();
+
 	/// Aiming
 	void Begin_Aiming();
 	void End_Aiming();
+
 	/// Fire
 	void Begin_Fire();
 	void Firing();

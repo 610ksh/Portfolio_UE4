@@ -13,8 +13,6 @@ class USH_IRifle : public UInterface
 	GENERATED_BODY()
 };
 
-
-
 /*
 	1. Player가 상속함
 */

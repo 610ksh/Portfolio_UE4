@@ -27,19 +27,17 @@ protected:
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent) // 재정의 가능한 이벤트, 함수
-		void ChangeColorRed();
+		void ChangeColorRed(); // 몸체가 없어도 에러x
 
-	UFUNCTION(BlueprintNativeEvent) // 몸체가 있어야함.
-		void ChangeColorWhite();
+	UFUNCTION(BlueprintNativeEvent) 
+		void ChangeColorWhite(); // 최소한의 몸체가 반드시 있어야함. _Implementaion이라도
 
-	void ChangeColorWhite_Implementation(); // C++에서는 _Implementaion을 적어주기. 붙여주기. 위의것도 똑같음.
+	// C++에서는 _Implementaion을 적어주기. 붙여주기. 위의것도 똑같음.
+	void ChangeColorWhite_Implementation();
 
 private:
 	UFUNCTION()
 		void ActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
-
-private:
 	UFUNCTION()
 		void ActorEndOverlap(AActor* OverlappedActor, AActor* OtherActor);
-
 };

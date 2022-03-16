@@ -15,12 +15,11 @@ ASH_Explosion::ASH_Explosion()
 void ASH_Explosion::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void ASH_Explosion::ActorBeginOverlap(AActor * OverlappedActor, AActor * OtherActor)
 {
-	Particle->ResetParticles(); // 리셋해줘야함. 기존에 하던거 초기화됨
+	Particle->ResetParticles(); // 리셋해줘야함. 기존에 하던거 초기화됨.
 	Particle->SetActive(true); // 들어왔을때 실행
 	 
 	FVector start = GetActorLocation();
@@ -33,7 +32,6 @@ void ASH_Explosion::ActorBeginOverlap(AActor * OverlappedActor, AActor * OtherAc
 	ignoreActors.Add(this);
 
 	TArray<FHitResult> hitResults;
-
 	if (UKismetSystemLibrary::SphereTraceMultiForObjects(GetWorld(), start, end, 200, queries, false, ignoreActors, EDrawDebugTrace::ForOneFrame, hitResults, true))
 	{
 		for (const FHitResult& hitResult : hitResults)

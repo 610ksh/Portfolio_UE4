@@ -185,7 +185,7 @@ void ASH_Player::OnRifle()
 		return;
 	}
 	Rifle->Equip();
-	SH_CLog::Log(FString("Equip!"));
+	SH_CLog::Log(FString(L"Equip!"));
 }
 
 void ASH_Player::OnAim()
@@ -198,8 +198,8 @@ void ASH_Player::OnAim()
 
 	SpringArm->TargetArmLength = 100; // 길이 당김
 	SpringArm->SocketOffset = FVector(0, 30, 10); // 소켓 위치 변경
+	Camera->FieldOfView = 40; // 시야 좁힘
 
-	//Camera->FieldOfView = 40; // 시야 좁힘
 	OnZoomIn(); // BP에서 이벤트 노드로 재정의함
 	Rifle->Begin_Aiming();
 	CrossHair->SetVisibility(ESlateVisibility::Visible);

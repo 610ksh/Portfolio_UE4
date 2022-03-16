@@ -26,6 +26,4 @@ ASH_Cylinder::ASH_Cylinder()
 void ASH_Cylinder::BeginPlay()
 {
 	Super::BeginPlay();
-
-
 }

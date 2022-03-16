@@ -42,5 +42,5 @@ void ASH_Override::ActorEndOverlap(AActor* OverlappedActor, AActor* OtherActor)
 void ASH_Override::ChangeColorWhite_Implementation()
 {
 	ASH_Player* player = Cast<ASH_Player>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	player->ChangeColor(FLinearColor(0, 0, 1)); // blue
+	player->ChangeColor(FLinearColor(0, 0.9, 1)); // blue
 }

@@ -10,7 +10,7 @@ class THELASTRPG_API USH_CAnimNotifyState_Equip : public UAnimNotifyState
 	GENERATED_BODY()
 	
 public:
-	FString GetNotifyName_Implementation() const;
+	FString GetNotifyName_Implementation() const override;
 
 	virtual void NotifyBegin(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation, float TotalDuration);
 	virtual void NotifyEnd(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation);
