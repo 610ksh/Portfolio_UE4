@@ -15,11 +15,11 @@ FString UJG_CAnimNotify_EndRoll::GetNotifyName_Implementation() const
 void UJG_CAnimNotify_EndRoll::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
 	Super::Notify(MeshComp, Animation);
-	CheckNull(MeshComp);
-	CheckNull(MeshComp->GetOwner()); 
+	JG_CheckNull(MeshComp);
+	JG_CheckNull(MeshComp->GetOwner()); 
 
 	AJG_CPlayer* player = Cast< AJG_CPlayer>(MeshComp->GetOwner());
-	CheckNull(player);
+	JG_CheckNull(player);
 
 	player->End_Roll();
 }

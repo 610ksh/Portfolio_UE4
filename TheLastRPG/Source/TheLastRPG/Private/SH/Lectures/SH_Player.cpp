@@ -190,8 +190,8 @@ void ASH_Player::OnRifle()
 
 void ASH_Player::OnAim()
 {
-	CheckFalse(Rifle->GetEquipped()); // 장착하지 않으면
-	CheckTrue(Rifle->GetEquipping()); // 쥐고 있는 도중이어도 pass
+	CheckFalse_SH(Rifle->GetEquipped()); // 장착하지 않으면
+	CheckTrue_SH(Rifle->GetEquipping()); // 쥐고 있는 도중이어도 pass
 
 	bUseControllerRotationYaw = true; // 조준모드가 시작되면, 카메라의 방향으로 됨.
 	GetCharacterMovement()->bOrientRotationToMovement = false; // 이동방향으로 회전하는거 막음
@@ -207,8 +207,8 @@ void ASH_Player::OnAim()
 
 void ASH_Player::OffAim()
 {
-	CheckFalse(Rifle->GetEquipped()); // 장착하지 않으면
-	CheckTrue(Rifle->GetEquipping()); // 쥐고 있는 도중이어도 pass
+	CheckFalse_SH(Rifle->GetEquipped()); // 장착하지 않으면
+	CheckTrue_SH(Rifle->GetEquipping()); // 쥐고 있는 도중이어도 pass
 
 	/// 전부 기본으로 돌림. 초기값 셋팅으로.
 	bUseControllerRotationYaw = false;

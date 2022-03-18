@@ -48,7 +48,7 @@ void AJG04_Light::BeginPlay()
 	TArray<AActor*> actors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AJG03_Trigger::StaticClass(), actors);
 
-	CheckFalse(actors.Num() > 0); 
+	JG_CheckFalse(actors.Num() > 0);
 
 	AJG03_Trigger* trigger = Cast<AJG03_Trigger>(actors[0]); 
 	trigger->OnBoxLightBeginOverlap.BindUFunction(this, "OnLight");

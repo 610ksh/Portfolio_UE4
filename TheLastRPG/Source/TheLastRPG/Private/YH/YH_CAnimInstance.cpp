@@ -16,7 +16,7 @@ void UYH_CAnimInstance::NativeBeginPlay()
 void UYH_CAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
-	CheckNull(OwnerCharacter);
+	YH_CheckNull(OwnerCharacter);
 	//게임프레임워크에 있다.
 	Speed = OwnerCharacter->GetVelocity().Size2D();
 	//벡터랭쓰이다.

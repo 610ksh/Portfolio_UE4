@@ -28,7 +28,7 @@ void UJG_CActionComponent::SetUnarmedMode()
 	{
 		
 		AJG_CEquipment* equipment = Datas[(int32)Type]->GetEquipment();
-		CheckNull(equipment);
+		JG_CheckNull(equipment);
 
 		equipment->Unequip(); 
 	}
@@ -58,13 +58,13 @@ void UJG_CActionComponent::SetMode(EActionType_JG InType)
 	{
 		
 		AJG_CEquipment* equipment = Datas[(int32)Type]->GetEquipment();
-		CheckNull(equipment);
+		JG_CheckNull(equipment);
 
 		equipment->Unequip();
 	}
 
 	AJG_CEquipment* equipment = Datas[(int32)InType]->GetEquipment();
-	CheckNull(equipment);
+	JG_CheckNull(equipment);
 
 	equipment->Equip(); 
 

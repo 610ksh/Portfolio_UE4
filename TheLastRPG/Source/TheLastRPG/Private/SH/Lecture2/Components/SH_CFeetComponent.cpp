@@ -57,7 +57,7 @@ void USH_CFeetComponent::Trace(FName InSocket, float & OutDistance, FRotator& Ou
 	FHitResult hitResult;
 	UKismetSystemLibrary::LineTraceSingle(GetWorld(), start, end, UEngineTypes::ConvertToTraceType(ECC_Visibility), true, IgnoreActors, DrawDebugType, hitResult, true, FLinearColor::Green, FLinearColor::Red);
 
-	CheckFalse(hitResult.IsValidBlockingHit()); // 충돌된게 없으면 리턴
+	CheckFalse_SH(hitResult.IsValidBlockingHit()); // 충돌된게 없으면 리턴
 
 	float length = (hitResult.ImpactPoint - hitResult.TraceEnd).Size();
 	// 땅 밑으로 내려가기 때문에 TraceDistance를 마이너스해줘야함.

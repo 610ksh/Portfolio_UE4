@@ -150,7 +150,7 @@ void ASH_CEnemy::Hitted()
 
 void ASH_CEnemy::Dead()
 {
-	CheckFalse(State->IsDeadMode());
+	CheckFalse_SH(State->IsDeadMode());
 	Montages->PlayDead();
 }
 

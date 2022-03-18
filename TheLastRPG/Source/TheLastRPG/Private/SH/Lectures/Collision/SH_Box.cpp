@@ -41,7 +41,7 @@ void ASH_Box::BeginPlay()
 
 	TArray<ASH_MulticastTrigger*> triggers;
 	SH_CHelpers::FindActors<ASH_MulticastTrigger>(GetWorld(), triggers);
-	CheckFalse(triggers.Num() > 0);
+	CheckFalse_SH(triggers.Num() > 0);
 	triggers[0]->OnMultiLightBeginOverlap.AddUFunction(this, "OnPhysics"); //BindUFunctionÀÌ ¾Æ´Ô
 	triggers[0]->OnMultiLightEndOverlap.AddUFunction(this, "OffPhysics");
 

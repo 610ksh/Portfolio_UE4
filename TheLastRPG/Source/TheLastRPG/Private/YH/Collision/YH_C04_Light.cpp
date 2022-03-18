@@ -43,7 +43,7 @@ void AYH_C04_Light::BeginPlay()
 
 	TArray<AActor*> actors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AYH_C03_Trigger::StaticClass(), actors);
-	CheckFalse(actors.Num() > 0);
+	YH_CheckFalse(actors.Num() > 0);
 
 	AYH_C03_Trigger* trigger = Cast<AYH_C03_Trigger>(actors[0]);
 	trigger->OnBoxLightBeginOverlap.BindUFunction(this, "OnLight");

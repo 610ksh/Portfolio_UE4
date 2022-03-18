@@ -190,8 +190,8 @@ void AJG_Player::OnRifle()
 
 void AJG_Player::OnAim()
 {
-	CheckFalse(Rifle->GetEquipped());
-	CheckTrue(Rifle->GetEquipping());
+	JG_CheckFalse(Rifle->GetEquipped());
+	JG_CheckTrue(Rifle->GetEquipping());
 
 	bUseControllerRotationYaw = true;
 	GetCharacterMovement()->bOrientRotationToMovement = false;
@@ -208,8 +208,8 @@ void AJG_Player::OnAim()
 
 void AJG_Player::OffAim()
 {
-	CheckFalse(Rifle->GetEquipped());
-	CheckTrue(Rifle->GetEquipping());
+	JG_CheckFalse(Rifle->GetEquipped());
+	JG_CheckTrue(Rifle->GetEquipping());
 
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;

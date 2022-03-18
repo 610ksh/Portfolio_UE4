@@ -19,7 +19,7 @@ bool USH_CPatrolComponent::GetMoveTo(FVector & OutLocation, float & OutAcceptanc
 {
 	OutLocation = FVector::ZeroVector;
 	OutAcceptanceRadius = AcceptanceRadius;
-	CheckNullResult(Path, false);
+	CheckNullResult_SH(Path, false);
 
 	OutLocation = Path->GetSpline()->GetLocationAtSplinePoint(Index, ESplineCoordinateSpace::World);
 
@@ -28,7 +28,7 @@ bool USH_CPatrolComponent::GetMoveTo(FVector & OutLocation, float & OutAcceptanc
 
 void USH_CPatrolComponent::UpdateNextIndex()
 {
-	CheckNull(Path);
+	CheckNull_SH(Path);
 
 	int32 count = Path->GetSpline()->GetNumberOfSplinePoints();
 

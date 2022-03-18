@@ -11,14 +11,14 @@ FString USH_CAnimNotify_Hitted::GetNotifyName_Implementation() const
 void USH_CAnimNotify_Hitted::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
 	Super::Notify(MeshComp, Animation);
-	CheckNull(MeshComp); // 메시 유무
-	CheckNull(MeshComp->GetOwner()); // 캐릭터 유무(Actor)
+	CheckNull_SH(MeshComp); // 메시 유무
+	CheckNull_SH(MeshComp->GetOwner()); // 캐릭터 유무(Actor)
 
 	ACharacter* character = Cast<ACharacter>(MeshComp->GetOwner());
-	CheckNull(character);
+	CheckNull_SH(character);
 
 	USH_CStateComponent* state = SH_CHelpers::GetComponent<USH_CStateComponent>(character);
-	CheckNull(state);
+	CheckNull_SH(state);
 
 	state->SetIdleMode();
 }

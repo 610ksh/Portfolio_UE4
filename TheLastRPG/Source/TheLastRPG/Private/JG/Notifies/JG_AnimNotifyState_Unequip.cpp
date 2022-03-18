@@ -14,10 +14,10 @@ FString UJG_AnimNotifyState_Unequip::GetNotifyName_Implementation() const
 void UJG_AnimNotifyState_Unequip::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration)
 {
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
-	CheckNull(MeshComp);
+	JG_CheckNull(MeshComp);
 
 	IJG_IRifle* rifle = Cast<IJG_IRifle>(MeshComp->GetOwner());
-	CheckNull(rifle);
+	JG_CheckNull(rifle);
 
 	rifle->GetRifle()->Begin_Unequip();
 }
@@ -25,10 +25,10 @@ void UJG_AnimNotifyState_Unequip::NotifyBegin(USkeletalMeshComponent* MeshComp, 
 void UJG_AnimNotifyState_Unequip::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
 	Super::NotifyEnd(MeshComp, Animation);
-	CheckNull(MeshComp);
+	JG_CheckNull(MeshComp);
 
 	IJG_IRifle* rifle = Cast<IJG_IRifle>(MeshComp->GetOwner());
-	CheckNull(rifle);
+	JG_CheckNull(rifle);
 
 	rifle->GetRifle()->End_Unequip();
 }

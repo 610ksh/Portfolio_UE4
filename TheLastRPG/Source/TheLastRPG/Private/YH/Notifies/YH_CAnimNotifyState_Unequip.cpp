@@ -14,10 +14,10 @@ FString UYH_CAnimNotifyState_Unequip::GetNotifyName_Implementation() const
 void UYH_CAnimNotifyState_Unequip::NotifyBegin(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation, float TotalDuration)
 {
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
-	CheckNull(MeshComp);
+	YH_CheckNull(MeshComp);
 
 	IYH_IRifle* rifle = Cast<IYH_IRifle>(MeshComp->GetOwner());
-	CheckNull(rifle);
+	YH_CheckNull(rifle);
 
 	rifle->GetRifle()->Begin_Unequip();
 }
@@ -25,10 +25,10 @@ void UYH_CAnimNotifyState_Unequip::NotifyBegin(USkeletalMeshComponent * MeshComp
 void UYH_CAnimNotifyState_Unequip::NotifyEnd(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation)
 {
 	Super::NotifyEnd(MeshComp, Animation);
-	CheckNull(MeshComp);
+	YH_CheckNull(MeshComp);
 
 	IYH_IRifle* rifle = Cast<IYH_IRifle>(MeshComp->GetOwner());
-	CheckNull(rifle);
+	YH_CheckNull(rifle);
 
 	rifle->GetRifle()->End_Unequip();
 }

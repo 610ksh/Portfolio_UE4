@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 
-#define PrintLine() {JG_Log::Log(__FUNCTION__, __LINE__);}
+#define JG_PrintLine() {JG_Log::Log(__FUNCTION__, __LINE__);}
 
 
 class THELASTRPG_API JG_Log

@@ -10,7 +10,7 @@ void UYH_CActionAnimInstance::NativeBeginPlay()
 	Super::NativeBeginPlay();
 
 	ACharacter* character = Cast<ACharacter>(TryGetPawnOwner());
-	CheckNull(character);
+	YH_CheckNull(character);
 }
 
 void UYH_CActionAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
@@ -18,7 +18,7 @@ void UYH_CActionAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
 	ACharacter* character = Cast<ACharacter>(TryGetPawnOwner());
-	CheckNull(character);
+	YH_CheckNull(character);
 
 	Speed = character->GetVelocity().Size2D();
 	Direction = CalculateDirection(character->GetVelocity(), character->GetControlRotation());

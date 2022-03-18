@@ -30,7 +30,7 @@ void AYH_C01_Log::BeginPlay()
 
 	YH_CLog::Log(this);
 	//CLog::Log(__FUNCTION__, __LINE__);
-	PrintLine();
+	YH_PrintLine();
 }
 
 void AYH_C01_Log::Tick(float DeltaTime)

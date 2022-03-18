@@ -71,7 +71,7 @@ void USH_CTargetComponent::SetTraceTargets()
 void USH_CTargetComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	CheckNull(Target); // 없으면 무시
+	CheckNull_SH(Target); // 없으면 무시
 
 	USH_CStateComponent* state = SH_CHelpers::GetComponent<USH_CStateComponent>(Target);
 
@@ -131,7 +131,7 @@ void USH_CTargetComponent::ChangeTargetRight()
 
 void USH_CTargetComponent::ChangeTarget(bool InRight)
 {
-	CheckNull(Target);
+	CheckNull_SH(Target);
 
 	/// 현재 타깃을 제외하고 모든 타깃에 대한 외적, 내적값을 구한다.
 	TMap<float, ACharacter*> map;

@@ -79,7 +79,7 @@ void AJG02_LineTrace::Tick(float DeltaTime)
 void AJG02_LineTrace::StartJump(AActor* InActor, FLinearColor InColor)
 {
 	AJG_Player* player = Cast<AJG_Player>(InActor);
-	CheckNull(player);
+	JG_CheckNull(player);
 
 	player->Jump();
 }

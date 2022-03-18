@@ -14,11 +14,11 @@ FString UJG_CAnimNotifyState_Equip::GetNotifyName_Implementation() const
 void UJG_CAnimNotifyState_Equip::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration)
 {
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
-	CheckNull(MeshComp);
-	CheckNull(MeshComp->GetOwner());
+	JG_CheckNull(MeshComp);
+	JG_CheckNull(MeshComp->GetOwner());
 
 	UJG_CActionComponent* action = JG_Helpers::GetComponent<UJG_CActionComponent>(MeshComp->GetOwner());
-	CheckNull(action);
+	JG_CheckNull(action);
 
 	action->GetCurrent()->GetEquipment()->Begin_Equip();
 }
@@ -26,11 +26,11 @@ void UJG_CAnimNotifyState_Equip::NotifyBegin(USkeletalMeshComponent* MeshComp, U
 void UJG_CAnimNotifyState_Equip::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
 	Super::NotifyEnd(MeshComp, Animation);
-	CheckNull(MeshComp);
-	CheckNull(MeshComp->GetOwner());
+	JG_CheckNull(MeshComp);
+	JG_CheckNull(MeshComp->GetOwner());
 
 	UJG_CActionComponent* action = JG_Helpers::GetComponent<UJG_CActionComponent>(MeshComp->GetOwner());
-	CheckNull(action);
+	JG_CheckNull(action);
 
 	action->GetCurrent()->GetEquipment()->End_Equip();
 }

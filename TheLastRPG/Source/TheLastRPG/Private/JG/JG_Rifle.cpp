@@ -49,8 +49,8 @@ AJG_Rifle::AJG_Rifle()
 
 void AJG_Rifle::Equip()
 {
-	CheckTrue(bEquipped);
-	CheckTrue(bEquipping);
+	JG_CheckTrue(bEquipped);
+	JG_CheckTrue(bEquipping);
 
 	bEquipping = true;
 	OwnerCharacter->PlayAnimMontage(GrabMontage);
@@ -70,8 +70,8 @@ void AJG_Rifle::End_Equip()
 
 void AJG_Rifle::Unequip()
 {
-	CheckFalse(bEquipped);
-	CheckTrue(bEquipping);
+	JG_CheckFalse(bEquipped);
+	JG_CheckTrue(bEquipping);
 
 	bEquipping = true;
 	OwnerCharacter->PlayAnimMontage(UngrabMontage);
@@ -115,9 +115,9 @@ void AJG_Rifle::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	CheckFalse(bAiming);
+	JG_CheckFalse(bAiming);
 	IJG_IRifle* rifle = Cast<IJG_IRifle>(OwnerCharacter);
-	CheckNull(rifle);
+	JG_CheckNull(rifle);
 
 	FVector start, end, direction;
 	rifle->GetLocationAndDirection(start, end, direction);
@@ -153,10 +153,10 @@ void AJG_Rifle::Tick(float DeltaTime)
 
 void AJG_Rifle::Begin_Fire()
 {
-	CheckFalse(bEquipped);
-	CheckTrue(bEquipping);
-	CheckFalse(bAiming);
-	CheckTrue(bFiring);
+	JG_CheckFalse(bEquipped);
+	JG_CheckTrue(bEquipping);
+	JG_CheckFalse(bAiming);
+	JG_CheckTrue(bFiring);
 
 	//bFiring = true;
 
@@ -166,7 +166,7 @@ void AJG_Rifle::Begin_Fire()
 void AJG_Rifle::Firing()
 {
 	IJG_IRifle* rifle = Cast<IJG_IRifle>(OwnerCharacter);
-	CheckNull(rifle);
+	JG_CheckNull(rifle);
 
 	FVector start, end, direction;
 	rifle->GetLocationAndDirection(start, end, direction);

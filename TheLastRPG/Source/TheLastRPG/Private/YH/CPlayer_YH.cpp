@@ -198,8 +198,8 @@ void ACPlayer_YH::OnRifle()
 
 void ACPlayer_YH::OnAim()
 {
-	CheckFalse(Rifle->GetEquipped());
-	CheckTrue(Rifle->GetEquipping());
+	YH_CheckFalse(Rifle->GetEquipped());
+	YH_CheckTrue(Rifle->GetEquipping());
 
 	bUseControllerRotationYaw = true;
 	GetCharacterMovement()->bOrientRotationToMovement = false;
@@ -215,8 +215,8 @@ void ACPlayer_YH::OnAim()
 
 void ACPlayer_YH::OffAim()
 {
-	CheckFalse(Rifle->GetEquipped());
-	CheckTrue(Rifle->GetEquipping());
+	YH_CheckFalse(Rifle->GetEquipped());
+	YH_CheckTrue(Rifle->GetEquipping());
 
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;

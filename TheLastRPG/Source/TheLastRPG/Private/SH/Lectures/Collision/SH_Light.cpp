@@ -40,7 +40,7 @@ void ASH_Light::BeginPlay()
 	TArray<AActor*> actors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ASH_Trigger::StaticClass(), actors);
 
-	CheckFalse(actors.Num() > 0); // 배열의 크기가 0이면 return 시켜버림.
+	CheckFalse_SH(actors.Num() > 0); // 배열의 크기가 0이면 return 시켜버림.
 
 	ASH_Trigger* trigger = Cast<ASH_Trigger>(actors[0]); // 1개만 찾았을거라 0번 고정.
 	trigger->OnBoxLightBeginOverlap.BindUFunction(this, "OnLight");

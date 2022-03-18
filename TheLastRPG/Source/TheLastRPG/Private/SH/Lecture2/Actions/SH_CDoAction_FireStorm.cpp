@@ -25,8 +25,8 @@ void ASH_CDoAction_FireStorm::BeginPlay()
 
 void ASH_CDoAction_FireStorm::DoAction()
 {
-	CheckFalse(*bEquipped);
-	CheckFalse(State->IsIdleMode());
+	CheckFalse_SH(*bEquipped);
+	CheckFalse_SH(State->IsIdleMode());
 
 	State->SetActionMode();
 	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
@@ -80,8 +80,8 @@ void ASH_CDoAction_FireStorm::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	CheckFalse(*bEquipped);
-	CheckFalse(State->IsActionMode());
+	CheckFalse_SH(*bEquipped);
+	CheckFalse_SH(State->IsActionMode());
 
 	FVector location = OwnerCharacter->GetActorLocation();
 

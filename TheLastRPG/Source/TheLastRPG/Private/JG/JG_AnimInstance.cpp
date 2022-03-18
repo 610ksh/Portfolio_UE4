@@ -17,7 +17,7 @@ void UJG_AnimInstance::NativeBeginPlay()
 void UJG_AnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
-	CheckNull(OwnerCharacter); 
+	JG_CheckNull(OwnerCharacter);
 
 	Speed = OwnerCharacter->GetVelocity().Size2D();
 	Direction = CalculateDirection(OwnerCharacter->GetVelocity(), OwnerCharacter->GetControlRotation());

@@ -12,14 +12,14 @@ FString USH_CAnimNotifyState_Collision::GetNotifyName_Implementation() const
 void USH_CAnimNotifyState_Collision::NotifyBegin(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation, float TotalDuration)
 {
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
-	CheckNull(MeshComp);
-	CheckNull(MeshComp->GetOwner());
+	CheckNull_SH(MeshComp);
+	CheckNull_SH(MeshComp->GetOwner());
 
 	USH_CActionComponent* action = SH_CHelpers::GetComponent<USH_CActionComponent>(MeshComp->GetOwner());
-	CheckNull(action);
+	CheckNull_SH(action);
 
 	ASH_CAttachment* attachment = action->GetCurrent()->GetAttachment();
-	CheckNull(attachment);
+	CheckNull_SH(attachment);
 
 	attachment->OnCollision();
 }
@@ -27,14 +27,14 @@ void USH_CAnimNotifyState_Collision::NotifyBegin(USkeletalMeshComponent * MeshCo
 void USH_CAnimNotifyState_Collision::NotifyEnd(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation)
 {
 	Super::NotifyEnd(MeshComp, Animation);
-	CheckNull(MeshComp);
-	CheckNull(MeshComp->GetOwner());
+	CheckNull_SH(MeshComp);
+	CheckNull_SH(MeshComp->GetOwner());
 
 	USH_CActionComponent* action = SH_CHelpers::GetComponent<USH_CActionComponent>(MeshComp->GetOwner());
-	CheckNull(action);
+	CheckNull_SH(action);
 
 	ASH_CAttachment* attachment = action->GetCurrent()->GetAttachment();
-	CheckNull(attachment);
+	CheckNull_SH(attachment);
 
 	attachment->OffCollision();
 }

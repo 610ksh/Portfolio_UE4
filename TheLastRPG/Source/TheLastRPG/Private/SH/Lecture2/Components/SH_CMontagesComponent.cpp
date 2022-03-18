@@ -12,7 +12,7 @@ void USH_CMontagesComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	CheckNull(DataTable);
+	CheckNull_SH(DataTable);
 
 	TArray<FMontageData*> datas;
 	DataTable->GetAllRows<FMontageData>("", datas);

@@ -47,8 +47,8 @@ ASH_CRifle::ASH_CRifle()
 #pragma region Equip Animation
 void ASH_CRifle::Equip()
 {
-	CheckTrue(bEquipped); // 이미 장비를 장착중이면 pass
-	CheckTrue(bEquipping); // 장착 도중이라면 pass
+	CheckTrue_SH(bEquipped); // 이미 장비를 장착중이면 pass
+	CheckTrue_SH(bEquipping); // 장착 도중이라면 pass
 
 	bEquipping = true;
 	// OwnerCharacter로 하는 이유는 다른 캐릭터(적 AI)도 붙을 수 있어서 중립적인 변수로 만듦.
@@ -70,8 +70,8 @@ void ASH_CRifle::End_Equip()
 #pragma region Unequip Animation
 void ASH_CRifle::Unequip()
 {
-	CheckFalse(bEquipped); // 장착중이지 않을때는 pass
-	CheckTrue(bEquipping); // 장착 도중이라면 pass
+	CheckFalse_SH(bEquipped); // 장착중이지 않을때는 pass
+	CheckTrue_SH(bEquipping); // 장착 도중이라면 pass
 
 	bEquipping = true;
 	OwnerCharacter->PlayAnimMontage(UngrabMontage);
@@ -111,10 +111,10 @@ void ASH_CRifle::BeginPlay()
 void ASH_CRifle::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	CheckFalse(bAiming); // Aiming 상태가 아니면 return
+	CheckFalse_SH(bAiming); // Aiming 상태가 아니면 return
 
 	ISH_IRifle* rifle = Cast<ISH_IRifle>(OwnerCharacter);
-	CheckNull(rifle); // Rifle이 ISH_IRifle 상속하고 있지 않으면 return
+	CheckNull_SH(rifle); // Rifle이 ISH_IRifle 상속하고 있지 않으면 return
 
 	FVector start, end, direction;
 	rifle->GetLocationAndDirection(start, end, direction);
@@ -148,10 +148,10 @@ void ASH_CRifle::Tick(float DeltaTime)
 
 void ASH_CRifle::Begin_Fire()
 {
-	CheckFalse(bEquipped); // 장착중이지 않으면 return
-	CheckTrue(bEquipping); // 장착중이면 return
-	CheckFalse(bAiming); // 에임중이지 않으면 return
-	CheckTrue(bFiring); // 발사중이면 return
+	CheckFalse_SH(bEquipped); // 장착중이지 않으면 return
+	CheckTrue_SH(bEquipping); // 장착중이면 return
+	CheckFalse_SH(bAiming); // 에임중이지 않으면 return
+	CheckTrue_SH(bFiring); // 발사중이면 return
 
 	Firing();
 }
@@ -160,7 +160,7 @@ void ASH_CRifle::Firing()
 {
 	// 부모* 변수 = 자식 
 	ISH_IRifle* rifle = Cast<ISH_IRifle>(OwnerCharacter); // 처음보는 문법.
-	CheckNull(rifle); // 라이플이 있다면
+	CheckNull_SH(rifle); // 라이플이 있다면
 
 	FVector start, end, direction;
 	rifle->GetLocationAndDirection(start, end, direction);

@@ -10,11 +10,11 @@ FString USH_CAnimNotifyState_Dead::GetNotifyName_Implementation() const
 void USH_CAnimNotifyState_Dead::NotifyBegin(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation, float TotalDuration)
 {
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
-	CheckNull(MeshComp);
-	CheckNull(MeshComp->GetOwner());
+	CheckNull_SH(MeshComp);
+	CheckNull_SH(MeshComp->GetOwner());
 
 	ISH_ICharacter* character = Cast<ISH_ICharacter>(MeshComp->GetOwner());
-	CheckNull(character);
+	CheckNull_SH(character);
 
 	character->Begin_Dead();
 }
@@ -22,11 +22,11 @@ void USH_CAnimNotifyState_Dead::NotifyBegin(USkeletalMeshComponent * MeshComp, U
 void USH_CAnimNotifyState_Dead::NotifyEnd(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation)
 {
 	Super::NotifyEnd(MeshComp, Animation);
-	CheckNull(MeshComp);
-	CheckNull(MeshComp->GetOwner());
+	CheckNull_SH(MeshComp);
+	CheckNull_SH(MeshComp->GetOwner());
 
 	ISH_ICharacter* character = Cast<ISH_ICharacter>(MeshComp->GetOwner());
-	CheckNull(character);
+	CheckNull_SH(character);
 
 	character->End_Dead();
 }

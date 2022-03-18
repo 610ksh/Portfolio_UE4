@@ -39,8 +39,8 @@ AYH_CRifle::AYH_CRifle()
 
 void AYH_CRifle::Equip()
 {
-	CheckTrue(bEquipped);
-	CheckTrue(bEquipping);
+	YH_CheckTrue(bEquipped);
+	YH_CheckTrue(bEquipping);
 
 	bEquipping = true;
 	//플레이어만이 꼭 아니다. 적도된다.
@@ -61,8 +61,8 @@ void AYH_CRifle::End_Equip()
 
 void AYH_CRifle::Unequip()
 {
-	CheckFalse(bEquipped);
-	CheckTrue(bEquipping);
+	YH_CheckFalse(bEquipped);
+	YH_CheckTrue(bEquipping);
 
 	bEquipping = true;
 	OwnerCharacter->PlayAnimMontage(UngrabMontage);
@@ -97,10 +97,10 @@ void AYH_CRifle::Begin_Fire()
 에이밍 안하면 안되지
 파이어링 트루일때
 */
-	CheckFalse(bEquipped);
-	CheckTrue(bEquipping);
-	CheckFalse(bAiming);
-	CheckTrue(bFiring);
+	YH_CheckFalse(bEquipped);
+	YH_CheckTrue(bEquipping);
+	YH_CheckFalse(bAiming);
+	YH_CheckTrue(bFiring);
 
 	//bFiring = true;
 
@@ -111,7 +111,7 @@ void AYH_CRifle::Firing()
 {
 	//총기 가지고 있나 총기 검사.
 	IYH_IRifle* rifle = Cast<IYH_IRifle>(OwnerCharacter);
-	CheckNull(rifle);
+	YH_CheckNull(rifle);
 
 	FVector start, end, direction;
 	rifle->GetLocationAndDirection(start, end, direction);
@@ -197,11 +197,11 @@ void AYH_CRifle::BeginPlay()
 void AYH_CRifle::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	CheckFalse(bAiming);
+	YH_CheckFalse(bAiming);
 
 	//적의 전방으로 보게 할것이다. 카메라방향을
 	IYH_IRifle* rifle = Cast<IYH_IRifle>(OwnerCharacter);
-	CheckNull(rifle);
+	YH_CheckNull(rifle);
 
 
 	FVector start, end, direction;

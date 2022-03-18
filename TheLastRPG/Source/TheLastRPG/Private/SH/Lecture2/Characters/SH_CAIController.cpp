@@ -40,7 +40,7 @@ void ASH_CAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	CheckFalse(bDrawDebug);
+	CheckFalse_SH(bDrawDebug);
 
 	FVector center = OwnerEnemy->GetActorLocation();
 	center.Z -= AdjustCircleHeight;

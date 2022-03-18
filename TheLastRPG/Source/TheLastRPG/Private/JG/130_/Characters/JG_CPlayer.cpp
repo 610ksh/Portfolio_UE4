@@ -98,7 +98,7 @@ void AJG_CPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 void AJG_CPlayer::OnMoveForward(float InAxis)
 {
-	CheckFalse(Status->CanMove());
+	JG_CheckFalse(Status->CanMove());
 
 	FRotator rotator = FRotator(0, GetControlRotation().Yaw, 0);
 	FVector direction = FQuat(rotator).GetForwardVector().GetSafeNormal2D();
@@ -128,8 +128,8 @@ void AJG_CPlayer::OnVerticalLook(float InAxis)
 
 void AJG_CPlayer::OnAvoid()
 {
-	CheckFalse(Status->CanMove());
-	CheckFalse(State->IsIdleMode());
+	JG_CheckFalse(Status->CanMove());
+	JG_CheckFalse(State->IsIdleMode());
 
 	if (InputComponent->GetAxisValue("MoveForward") < 0.0f)
 	{
@@ -198,7 +198,7 @@ void AJG_CPlayer::End_Backstep()
 
 void AJG_CPlayer::OnOneHand()
 {
-	CheckFalse(State->IsIdleMode());
+	JG_CheckFalse(State->IsIdleMode());
 
 	//Action->SetOneHandMode();
 }

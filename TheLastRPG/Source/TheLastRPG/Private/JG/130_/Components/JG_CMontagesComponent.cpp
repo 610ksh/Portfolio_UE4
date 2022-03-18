@@ -19,7 +19,7 @@ UJG_CMontagesComponent::UJG_CMontagesComponent()
 void UJG_CMontagesComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	CheckNull(DataTable);
+	JG_CheckNull(DataTable);
 
 	TArray<FMontageData_JG*> datas;
 	DataTable->GetAllRows<FMontageData_JG>("", datas);

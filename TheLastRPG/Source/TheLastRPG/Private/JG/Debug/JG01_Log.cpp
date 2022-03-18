@@ -36,7 +36,7 @@ void AJG01_Log::BeginPlay() //
 	JG_Log::Log(GetActorRotation());
 
 	JG_Log::Log(this);
-	PrintLine();
+	JG_PrintLine();
 }
 
 // Called every frame

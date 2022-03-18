@@ -78,7 +78,7 @@ void AYH_C2_LineTrace::Tick(float DeltaTime)
 void AYH_C2_LineTrace::StartJump(AActor * InActor, FLinearColor InColor)
 {
 	ACPlayer_YH* player = Cast<ACPlayer_YH>(InActor);
-	CheckNull(player);
+	YH_CheckNull(player);
 
 	player->Jump();
 }

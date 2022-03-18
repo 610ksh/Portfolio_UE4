@@ -11,14 +11,14 @@ FString USH_CAnimNotifyState_EnableCombo::GetNotifyName_Implementation() const
 void USH_CAnimNotifyState_EnableCombo::NotifyBegin(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation, float TotalDuration)
 {
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
-	CheckNull(MeshComp);
-	CheckNull(MeshComp->GetOwner());
+	CheckNull_SH(MeshComp);
+	CheckNull_SH(MeshComp->GetOwner());
 
 	USH_CActionComponent* action = SH_CHelpers::GetComponent<USH_CActionComponent>(MeshComp->GetOwner());
-	CheckNull(action);
+	CheckNull_SH(action);
 	
 	ASH_CDoAction_Melee* melee = Cast<ASH_CDoAction_Melee>(action->GetCurrent()->GetDoAction());
-	CheckNull(melee);
+	CheckNull_SH(melee);
 
 	melee->EnableCombo(); // 이후부터 콤보 입력 가능함
 }
@@ -26,14 +26,14 @@ void USH_CAnimNotifyState_EnableCombo::NotifyBegin(USkeletalMeshComponent * Mesh
 void USH_CAnimNotifyState_EnableCombo::NotifyEnd(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation)
 {
 	Super::NotifyEnd(MeshComp, Animation);
-	CheckNull(MeshComp);
-	CheckNull(MeshComp->GetOwner());
+	CheckNull_SH(MeshComp);
+	CheckNull_SH(MeshComp->GetOwner());
 
 	USH_CActionComponent* action = SH_CHelpers::GetComponent<USH_CActionComponent>(MeshComp->GetOwner());
-	CheckNull(action);
+	CheckNull_SH(action);
 
 	ASH_CDoAction_Melee* melee = Cast<ASH_CDoAction_Melee>(action->GetCurrent()->GetDoAction());
-	CheckNull(melee);
+	CheckNull_SH(melee);
 
 	melee->DisableCombo(); // 이후부터 콤보 입력 불가능
 }
