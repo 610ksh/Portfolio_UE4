@@ -9,7 +9,7 @@
 #include "GameFramework/Character.h"
 #include "Components/SkeletalMeshComponent.h"
 
-
+//
 void UJG_CActionData::BeginPlay(class ACharacter* InOwnerCharacter)
 {
 	FTransform transform;

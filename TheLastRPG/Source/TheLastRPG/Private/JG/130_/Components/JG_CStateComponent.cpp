@@ -39,7 +39,7 @@ void UJG_CStateComponent::SetEquipMode()
 {
 	ChangeType(EStateType_JG::Equip);
 }
-
+//
 void UJG_CStateComponent::SetActionMode()
 {
 	ChangeType(EStateType_JG::Action);

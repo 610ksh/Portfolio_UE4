@@ -10,7 +10,7 @@ FString UJG_CAnimNotify_EndBackstep::GetNotifyName_Implementation() const
 {
 	return "Backstep";
 }
-
+//
 void UJG_CAnimNotify_EndBackstep::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
 	Super::Notify(MeshComp, Animation);

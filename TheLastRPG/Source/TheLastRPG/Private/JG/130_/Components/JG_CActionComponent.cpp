@@ -21,7 +21,7 @@ void UJG_CActionComponent::BeginPlay()
 	Super::BeginPlay();
 	
 }
-
+//
 void UJG_CActionComponent::SetUnarmedMode()
 {
 	if (!!Datas[(int32)Type]) 

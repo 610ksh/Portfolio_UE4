@@ -8,7 +8,7 @@
 #include "JG/JG_Global.h"
 #include "GameFramework/Character.h" 
 #include "Components/SkeletalMeshComponent.h"
-
+//
 // Sets default values
 AJG_CAttachment::AJG_CAttachment()
 {

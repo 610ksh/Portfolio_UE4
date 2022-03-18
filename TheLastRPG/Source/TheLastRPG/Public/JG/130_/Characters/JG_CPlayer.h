@@ -7,6 +7,7 @@
 #include "JG/130_/Components/JG_CStateComponent.h"
 #include "JG_CPlayer.generated.h"
 
+//
 UCLASS()
 class THELASTRPG_API AJG_CPlayer : public ACharacter
 {
