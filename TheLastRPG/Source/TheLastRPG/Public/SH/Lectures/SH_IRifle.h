@@ -1,12 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
 #include "SH_IRifle.generated.h"
 
-// This class does not need to be modified.
 UINTERFACE(MinimalAPI)
 class USH_IRifle : public UInterface
 {
