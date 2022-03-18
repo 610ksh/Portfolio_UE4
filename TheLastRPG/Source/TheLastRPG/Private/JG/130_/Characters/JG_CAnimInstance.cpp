@@ -7,6 +7,7 @@
 
 void UJG_CAnimInstance::NativeBeginPlay()
 {
+	//
 	Super::NativeBeginPlay();
 }
 

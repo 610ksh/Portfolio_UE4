@@ -9,7 +9,7 @@
 
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
+//
 // Sets default values
 AJG_CEquipment::AJG_CEquipment()
 {

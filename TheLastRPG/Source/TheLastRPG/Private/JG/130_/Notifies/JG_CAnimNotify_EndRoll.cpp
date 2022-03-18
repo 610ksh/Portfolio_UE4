@@ -8,6 +8,7 @@
 
 FString UJG_CAnimNotify_EndRoll::GetNotifyName_Implementation() const
 {
+	//
 	return "Roll";
 }
 

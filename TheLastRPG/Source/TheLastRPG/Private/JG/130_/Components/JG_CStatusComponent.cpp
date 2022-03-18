@@ -2,7 +2,7 @@
 #include "JG/130_/Components/JG_CStatusComponent.h"
 #include "JG/JG_Global.h"
 
-
+//
 // Sets default values
 UJG_CStatusComponent::UJG_CStatusComponent()
 {

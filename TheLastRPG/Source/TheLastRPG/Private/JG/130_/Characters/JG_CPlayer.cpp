@@ -155,7 +155,7 @@ void AJG_CPlayer::OnStateTypeChanged(EStateType_JG InPrevType, EStateType_JG InN
 void AJG_CPlayer::Begin_Roll()
 {
 	bUseControllerRotationYaw = false; // 컨트롤러 꺼놓기 (구르는 방향으로만 움직이기 위함)
-	GetCharacterMovement()->bOrientRotationToMovement = true; // 구르는 방향으로 잡아놓음
+	GetCharacterMovement()->bOrientRotationToMovement = true; // 구르는 방향으로 고정
 
 	FVector start = GetActorLocation();
 	FVector from = start + GetVelocity().GetSafeNormal2D(); 
@@ -175,6 +175,7 @@ void AJG_CPlayer::End_Roll()
 	State->SetIdleMode();
 }
 
+//
 void AJG_CPlayer::Begin_Backstep()
 {
 	bUseControllerRotationYaw = true; // 컨트롤러를 켜놓긴 하는데 게임에서 어떻게 구현하느냐에 따라 끌수도 있을듯

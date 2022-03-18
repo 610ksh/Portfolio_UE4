@@ -4,6 +4,7 @@
 #include "JG/130_/Components/JG_COptionComponent.h"
 #include "JG/JG_Global.h"
 
+//
 // Sets default values for this component's properties
 UJG_COptionComponent::UJG_COptionComponent()
 {

@@ -5,7 +5,7 @@
 #include "JG/130_/Components/JG_CActionComponent.h"
 #include "JG/130_/Actions/JG_CEquipment.h"
 #include "JG/JG_Global.h"
-
+//
 FString UJG_CAnimNotifyState_Equip::GetNotifyName_Implementation() const
 {
 	return "Equip";
