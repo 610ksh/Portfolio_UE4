@@ -131,7 +131,7 @@ void ASH_Player::OffFocus()
 
 void ASH_Player::PlayCameraShake()
 {
-	GetController<APlayerController>()->PlayerCameraManager->StartCameraShake(CameraShakeClass);
+	GetController<APlayerController>()->PlayerCameraManager->StartMatineeCameraShake(CameraShakeClass);
 }
 
 void ASH_Player::OnMoveForward(float Axis)

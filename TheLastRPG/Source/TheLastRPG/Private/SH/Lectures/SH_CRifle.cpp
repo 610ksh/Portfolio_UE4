@@ -37,7 +37,7 @@ ASH_CRifle::ASH_CRifle()
 	SH_CHelpers::GetAsset<UParticleSystem>(&FlashParticle, "ParticleSystem'/Game/Lectures/Particles_Rifle/Particles/VFX_Muzzleflash.VFX_Muzzleflash'");
 	SH_CHelpers::GetAsset<UParticleSystem>(&EjectParticle, "ParticleSystem'/Game/Lectures/Particles_Rifle/Particles/VFX_Eject_bullet.VFX_Eject_bullet'");
 	SH_CHelpers::GetAsset<UParticleSystem>(&ImpactParticle, "ParticleSystem'/Game/Lectures/Particles_Rifle/Particles/VFX_Impact_Default.VFX_Impact_Default'");
-
+	
 	SH_CHelpers::GetAsset<USoundCue>(&FireSoundCue, "SoundCue'/Game/SungHoon/Lectures/GunShooting/Weapons/Sounds/S_RifleShoot_Cue.S_RifleShoot_Cue'");
 	SH_CHelpers::GetClass<ASH_CBullet>(&BulletClass, "Blueprint'/Game/SungHoon/Lectures/GunShooting/Blueprints/SH_BP_CBullet.SH_BP_CBullet_C'");
 
@@ -89,6 +89,7 @@ void ASH_CRifle::End_Unequip()
 }
 #pragma endregion
 
+#pragma region Aiming
 void ASH_CRifle::Begin_Aiming()
 {
 	bAiming = true;
@@ -97,13 +98,14 @@ void ASH_CRifle::End_Aiming()
 {
 	bAiming = false;
 }
+#pragma endregion
 
 void ASH_CRifle::BeginPlay()
 {
 	Super::BeginPlay();
 
 	OwnerCharacter = Cast<ACharacter>(GetOwner()); // 본인 자신의 소유권을 가져옴
-												  
+
 	// 본인 캐릭터의 메시로가서 소켓에 현재 본인을 부착하는 함수.
 	AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true), HolsterSocket);
 }
@@ -137,6 +139,7 @@ void ASH_CRifle::Tick(float DeltaTime)
 				if (meshComponent->BodyInstance.bSimulatePhysics) // 충돌처리가 켜져있다면
 				{
 					rifle->OnFocus();
+					//DrawDebugLine(GetWorld(), start, end, FColor::Green, false, 3.0f);
 					return;
 				}
 			}
@@ -174,7 +177,7 @@ void ASH_CRifle::Firing()
 
 	FVector muzzleLocation = Mesh->GetSocketLocation("MuzzleFlash");
 	UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireSoundCue, muzzleLocation);
-	
+
 	/// 총알 생성
 	if (!!BulletClass)
 		GetWorld()->SpawnActor<ASH_CBullet>(BulletClass, muzzleLocation, direction.Rotation());
@@ -187,7 +190,7 @@ void ASH_CRifle::Firing()
 	if (GetWorld()->LineTraceSingleByChannel(hitResult, start, end, ECollisionChannel::ECC_Visibility, params))
 	{
 		FRotator rotator = hitResult.ImpactNormal.Rotation();
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactParticle, hitResult.Location, rotator); // 탄환 이펙트 생성
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactParticle, hitResult.Location, rotator, FVector(2)); // 탄환 이펙트 생성
 		UGameplayStatics::SpawnDecalAtLocation(GetWorld(), DecalMaterial, FVector(5), hitResult.Location, rotator, 10.0f); // Decal 생성
 	}
 
@@ -202,10 +205,10 @@ void ASH_CRifle::Firing()
 			{
 				if (meshComponent->BodyInstance.bSimulatePhysics) // 충돌처리가 켜져있다면
 				{
-					direction = staticMeshActor->GetActorLocation() - OwnerCharacter->GetActorLocation(); // 방향벡터
-					direction.Normalize();
-					
-					meshComponent->AddImpulseAtLocation(direction* meshComponent->GetMass() * 100, OwnerCharacter->GetActorLocation());
+					direction = staticMeshActor->GetActorLocation() - OwnerCharacter->GetActorLocation();
+					direction.Normalize(); // 방향벡터
+
+					meshComponent->AddImpulseAtLocation(direction * meshComponent->GetMass() * 100, OwnerCharacter->GetActorLocation());
 					SH_CLog::Log("hit!");
 					return;
 				}
