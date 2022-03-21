@@ -35,7 +35,8 @@ void ASH_ActorBeginOverlap::ActorBeginOverlap(AActor * OverlappedActor, AActor *
 	FString str = "";
 	str.Append("C++ Actor Begin Overlap : ");
 	str.Append(OtherActor->GetName());
-
+	SH_CLog::Print(OverlappedActor->GetName());
+	SH_CLog::Print(OverlappedActor->GetFullName());
 	SH_CLog::Log(str);
 }
 
