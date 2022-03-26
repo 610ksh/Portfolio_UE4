@@ -8,7 +8,7 @@ AYH_C04_Explosion::AYH_C04_Explosion()
 	CHelpers_YH::CreateComponent<UParticleSystemComponent>(this, &Particle, "Particle");
 
 	UParticleSystem* particle;
-	CHelpers_YH::GetAsset<UParticleSystem>(&particle, "ParticleSystem'/Game/ParagonCountess/FX/Particles/Abilities/BlinkStrike/FX/P_Countess_TeleportArrive.P_Countess_TeleportArrive'");
+	CHelpers_YH::GetAsset<UParticleSystem>(&particle, "ParticleSystem'/Game/Lectures/Effects/P_Explosion2.P_Explosion2'");
 	Particle->SetTemplate(particle);
 	Particle->bAutoActivate = false;
 

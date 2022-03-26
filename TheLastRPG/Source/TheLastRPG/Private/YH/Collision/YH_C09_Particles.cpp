@@ -18,9 +18,9 @@ AYH_C09_Particles::AYH_C09_Particles()
 	Text->HorizontalAlignment = EHorizTextAligment::EHTA_Center;
 	Text->Text = FText::FromString(GetName());
 
-	CHelpers_YH::GetAsset<UParticleSystem>(&Particles[0], "ParticleSystem'/Game/ParagonCountess/FX/Particles/Abilities/Ultimate/FX/p_CountessUlt_ApplicationFX.p_CountessUlt_ApplicationFX'");
-	CHelpers_YH::GetAsset<UParticleSystem>(&Particles[1], "ParticleSystem'/Game/ParagonCountess/FX/Particles/Abilities/BlinkStrike/FX/p_Countess_BlinkStrikeFlash.p_Countess_BlinkStrikeFlash'");
-	CHelpers_YH::GetAsset<UParticleSystem>(&Particles[2], "ParticleSystem'/Game/ParagonCountess/FX/Particles/Abilities/BlinkStrike/FX/P_Countess_TeleportArrive.P_Countess_TeleportArrive'");
+	CHelpers_YH::GetAsset<UParticleSystem>(&Particles[0], "ParticleSystem'/Game/Lectures/Effects/P_Explosion2.P_Explosion2'");
+	CHelpers_YH::GetAsset<UParticleSystem>(&Particles[1], "ParticleSystem'/Game/Lectures/Effects/P_Explosion2.P_Explosion2'");
+	CHelpers_YH::GetAsset<UParticleSystem>(&Particles[2], "ParticleSystem'/Game/Lectures/Effects/P_Explosion2.P_Explosion2'");
 
 }
 

@@ -11,7 +11,7 @@ AJG04_Explosion::AJG04_Explosion()
 	JG_Helpers::CreateComponent<UParticleSystemComponent>(this, &Particle, "Particle");
 
 	UParticleSystem* particle;
-	JG_Helpers::GetAsset<UParticleSystem>(&particle, "ParticleSystem'/Game/ParagonCountess/FX/Particles/Abilities/BladeSiphon/FX/p_Countess_BladeSiphon_HitFX.p_Countess_BladeSiphon_HitFX'");
+	JG_Helpers::GetAsset<UParticleSystem>(&particle, "ParticleSystem'/Game/Lectures/Effects/P_Explosion2.P_Explosion2'");
 	Particle->SetTemplate(particle);
 	Particle->bAutoActivate = false;
 }

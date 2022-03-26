@@ -19,9 +19,9 @@ AJG09_Particles::AJG09_Particles()
 	Text->HorizontalAlignment = EHorizTextAligment::EHTA_Center;
 	Text->Text = FText::FromString(GetName());
 
-	JG_Helpers::GetAsset<UParticleSystem>(&Particles[0], "ParticleSystem'/Game/ParagonCountess/FX/Particles/Abilities/BladeSiphon/FX/p_Countess_BladeSiphon_HitFX.p_Countess_BladeSiphon_HitFX'");
-	JG_Helpers::GetAsset<UParticleSystem>(&Particles[1], "ParticleSystem'/Game/ParagonCountess/FX/Particles/Abilities/BladeSiphon/FX/P_Countess_BladeSiphon_Trails.P_Countess_BladeSiphon_Trails'");
-	JG_Helpers::GetAsset<UParticleSystem>(&Particles[2], "ParticleSystem'/Game/ParagonCountess/FX/Particles/Abilities/Ultimate/FX/p_CountessUlt_SlashFX.p_CountessUlt_SlashFX'");
+	JG_Helpers::GetAsset<UParticleSystem>(&Particles[0], "ParticleSystem'/Game/Lectures/Effects/P_Explosion2.P_Explosion2'");
+	JG_Helpers::GetAsset<UParticleSystem>(&Particles[1], "ParticleSystem'/Game/Lectures/Effects/P_Explosion2.P_Explosion2'");
+	JG_Helpers::GetAsset<UParticleSystem>(&Particles[2], "ParticleSystem'/Game/Lectures/Effects/P_Explosion2.P_Explosion2'");
 
 
 }
