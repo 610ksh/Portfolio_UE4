@@ -12,45 +12,44 @@ void USH_CStateComponent::BeginPlay()
 
 }
 
-
 void USH_CStateComponent::SetIdleMode()
 {
-	ChangeType(EStateType::Idle);
+	ChangeType(SH_EStateType::Idle);
 }
 
 void USH_CStateComponent::SetRollMode()
 {
-	ChangeType(EStateType::Roll);
+	ChangeType(SH_EStateType::Roll);
 }
 
 void USH_CStateComponent::SetBackstepMode()
 {
-	ChangeType(EStateType::Backstep);
+	ChangeType(SH_EStateType::Backstep);
 }
 
 void USH_CStateComponent::SetEquipMode()
 {
-	ChangeType(EStateType::Equip);
+	ChangeType(SH_EStateType::Equip);
 }
 
 void USH_CStateComponent::SetActionMode()
 {
-	ChangeType(EStateType::Action);
+	ChangeType(SH_EStateType::Action);
 }
 
 void USH_CStateComponent::SetHittedMode()
 {
-	ChangeType(EStateType::Hitted);
+	ChangeType(SH_EStateType::Hitted);
 }
 
 void USH_CStateComponent::SetDeadMode()
 {
-	ChangeType(EStateType::Dead);
+	ChangeType(SH_EStateType::Dead);
 }
 
-void USH_CStateComponent::ChangeType(EStateType InType)
+void USH_CStateComponent::ChangeType(SH_EStateType InType)
 {
-	EStateType prevType = Type;
+	SH_EStateType prevType = Type;
 	Type = InType;
 
 	if (OnStateTypeChanged.IsBound())

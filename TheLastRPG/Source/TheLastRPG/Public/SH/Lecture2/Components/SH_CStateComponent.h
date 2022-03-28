@@ -5,12 +5,12 @@
 #include "SH_CStateComponent.generated.h"
 
 UENUM(BlueprintType)
-enum class EStateType : uint8
+enum class SH_EStateType : uint8
 {
 	Idle, Roll, Backstep, Equip, Action, Hitted, Dead, Max,
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FStateTypeChanged, EStateType, InPrevType, EStateType, InNewType);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FStateTypeChanged, SH_EStateType, InPrevType, SH_EStateType, InNewType);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class THELASTRPG_API USH_CStateComponent : public UActorComponent
@@ -19,19 +19,19 @@ class THELASTRPG_API USH_CStateComponent : public UActorComponent
 
 public:
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsIdleMode() { return Type == EStateType::Idle; }
+		FORCEINLINE bool IsIdleMode() { return Type == SH_EStateType::Idle; }
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsRollMode() { return Type == EStateType::Roll; }
+		FORCEINLINE bool IsRollMode() { return Type == SH_EStateType::Roll; }
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsBackstepMode() { return Type == EStateType::Backstep; }
+		FORCEINLINE bool IsBackstepMode() { return Type == SH_EStateType::Backstep; }
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsEquipMode() { return Type == EStateType::Equip; }
+		FORCEINLINE bool IsEquipMode() { return Type == SH_EStateType::Equip; }
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsActionMode() { return Type == EStateType::Action; }
+		FORCEINLINE bool IsActionMode() { return Type == SH_EStateType::Action; }
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsHittedMode() { return Type == EStateType::Hitted; }
+		FORCEINLINE bool IsHittedMode() { return Type == SH_EStateType::Hitted; }
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsDeadMode() { return Type == EStateType::Dead; }
+		FORCEINLINE bool IsDeadMode() { return Type == SH_EStateType::Dead; }
 
 public:
 	void SetIdleMode();
@@ -43,7 +43,7 @@ public:
 	void SetDeadMode();
 
 private:
-	void ChangeType(EStateType InType);
+	void ChangeType(SH_EStateType InType);
 
 public:	
 	USH_CStateComponent();
@@ -55,5 +55,5 @@ public:
 	UPROPERTY(BlueprintAssignable)
 		FStateTypeChanged OnStateTypeChanged;
 private:
-	EStateType Type;
+	SH_EStateType Type;
 };

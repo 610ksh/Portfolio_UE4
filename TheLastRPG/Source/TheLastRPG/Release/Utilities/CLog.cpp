@@ -1,8 +1,7 @@
 #include "CLog.h"
 #include "Engine.h"
 
-DEFINE_LOG_CATEGORY_STATIC(LOG_, Display, All)
-
+DEFINE_LOG_CATEGORY_STATIC(LOG_GameProject, Display, All)
 
 void CLog::Print(int32 InValue, int32 InKey, float Duration, FColor InColor)
 {
@@ -29,29 +28,30 @@ void CLog::Print(const FRotator & InValue, int32 InKey, float Duration, FColor I
 	GEngine->AddOnScreenDebugMessage(InKey, Duration, InColor, InValue.ToString());
 }
 
+// Display vs Warning
 void CLog::Log(int32 InValue)
 {
-	UE_LOG(LOG_, Display, L"%d", InValue);
+	UE_LOG(LOG_GameProject, Warning, L"%d", InValue); 
 }
 
 void CLog::Log(float InValue)
 {
-	UE_LOG(LOG_, Display, L"%f", InValue);
+	UE_LOG(LOG_GameProject, Warning, L"%f", InValue);
 }
 
 void CLog::Log(const FString& InValue)
 {
-	UE_LOG(LOG_, Display, L"%s", *InValue);
+	UE_LOG(LOG_GameProject, Warning, L"%s", *InValue);
 }
 
 void CLog::Log(const FVector& InValue)
 {
-	UE_LOG(LOG_, Display, L"%s", *InValue.ToString());
+	UE_LOG(LOG_GameProject, Warning, L"%s", *InValue.ToString());
 }
 
 void CLog::Log(const FRotator & InValue)
 {
-	UE_LOG(LOG_, Display, L"%s", *InValue.ToString());
+	UE_LOG(LOG_GameProject, Warning, L"%s", *InValue.ToString());
 }
 
 void CLog::Log(const UObject* InObject)
@@ -61,7 +61,7 @@ void CLog::Log(const UObject* InObject)
 		str.Append(InObject->GetName());
 
 	str.Append(!!InObject ? " Not NULL" : " NULL");
-	UE_LOG(LOG_, Warning, L"%s", *str);
+	UE_LOG(LOG_GameProject, Warning, L"%s", *str);
 }
 
 void CLog::Log(const FString& InFuncName, int32 InLineNumber)
@@ -71,5 +71,5 @@ void CLog::Log(const FString& InFuncName, int32 InLineNumber)
 	str.Append(", ");
 	str.Append(FString::FromInt(InLineNumber));
 
-	UE_LOG(LOG_, Warning, L"%s", *str);
+	UE_LOG(LOG_GameProject, Warning, L"%s", *str);
 }

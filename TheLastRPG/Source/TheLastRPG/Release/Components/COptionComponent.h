@@ -4,7 +4,6 @@
 #include "Components/ActorComponent.h"
 #include "COptionComponent.generated.h"
 
-
 UCLASS( ClassGroup=(GameProject), meta=(BlueprintSpawnableComponent) )
 class THELASTRPG_API UCOptionComponent : public UActorComponent
 {
@@ -19,7 +18,6 @@ private:
 public:
 	FORCEINLINE float GetHorizontalLookRate() { return HorizontalLookRate; }
 	FORCEINLINE float GetVerticalLookRate() { return VerticalLookRate; }
-
 
 public:	
 	UCOptionComponent();

@@ -26,11 +26,11 @@ void USH_CMontagesComponent::BeginPlay()
 		}
 	}
 
-	for (int32 i = 0; i < (int32)EStateType::Max; ++i)
+	for (int32 i = 0; i < (int32)SH_EStateType::Max; ++i)
 	{
 		for (FMontageData* data : datas) // 액셀 데이터
 		{
-			if ((EStateType)i == data->Type) // 타입 같은것만
+			if ((SH_EStateType)i == data->Type) // 타입 같은것만
 			{
 				Datas[i] = data;
 
@@ -42,25 +42,25 @@ void USH_CMontagesComponent::BeginPlay()
 
 void USH_CMontagesComponent::PlayRoll()
 {
-	PlayAnimMontage(EStateType::Roll);
+	PlayAnimMontage(SH_EStateType::Roll);
 }
 
 void USH_CMontagesComponent::PlayBackstep()
 {
-	PlayAnimMontage(EStateType::Backstep);
+	PlayAnimMontage(SH_EStateType::Backstep);
 }
 
 void USH_CMontagesComponent::PlayHitted()
 {
-	PlayAnimMontage(EStateType::Hitted);
+	PlayAnimMontage(SH_EStateType::Hitted);
 }
 
 void USH_CMontagesComponent::PlayDead()
 {
-	PlayAnimMontage(EStateType::Dead);
+	PlayAnimMontage(SH_EStateType::Dead);
 }
 
-void USH_CMontagesComponent::PlayAnimMontage(EStateType InState)
+void USH_CMontagesComponent::PlayAnimMontage(SH_EStateType InState)
 {
 	ACharacter* character = Cast<ACharacter>(GetOwner());
 

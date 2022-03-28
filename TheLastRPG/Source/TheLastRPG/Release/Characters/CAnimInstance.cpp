@@ -1,5 +1,6 @@
 #include "Release/Characters/CAnimInstance.h"
 #include "Release/Global.h"
+
 #include "GameFramework/Character.h"
 
 void UCAnimInstance::NativeBeginPlay()

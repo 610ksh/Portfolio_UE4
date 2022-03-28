@@ -46,7 +46,7 @@ public:
 
 private:
 	UFUNCTION()
-		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
+		void OnStateTypeChanged(SH_EStateType InPrevType, SH_EStateType InNewType);
 
 	UFUNCTION()
 		void RestoreColor();

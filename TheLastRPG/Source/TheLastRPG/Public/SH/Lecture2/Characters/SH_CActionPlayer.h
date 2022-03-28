@@ -70,7 +70,7 @@ private:
 
 private:
 	UFUNCTION() // for Delegate about StateComponent
-		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
+		void OnStateTypeChanged(SH_EStateType InPrevType, SH_EStateType InNewType);
 
 private:
 	void Begin_Roll();

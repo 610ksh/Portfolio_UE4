@@ -13,7 +13,7 @@ struct FMontageData : public FTableRowBase
 
 public:
 	UPROPERTY(EditAnywhere)
-		EStateType Type; // enum은 전방선언이 안됨.
+		SH_EStateType Type; // enum은 전방선언이 안됨.
 
 	UPROPERTY(EditAnywhere)
 		class UAnimMontage* AnimMontage;
@@ -47,8 +47,8 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	void PlayAnimMontage(EStateType InState);
+	void PlayAnimMontage(SH_EStateType InState);
 
 private:
-	FMontageData* Datas[(int32)EStateType::Max];
+	FMontageData* Datas[(int32)SH_EStateType::Max];
 };

@@ -184,20 +184,20 @@ void ASH_CActionPlayer::OnAvoid()
 	State->SetRollMode(); // 뒤로가는거 아니면 Roll
 }
 
-void ASH_CActionPlayer::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
+void ASH_CActionPlayer::OnStateTypeChanged(SH_EStateType InPrevType, SH_EStateType InNewType)
 {
 	switch (InNewType)
 	{
-	case EStateType::Roll:
+	case SH_EStateType::Roll:
 		Begin_Roll();
 		break;
-	case EStateType::Backstep:
+	case SH_EStateType::Backstep:
 		Begin_Backstep();
 		break;
-	case EStateType::Hitted:
+	case SH_EStateType::Hitted:
 		Hitted();
 		break;
-	case EStateType::Dead:
+	case SH_EStateType::Dead:
 		Dead();
 		break;
 	}

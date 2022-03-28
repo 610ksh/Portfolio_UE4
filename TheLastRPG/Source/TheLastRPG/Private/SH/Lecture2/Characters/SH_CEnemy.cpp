@@ -94,14 +94,14 @@ void ASH_CEnemy::ChangeColor(FLinearColor InColor)
 	LogoMaterial->SetVectorParameterValue("BodyColor", InColor);
 }
 
-void ASH_CEnemy::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
+void ASH_CEnemy::OnStateTypeChanged(SH_EStateType InPrevType, SH_EStateType InNewType)
 {
 	switch (InNewType)
 	{
-	case EStateType::Hitted:
+	case SH_EStateType::Hitted:
 		Hitted();
 		break;
-	case EStateType::Dead:
+	case SH_EStateType::Dead:
 		Dead();
 		break;
 	}

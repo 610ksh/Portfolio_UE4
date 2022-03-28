@@ -4,9 +4,6 @@
 #include "Animation/AnimInstance.h"
 #include "CAnimInstance.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class THELASTRPG_API UCAnimInstance : public UAnimInstance
 {

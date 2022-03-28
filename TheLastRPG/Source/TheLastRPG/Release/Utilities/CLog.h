@@ -7,14 +7,14 @@
 class THELASTRPG_API CLog
 {
 public:
-	/// 화면 출력을 위한 함수
+	/// Print viewport (Screen)
 	static void Print(int32 InValue, int32 InKey = -1, float Duration = 10.0f, FColor InColor = FColor::Blue);
 	static void Print(float InValue, int32 InKey = -1, float Duration = 10.0f, FColor InColor = FColor::Blue);
 	static void Print(const FString& InValue, int32 InKey = -1, float Duration = 10.0f, FColor InColor = FColor::Blue);
 	static void Print(const FVector& InValue, int32 InKey = -1, float Duration = 10.0f, FColor InColor = FColor::Blue);
 	static void Print(const FRotator& InValue, int32 InKey = -1, float Duration = 10.0f, FColor InColor = FColor::Blue);
 
-	/// 출력 로그를 위한 함수
+	/// Print log
 	static void Log(int32 InValue);
 	static void Log(float InValue);
 	static void Log(const FString& InValue);

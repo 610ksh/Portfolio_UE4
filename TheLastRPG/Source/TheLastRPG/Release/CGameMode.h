@@ -9,4 +9,6 @@ class THELASTRPG_API ACGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+public:
+	ACGameMode();
 };
