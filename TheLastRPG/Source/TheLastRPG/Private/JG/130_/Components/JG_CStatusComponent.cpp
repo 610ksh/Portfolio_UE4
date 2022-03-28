@@ -14,7 +14,6 @@ UJG_CStatusComponent::UJG_CStatusComponent()
 void UJG_CStatusComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 

@@ -7,7 +7,7 @@
 #include "JG_COptionComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(GameProject), meta=(BlueprintSpawnableComponent) )
 class THELASTRPG_API UJG_COptionComponent : public UActorComponent
 {
 	GENERATED_BODY()

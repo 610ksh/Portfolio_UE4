@@ -66,3 +66,4 @@ void AJG_CEquipment::Unequip_Implementation()
 	OwnerCharacter->bUseControllerRotationYaw = false;
 	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = true;
 }
+
