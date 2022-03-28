@@ -17,7 +17,7 @@ class THELASTRPG_API UJG_CAnimInstance : public UAnimInstance
 
 protected: //블루프린트는 상속받아서 접근하기 때문에 private X
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-		float Speed;
+	float Speed;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 	float Direction;
