@@ -34,9 +34,9 @@ ACCountess::ACCountess()
 	Helpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/SungHoon/Projects/Characters/ABP_CCountess.ABP_CCountess_C'");
 	GetMesh()->SetAnimInstanceClass(animInstance);
 
-	SpringArm->SetRelativeLocation(FVector(0, 0, 150));
+	SpringArm->SetRelativeLocation(FVector(0, 0, 140));
 	SpringArm->SetRelativeRotation(FRotator(0, 90, 0));
-	SpringArm->TargetArmLength = 200.f;
+	SpringArm->TargetArmLength = 250.f;
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->bEnableCameraLag = true;
 	SpringArm->bUsePawnControlRotation = true;
@@ -50,7 +50,6 @@ void ACCountess::BeginPlay()
 	Super::BeginPlay();
 	
 	State->OnCountessStateTypeChanged.AddDynamic(this, &ACCountess::OnStateTypeChanged);
-	//State->SetIdleMode();
 }
 
 void ACCountess::Tick(float DeltaTime)
@@ -133,22 +132,35 @@ void ACCountess::OnStateTypeChanged(ECountessStateType InPrevType, ECountessStat
 
 void ACCountess::Begin_Roll()
 {
+	bUseControllerRotationYaw = false;
+	GetCharacterMovement()->bOrientRotationToMovement = true;
 
-	End_Roll();
+	FVector start = GetActorLocation();
+	FVector from = start + GetVelocity().GetSafeNormal2D();
+	SetActorRotation(UKismetMathLibrary::FindLookAtRotation(start, from));
+
+	Montages->PlayRoll();
 }
 
 void ACCountess::End_Roll()
 {
+	State->SetIdleMode();
 	CLog::Log(L"End_Roll");
 }
 
 void ACCountess::Begin_Backstep()
 {
+	bUseControllerRotationYaw = true;
+	GetCharacterMovement()->bOrientRotationToMovement = false;
 
-	End_Backstep();
+	Montages->PlayBackstep();
 }
 
 void ACCountess::End_Backstep()
 {
+	bUseControllerRotationYaw = false;
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+
+	State->SetIdleMode();
 	CLog::Log(L"End_Backstep");
 }

@@ -27,6 +27,16 @@ void UCStateComponent::SetBackstepMode()
 	ChangeType(ECountessStateType::Backstep);
 }
 
+void UCStateComponent::SetEquipMode()
+{
+	ChangeType(ECountessStateType::Equip);
+}
+
+void UCStateComponent::SetUnequipMode()
+{
+	ChangeType(ECountessStateType::Unequip);
+}
+
 void UCStateComponent::ChangeType(ECountessStateType InType)
 {
 	ECountessStateType prevType = Type;

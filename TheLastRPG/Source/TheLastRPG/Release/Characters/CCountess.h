@@ -1,12 +1,13 @@
 #pragma once
 
-#include "Release/Components/CStateComponent.h"
 #include "CoreMinimal.h"
+#include "Release/Components/CStateComponent.h"
+#include "Release/Characters/ICharacter.h"
 #include "GameFramework/Character.h"
 #include "CCountess.generated.h"
 
 UCLASS()
-class THELASTRPG_API ACCountess : public ACharacter
+class THELASTRPG_API ACCountess : public ACharacter, public IICharacter
 {
 	GENERATED_BODY()
 
@@ -51,8 +52,9 @@ private:
 
 private:
 	void Begin_Roll();
-	void End_Roll();
-
 	void Begin_Backstep();
-	void End_Backstep();
+
+public:
+	void End_Roll() override;
+	void End_Backstep() override;
 };
