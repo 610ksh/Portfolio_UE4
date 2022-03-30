@@ -5,14 +5,18 @@
 #include "Release/Actions/CAction.h"
 #include "CEquipment.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEquipmentDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FUnequipmentDelegate);
+
 UCLASS()
 class THELASTRPG_API ACEquipment : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	FORCEINLINE void SetData(FEquipmentData InData) { Data = InData; }
-	
+	FORCEINLINE void SetEquipData(FEquipmentData InData) { EquipData = InData; }
+	FORCEINLINE void SetUnequipData(FEquipmentData InData) { UnequipData = InData; }
+
 public:	
 	ACEquipment();
 
@@ -33,8 +37,23 @@ public:
 		void Unequip();
 	void Unequip_Implementation();
 
+	UFUNCTION(BlueprintNativeEvent)
+		void Begin_Unequip();
+	void Begin_Unequip_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent)
+		void End_Unequip();
+	void End_Unequip_Implementation();
+	
+
 protected:
 	virtual void BeginPlay() override;
+
+public:
+	UPROPERTY(BlueprintAssignable)
+		FEquipmentDelegate OnEquipmentDelegate;
+	UPROPERTY(BlueprintAssignable)
+		FUnequipmentDelegate OnUnequipmentDelegate;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
@@ -47,6 +66,6 @@ protected:
 		class UCStatusComponent* Status;
 
 private:
-	FEquipmentData Data;
-
+	FEquipmentData EquipData;
+	FEquipmentData UnequipData;
 };

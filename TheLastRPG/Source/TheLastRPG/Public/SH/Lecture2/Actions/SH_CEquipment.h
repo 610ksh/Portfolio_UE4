@@ -5,8 +5,8 @@
 #include "SH/Lecture2/Actions/SH_CActionData.h"
 #include "SH_CEquipment.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEquipmentDelegate);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FUnequipmentDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEquipmentDelegate_SH);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FUnequipmentDelegate_SH);
 
 UCLASS()
 class THELASTRPG_API ASH_CEquipment : public AActor
@@ -48,10 +48,10 @@ protected:
 
 public:
 	UPROPERTY(BlueprintAssignable)
-		FEquipmentDelegate OnEquipmentDelegate;
+		FEquipmentDelegate_SH OnEquipmentDelegate;
 
 	UPROPERTY(BlueprintAssignable)
-		FUnequipmentDelegate OnUnequipmentDelegate;
+		FUnequipmentDelegate_SH OnUnequipmentDelegate;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)

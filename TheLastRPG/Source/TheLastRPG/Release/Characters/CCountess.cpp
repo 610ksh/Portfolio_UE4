@@ -1,4 +1,5 @@
 #include "Release/Characters/CCountess.h"
+#include "Release/Components/CActionComponent.h"
 #include "Release/Components/COptionComponent.h"
 #include "Release/Components/CStatusComponent.h"
 #include "Release/Components/CMontageComponent.h"
@@ -17,6 +18,7 @@ ACCountess::ACCountess()
 	Helpers::CreateComponent<USpringArmComponent>(this, &SpringArm, "SpringArm", GetMesh());
 	Helpers::CreateComponent<UCameraComponent>(this, &Camera, "Camera", SpringArm);
 
+	Helpers::CreateActorComponent<UCActionComponent>(this, &Action, "Action");
 	Helpers::CreateActorComponent<UCOptionComponent>(this, &Option, "Option");
 	Helpers::CreateActorComponent<UCStatusComponent>(this, &Status, "Status");
 	Helpers::CreateActorComponent<UCStateComponent>(this, &State, "State");
@@ -48,7 +50,7 @@ ACCountess::ACCountess()
 void ACCountess::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	State->OnCountessStateTypeChanged.AddDynamic(this, &ACCountess::OnStateTypeChanged);
 }
 
@@ -68,6 +70,7 @@ void ACCountess::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis("LookUp", this, &ACCountess::OnVerticalLook);
 
 	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &ACCountess::OnAvoid);
+	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ACCountess::OnOneHand);
 }
 
 void ACCountess::OnMoveForward(float InAxis)
@@ -113,6 +116,13 @@ void ACCountess::OnAvoid()
 	State->SetRollMode();
 }
 
+void ACCountess::OnOneHand()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetOneHandMode();
+}
+
 void ACCountess::OnStateTypeChanged(ECountessStateType InPrevType, ECountessStateType InNewType)
 {
 	switch (InNewType)
@@ -144,6 +154,12 @@ void ACCountess::Begin_Roll()
 
 void ACCountess::End_Roll()
 {
+	if (Action->IsUnarmedMode() == false)
+	{
+		bUseControllerRotationYaw = true;
+		GetCharacterMovement()->bOrientRotationToMovement = false;
+	}
+
 	State->SetIdleMode();
 	CLog::Log(L"End_Roll");
 }
@@ -158,8 +174,11 @@ void ACCountess::Begin_Backstep()
 
 void ACCountess::End_Backstep()
 {
-	bUseControllerRotationYaw = false;
-	GetCharacterMovement()->bOrientRotationToMovement = true;
+	if (Action->IsUnarmedMode() == false)
+	{
+		bUseControllerRotationYaw = false;
+		GetCharacterMovement()->bOrientRotationToMovement = true;
+	}
 
 	State->SetIdleMode();
 	CLog::Log(L"End_Backstep");

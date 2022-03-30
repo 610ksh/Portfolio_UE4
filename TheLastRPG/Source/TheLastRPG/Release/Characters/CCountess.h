@@ -19,6 +19,8 @@ private: // Scene component
 
 private: // Actor component
 	UPROPERTY(VisibleDefaultsOnly)
+		class UCActionComponent* Action;
+	UPROPERTY(VisibleDefaultsOnly)
 		class UCOptionComponent* Option;
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCStatusComponent* Status;
@@ -57,4 +59,7 @@ private:
 public:
 	void End_Roll() override;
 	void End_Backstep() override;
+
+private:
+	void OnOneHand();
 };
