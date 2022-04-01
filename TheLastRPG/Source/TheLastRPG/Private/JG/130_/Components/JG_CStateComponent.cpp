@@ -11,6 +11,7 @@ UJG_CStateComponent::UJG_CStateComponent()
 }
 
 
+
 // Called when the game starts
 void UJG_CStateComponent::BeginPlay()
 {

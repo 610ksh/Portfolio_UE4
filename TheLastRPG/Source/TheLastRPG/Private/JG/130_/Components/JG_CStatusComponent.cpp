@@ -10,6 +10,7 @@ UJG_CStatusComponent::UJG_CStatusComponent()
 }
 
 
+
 // Called when the game starts or when spawned
 void UJG_CStatusComponent::BeginPlay()
 {

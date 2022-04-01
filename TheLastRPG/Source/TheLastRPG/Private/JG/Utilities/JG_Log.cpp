@@ -63,6 +63,7 @@ void JG_Log::Log(const UObject* InObject)
 	FString str;
 	if (!!InObject)
 		str.Append(InObject->GetName()); //+=도 되지만 강사는 사용하지 않음
+	//str += InObject->GetName();
 
 	str.Append(!!InObject ? " Not NULL" : " Null");
 	UE_LOG(JG_GameProject, Display, L"%s", *str);

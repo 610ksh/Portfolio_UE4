@@ -13,6 +13,7 @@ FString UJG_AnimNotifyState_Equip::GetNotifyName_Implementation() const
 
 void UJG_AnimNotifyState_Equip::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration)
 {
+
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
 	JG_CheckNull(MeshComp);
 
