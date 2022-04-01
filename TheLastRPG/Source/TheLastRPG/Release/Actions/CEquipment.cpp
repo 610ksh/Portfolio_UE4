@@ -1,5 +1,6 @@
 #include "Release/Actions/CEquipment.h"
 #include "Release/Global.h"
+#include "Release/Components/CActionComponent.h"
 #include "Release/Components/CStateComponent.h"
 #include "Release/Components/CStatusComponent.h"
 
@@ -46,7 +47,8 @@ void ACEquipment::End_Equip_Implementation()
 	State->SetIdleMode();
 }
 
-void ACEquipment::Unequip_Implementation()
+/// Unequip
+void ACEquipment::Unequip_Implementation() // 4
 {
 	State->SetUnequipMode();
 
@@ -63,11 +65,11 @@ void ACEquipment::Begin_Unequip_Implementation()
 
 void ACEquipment::End_Unequip_Implementation()
 {
-	if (OnUnequipmentDelegate.IsBound())
-		OnUnequipmentDelegate.Broadcast();
-
 	State->SetIdleMode();
 
 	OwnerCharacter->bUseControllerRotationYaw = false;
 	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = true;
+
+	if (OnUnequipmentDelegate.IsBound())
+		OnUnequipmentDelegate.Broadcast();
 }

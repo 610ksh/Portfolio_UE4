@@ -174,7 +174,7 @@ void ACCountess::Begin_Backstep()
 
 void ACCountess::End_Backstep()
 {
-	if (Action->IsUnarmedMode() == false)
+	if (Action->IsUnarmedMode())
 	{
 		bUseControllerRotationYaw = false;
 		GetCharacterMovement()->bOrientRotationToMovement = true;

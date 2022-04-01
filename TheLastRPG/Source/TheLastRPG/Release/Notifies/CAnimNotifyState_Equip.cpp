@@ -6,7 +6,7 @@
 
 FString UCAnimNotifyState_Equip::GetNotifyName_Implementation() const
 {
-	return "Equip";
+	return "Equip_State";
 }
 
 void UCAnimNotifyState_Equip::NotifyBegin(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation, float TotalDuration)

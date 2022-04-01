@@ -14,13 +14,14 @@ class THELASTRPG_API ACEquipment : public AActor
 	GENERATED_BODY()
 
 public:
-	FORCEINLINE void SetEquipData(FEquipmentData InData) { EquipData = InData; }
-	FORCEINLINE void SetUnequipData(FEquipmentData InData) { UnequipData = InData; }
+	FORCEINLINE void SetEquipData(const FEquipmentData& InData) { EquipData = InData; }
+	FORCEINLINE void SetUnequipData(const FEquipmentData& InData) { UnequipData = InData; }
 
-public:	
+public:
 	ACEquipment();
 
 public:
+	/// Equip
 	UFUNCTION(BlueprintNativeEvent)
 		void Equip();
 	void Equip_Implementation();
@@ -33,6 +34,7 @@ public:
 		void End_Equip();
 	void End_Equip_Implementation();
 
+	/// Unequip
 	UFUNCTION(BlueprintNativeEvent)
 		void Unequip();
 	void Unequip_Implementation();
@@ -44,7 +46,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 		void End_Unequip();
 	void End_Unequip_Implementation();
-	
+
 
 protected:
 	virtual void BeginPlay() override;

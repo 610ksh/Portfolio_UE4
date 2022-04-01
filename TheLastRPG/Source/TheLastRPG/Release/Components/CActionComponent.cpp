@@ -19,22 +19,24 @@ void UCActionComponent::BeginPlay()
 		if (!!Datas[i])
 			Datas[i]->BeginPlay(character);
 	}
-
 }
 
-void UCActionComponent::SetUnarmedMode()
+void UCActionComponent::SetUnarmedMode_Begin() // 3
 {
-	if (!!Datas[(int32)Type]) 
+	if (!!Datas[(int32)Type])
 	{ // 현재 액션 타입에 대한 DataAsset이 존재한다면
 		ACEquipment* equipment = Datas[(int32)Type]->GetEquipment();
 		if (!!equipment)
 			equipment->Unequip(); // 장비 해제
 	}
+}
 
+void UCActionComponent::SetUnarmedMode() // 3
+{
 	ChangeType(ECountessActionType::Unarmed);
 }
 
-void UCActionComponent::SetOneHandMode()
+void UCActionComponent::SetOneHandMode() // 1
 {
 	SetMode(ECountessActionType::OneHand);
 }
@@ -44,23 +46,26 @@ void UCActionComponent::SetTwoHandMode()
 	SetMode(ECountessActionType::TwoHand);
 }
 
-void UCActionComponent::SetMode(ECountessActionType InType)
+void UCActionComponent::SetMode(ECountessActionType InType) // 2
 {
 	if (Type == InType) // 같은 무기 2번 선택
 	{
-		SetUnarmedMode();
+		SetUnarmedMode_Begin();
 		return;
 	}
 	else if (IsUnarmedMode() == false)
 	{ // 현재 Unarmed가 아니면서 && 이전과 다른 무기를 눌렀다면
-		ACEquipment* equipment = Datas[(int32)Type]->GetEquipment(); // 기존걸 벗고
-		CheckNull(equipment);
-		equipment->Unequip();
+		//ACEquipment* equipment = Datas[(int32)Type]->GetEquipment(); // 기존걸 벗고
+		//CheckNull(equipment);
+		//equipment->Unequip();
 	}
 
-	ACEquipment* equipment = Datas[(int32)InType]->GetEquipment();
-	CheckNull(equipment);
-	equipment->Equip();
+	if (!!Datas[(int32)InType]) // 데이터가 없을 수도 있기 때문에
+	{
+		ACEquipment* equipment = Datas[(int32)InType]->GetEquipment();
+		CheckNull(equipment);
+		equipment->Equip();
+	}
 
 	ChangeType(InType);
 }

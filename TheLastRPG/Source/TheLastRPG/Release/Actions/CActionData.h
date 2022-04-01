@@ -12,7 +12,7 @@ class THELASTRPG_API UCActionData : public UDataAsset
 	
 public:
 	FORCEINLINE class ACEquipment* GetEquipment() { return Equipment; }
-
+	
 public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		TSubclassOf<class ACAttachment> AttachmentClass;

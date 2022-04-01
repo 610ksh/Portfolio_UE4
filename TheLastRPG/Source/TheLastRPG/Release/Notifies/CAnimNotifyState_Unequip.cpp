@@ -6,7 +6,7 @@
 
 FString UCAnimNotifyState_Unequip::GetNotifyName_Implementation() const
 {
-	return "Unequip";
+	return "Unequip_State";
 }
 
 void UCAnimNotifyState_Unequip::NotifyBegin(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation, float TotalDuration)
@@ -17,8 +17,8 @@ void UCAnimNotifyState_Unequip::NotifyBegin(USkeletalMeshComponent * MeshComp, U
 
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
-	CLog::Print(L"Begin");
-	action->GetCurrentActionData()->GetEquipment()->End_Unequip(); // reverse
+
+	action->GetCurrentActionData()->GetEquipment()->Begin_Unequip();
 }
 
 void UCAnimNotifyState_Unequip::NotifyEnd(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation)
@@ -29,6 +29,7 @@ void UCAnimNotifyState_Unequip::NotifyEnd(USkeletalMeshComponent * MeshComp, UAn
 
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
-	CLog::Print(L"END");
-	action->GetCurrentActionData()->GetEquipment()->Begin_Unequip(); // reverse
+
+	action->GetCurrentActionData()->GetEquipment()->End_Unequip();
+	action->SetUnarmedMode();
 }

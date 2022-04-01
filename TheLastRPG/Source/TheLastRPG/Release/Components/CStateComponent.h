@@ -50,6 +50,6 @@ public:
 		FCountessStateTypeChanged OnCountessStateTypeChanged;
 
 private:
-	UPROPERTY(VisibleDefaultsOnly)
+	UPROPERTY(VisibleAnywhere)
 		ECountessStateType Type;
 };

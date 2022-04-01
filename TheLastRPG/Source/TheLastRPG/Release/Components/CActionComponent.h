@@ -32,6 +32,7 @@ public:
 		FORCEINLINE bool IsOneHandMode() { return Type == ECountessActionType::OneHand; }
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsTwoHandMode() { return Type == ECountessActionType::TwoHand; }
+
 public:	
 	UCActionComponent();
 
@@ -43,6 +44,7 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	void SetUnarmedMode_Begin();
 	void SetMode(ECountessActionType InType);
 	void ChangeType(ECountessActionType InNewType);
 
@@ -50,5 +52,7 @@ private:
 	FCountessActionTypeChanged OnCountessActionTypeChanged;
 
 private:
-	ECountessActionType Type;
+	UPROPERTY(VisibleAnywhere)
+		ECountessActionType Type;
+	/// TODO
 };

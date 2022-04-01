@@ -4,6 +4,7 @@
 #include "Release/Global.h"
 
 #include "GameFramework/Character.h"
+#include "Components/SkeletalMeshComponent.h"
 
 void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 {
@@ -19,13 +20,16 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 	// Equipment (Action)
 	{
 		Equipment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACEquipment>(EquipmentClass, transform, InOwnerCharacter);
-		Equipment->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
 		Equipment->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Equipment");
+		Equipment->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
 		Equipment->SetEquipData(EquipmentData);
 		Equipment->SetUnequipData(UnequipmentData);
 		UGameplayStatics::FinishSpawningActor(Equipment, transform);
 
-		Equipment->OnEquipmentDelegate.AddDynamic(Attachment, &ACAttachment::OnEquip);
-		Equipment->OnUnequipmentDelegate.AddDynamic(Attachment, &ACAttachment::OnUnequip);
+		if (!!Attachment)
+		{
+			Equipment->OnEquipmentDelegate.AddDynamic(Attachment, &ACAttachment::OnEquip);
+			Equipment->OnUnequipmentDelegate.AddDynamic(Attachment, &ACAttachment::OnUnequip);
+		}
 	}
 }
