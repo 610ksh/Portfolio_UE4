@@ -17,9 +17,7 @@ void UCAnimNotify_Unequip_End::Notify(USkeletalMeshComponent * MeshComp, UAnimSe
 
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
-	CLog::Print(action->GetName());
-	CLog::Print(action->GetCurrentActionData()->GetName()); // 여기서 읽지 못함. 
-	/// 결론 : GEtCurrentActionData를 못가져옴
-	CLog::Print(action->GetCurrentActionData()->GetEquipment()->GetName());
+
 	action->GetCurrentActionData()->GetEquipment()->End_Unequip();
+	action->SetUnarmedMode();
 }

@@ -17,7 +17,7 @@ void UCAnimNotifyState_Unequip::NotifyBegin(USkeletalMeshComponent * MeshComp, U
 
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
-
+	
 	action->GetCurrentActionData()->GetEquipment()->Begin_Unequip();
 }
 

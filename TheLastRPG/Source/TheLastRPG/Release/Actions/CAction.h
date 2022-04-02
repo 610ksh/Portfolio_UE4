@@ -4,8 +4,9 @@
 #include "UObject/NoExportTypes.h"
 #include "CAction.generated.h"
 
+/// Data for Equip, Unequip
 USTRUCT(BlueprintType)
-struct FEquipmentData // 무기 장착관련 몽타주 데이터
+struct FEquipmentData
 {
 	GENERATED_BODY()
 
@@ -26,6 +27,7 @@ public:
 		bool bPawnControl = true;
 };
 
+/// Action data for Attack
 USTRUCT(BlueprintType)
 struct FDoActionData : public FEquipmentData
 {

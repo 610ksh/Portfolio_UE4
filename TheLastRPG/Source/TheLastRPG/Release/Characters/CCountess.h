@@ -46,13 +46,13 @@ private:
 	void OnVerticalLook(float InAxis);
 
 private:
-	void OnAvoid();
-
-private:
 	UFUNCTION()
 		void OnStateTypeChanged(ECountessStateType InPrevType, ECountessStateType InNewType);
 
 private:
+	/// Movement
+	void OnAvoid();
+
 	void Begin_Roll();
 	void Begin_Backstep();
 
@@ -61,5 +61,9 @@ public:
 	void End_Backstep() override;
 
 private:
+	/// Equip
 	void OnOneHand();
+
+	/// Attack
+	void OnDoAction();
 };

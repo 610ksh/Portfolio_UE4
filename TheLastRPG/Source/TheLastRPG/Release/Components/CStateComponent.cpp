@@ -9,7 +9,6 @@ UCStateComponent::UCStateComponent()
 void UCStateComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 void UCStateComponent::SetIdleMode()
@@ -35,6 +34,11 @@ void UCStateComponent::SetEquipMode()
 void UCStateComponent::SetUnequipMode()
 {
 	ChangeType(ECountessStateType::Unequip);
+}
+
+void UCStateComponent::SetActionMode()
+{
+	ChangeType(ECountessStateType::Action);
 }
 
 void UCStateComponent::ChangeType(ECountessStateType InType)

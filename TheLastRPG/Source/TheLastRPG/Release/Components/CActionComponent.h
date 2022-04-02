@@ -40,6 +40,9 @@ public:
 	void SetOneHandMode();
 	void SetTwoHandMode();
 
+public: // Attack
+	void DoAction();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -48,7 +51,7 @@ private:
 	void SetMode(ECountessActionType InType);
 	void ChangeType(ECountessActionType InNewType);
 
-private:
+public:
 	FCountessActionTypeChanged OnCountessActionTypeChanged;
 
 private:

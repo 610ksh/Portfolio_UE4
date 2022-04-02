@@ -54,11 +54,35 @@ void ACCountess::BeginPlay()
 	State->OnCountessStateTypeChanged.AddDynamic(this, &ACCountess::OnStateTypeChanged);
 }
 
+#pragma region Delegate
+/// DeleGate
+
+void ACCountess::OnStateTypeChanged(ECountessStateType InPrevType, ECountessStateType InNewType)
+{
+	switch (InNewType)
+	{
+	case ECountessStateType::Idle:
+		break;
+	case ECountessStateType::Roll:
+		Begin_Roll();
+		break;
+	case ECountessStateType::Backstep:
+		Begin_Backstep();
+		break;
+	default:
+		break;
+	}
+}
+#pragma endregion
+
 void ACCountess::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
+
+#pragma region InputComponent
+/// InputComponent, Bind function
 
 void ACCountess::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -71,6 +95,7 @@ void ACCountess::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &ACCountess::OnAvoid);
 	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ACCountess::OnOneHand);
+	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACCountess::OnDoAction);
 }
 
 void ACCountess::OnMoveForward(float InAxis)
@@ -102,6 +127,10 @@ void ACCountess::OnVerticalLook(float InAxis)
 	float lookUpRate = Option->GetVerticalLookRate();
 	AddControllerPitchInput(InAxis * lookUpRate * GetWorld()->GetDeltaSeconds());
 }
+#pragma endregion
+
+#pragma region Movement
+/// Movement, Roll, Backstep
 
 void ACCountess::OnAvoid()
 {
@@ -114,30 +143,6 @@ void ACCountess::OnAvoid()
 		return;
 	}
 	State->SetRollMode();
-}
-
-void ACCountess::OnOneHand()
-{
-	CheckFalse(State->IsIdleMode());
-
-	Action->SetOneHandMode();
-}
-
-void ACCountess::OnStateTypeChanged(ECountessStateType InPrevType, ECountessStateType InNewType)
-{
-	switch (InNewType)
-	{
-	case ECountessStateType::Idle:
-		break;
-	case ECountessStateType::Roll:
-		Begin_Roll();
-		break;
-	case ECountessStateType::Backstep:
-		Begin_Backstep();
-		break;
-	default:
-		break;
-	}
 }
 
 void ACCountess::Begin_Roll()
@@ -183,3 +188,24 @@ void ACCountess::End_Backstep()
 	State->SetIdleMode();
 	CLog::Log(L"End_Backstep");
 }
+#pragma endregion
+
+#pragma region Equipment
+/// Equip State
+
+void ACCountess::OnOneHand()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetOneHandMode();
+}
+#pragma endregion
+
+#pragma region Attack
+/// Attack
+
+void ACCountess::OnDoAction()
+{
+	Action->DoAction();
+}
+#pragma endregion

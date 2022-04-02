@@ -7,7 +7,7 @@
 UENUM(BlueprintType) // 각 캐릭터마다 만들어주면 됨
 enum class ECountessStateType : uint8
 {
-	Idle, Roll, Backstep, Equip, Unequip, Max,
+	Idle, Roll, Backstep, Equip, Unequip, Action, Max,
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FCountessStateTypeChanged, ECountessStateType, InPrevType, ECountessStateType, InNewType);
@@ -28,6 +28,8 @@ public: // getter
 		FORCEINLINE bool IsEquipMode() { return Type == ECountessStateType::Equip; }
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsUnequipMode() { return Type == ECountessStateType::Unequip; }
+	UFUNCTION(BlueprintPure)
+		FORCEINLINE bool IsActionMode() { return Type == ECountessStateType::Action; }
 
 public: // setter
 	void SetIdleMode();
@@ -35,6 +37,7 @@ public: // setter
 	void SetBackstepMode();
 	void SetEquipMode();
 	void SetUnequipMode();
+	void SetActionMode();
 
 private:
 	void ChangeType(ECountessStateType InType);

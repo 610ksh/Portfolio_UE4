@@ -12,13 +12,18 @@ class THELASTRPG_API UCActionData : public UDataAsset
 	
 public:
 	FORCEINLINE class ACEquipment* GetEquipment() { return Equipment; }
+	FORCEINLINE class ACDoAction* GetDoAction() { return DoAction; }
 	
 public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		TSubclassOf<class ACAttachment> AttachmentClass;
-
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		TSubclassOf<class ACEquipment> EquipmentClass;
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		TSubclassOf<class ACDoAction> DoActionClass;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		TArray<FDoActionData> DoActionDatas;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		FEquipmentData EquipmentData;
@@ -31,4 +36,5 @@ public:
 private:
 	class ACAttachment* Attachment;
 	class ACEquipment* Equipment;
+	class ACDoAction* DoAction;
 };

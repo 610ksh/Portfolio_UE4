@@ -1,12 +1,12 @@
 #include "Release/Components/CActionComponent.h"
 #include "Release/Actions/CActionData.h"
+#include "Release/Actions/CDoAction.h"
 #include "Release/Actions/CEquipment.h"
 #include "Release/Global.h"
 
 UCActionComponent::UCActionComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
-
 }
 
 void UCActionComponent::BeginPlay()
@@ -21,7 +21,7 @@ void UCActionComponent::BeginPlay()
 	}
 }
 
-void UCActionComponent::SetUnarmedMode_Begin() // 3
+void UCActionComponent::SetUnarmedMode_Begin()
 {
 	if (!!Datas[(int32)Type])
 	{ // 현재 액션 타입에 대한 DataAsset이 존재한다면
@@ -31,12 +31,13 @@ void UCActionComponent::SetUnarmedMode_Begin() // 3
 	}
 }
 
-void UCActionComponent::SetUnarmedMode() // 3
-{
+/// Notice : SetUnarmedMode function called notify
+void UCActionComponent::SetUnarmedMode()
+{ 
 	ChangeType(ECountessActionType::Unarmed);
 }
 
-void UCActionComponent::SetOneHandMode() // 1
+void UCActionComponent::SetOneHandMode()
 {
 	SetMode(ECountessActionType::OneHand);
 }
@@ -46,7 +47,20 @@ void UCActionComponent::SetTwoHandMode()
 	SetMode(ECountessActionType::TwoHand);
 }
 
-void UCActionComponent::SetMode(ECountessActionType InType) // 2
+void UCActionComponent::DoAction()
+{
+	CheckTrue(IsUnarmedMode());
+
+	if (!!Datas[(int32)Type])
+	{
+		ACDoAction* action = Datas[(int32)Type]->GetDoAction();
+
+		if (!!action)
+			action->DoAction();
+	}
+}
+
+void UCActionComponent::SetMode(ECountessActionType InType)
 {
 	if (Type == InType) // 같은 무기 2번 선택
 	{
