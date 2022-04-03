@@ -10,6 +10,8 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Materials/MaterialInstanceConstant.h"
+#include "Materials/MaterialInstanceDynamic.h"
 
 ACCountess::ACCountess()
 {
@@ -52,6 +54,18 @@ void ACCountess::BeginPlay()
 	Super::BeginPlay();
 
 	State->OnCountessStateTypeChanged.AddDynamic(this, &ACCountess::OnStateTypeChanged);
+
+	UMaterialInstanceConstant* top;
+	UMaterialInstanceConstant* bottom;
+
+	Helpers::GetAssetDynamic<UMaterialInstanceConstant>(&bottom, "MaterialInstanceConstant'/Game/SungHoon/Projects/Characters/Materials/M_Countess_Bottom_Inst.M_Countess_Bottom_Inst'");
+	Helpers::GetAssetDynamic<UMaterialInstanceConstant>(&top, "MaterialInstanceConstant'/Game/SungHoon/Projects/Characters/Materials/M_Countess_Top_Inst.M_Countess_Top_Inst'");
+
+	BottomMaterial = UMaterialInstanceDynamic::Create(bottom, this);
+	TopMaterial = UMaterialInstanceDynamic::Create(top, this);
+
+	GetMesh()->SetMaterial(1, BottomMaterial);
+	GetMesh()->SetMaterial(2, TopMaterial);
 }
 
 #pragma region Delegate

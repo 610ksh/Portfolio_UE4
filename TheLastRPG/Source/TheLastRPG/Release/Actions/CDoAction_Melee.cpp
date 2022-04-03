@@ -9,8 +9,16 @@ void ACDoAction_Melee::DoAction()
 {
 	Super::DoAction();
 	CheckFalse(Datas.Num() > 0);
-	CheckFalse(State->IsIdleMode());
+	
+	if (bEnableCombo)
+	{
+		bExistCombo = true;
+		bEnableCombo = false;
 
+		return;
+	}
+	
+	CheckFalse(State->IsIdleMode());
 	State->SetActionMode();
 
 	const FDoActionData& data = Datas[0];
@@ -23,12 +31,28 @@ void ACDoAction_Melee::Begin_DoAction()
 {
 	Super::Begin_DoAction();
 
+	CheckFalse(bExistCombo);
+	bExistCombo = false;
+
+	OwnerCharacter->StopAnimMontage();
+	comboIndex++;
+
+	const FDoActionData& data = Datas[comboIndex];
+	CheckNull(data.AnimMontage);
+	OwnerCharacter->PlayAnimMontage(data.AnimMontage, data.PlayRatio, data.StartSection);
+
+	data.bCanMove ? Status->SetMove() : Status->SetStop();
 }
 
 void ACDoAction_Melee::End_DoAction()
 {
 	Super::End_DoAction();
 
+	const FDoActionData& data = Datas[comboIndex];
+	OwnerCharacter->StopAnimMontage();
+
 	State->SetIdleMode();
 	Status->SetMove();
+
+	comboIndex = 0;
 }

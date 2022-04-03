@@ -66,4 +66,9 @@ private:
 
 	/// Attack
 	void OnDoAction();
+
+private:
+	class UMaterialInstanceDynamic* TopMaterial;
+	class UMaterialInstanceDynamic* BottomMaterial;
+
 };
