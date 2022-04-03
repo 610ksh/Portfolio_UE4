@@ -12,6 +12,7 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 	FTransform transform;
 
 	// Attachment (Weapon)
+	if(!!AttachmentClass)
 	{
 		Attachment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACAttachment>(AttachmentClass, transform, InOwnerCharacter);
 		Attachment->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Attachment");
@@ -19,12 +20,14 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 	}
 
 	// Equipment (Action)
+	if (!!EquipmentClass)
 	{
 		Equipment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACEquipment>(EquipmentClass, transform, InOwnerCharacter);
 		Equipment->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Equipment");
 		Equipment->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
 		Equipment->SetEquipData(EquipmentData);
 		Equipment->SetUnequipData(UnequipmentData);
+		Equipment->SetColor(EquipmentColor);
 		UGameplayStatics::FinishSpawningActor(Equipment, transform);
 
 		if (!!Attachment)
@@ -35,6 +38,7 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 	}
 
 	// DoAction
+	if (!!DoActionClass)
 	{
 		DoAction = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACDoAction>(DoActionClass, transform, InOwnerCharacter);
 		DoAction->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_DoAction");

@@ -16,6 +16,7 @@ class THELASTRPG_API ACEquipment : public AActor
 public:
 	FORCEINLINE void SetEquipData(const FEquipmentData& InData) { EquipData = InData; }
 	FORCEINLINE void SetUnequipData(const FEquipmentData& InData) { UnequipData = InData; }
+	FORCEINLINE void SetColor(const FLinearColor& InColor) { Color = InColor; }
 
 public:
 	ACEquipment();
@@ -47,6 +48,8 @@ public:
 		void End_Unequip();
 	void End_Unequip_Implementation();
 
+public:
+	void ChangeColor();
 
 protected:
 	virtual void BeginPlay() override;
@@ -70,4 +73,5 @@ protected:
 private:
 	FEquipmentData EquipData;
 	FEquipmentData UnequipData;
+	FLinearColor Color;
 };

@@ -16,6 +16,7 @@ class THELASTRPG_API IICharacter
 	GENERATED_BODY()
 
 public:
+	virtual void ChangeColor(FLinearColor InColor) = 0;
 	virtual void End_Roll() = 0;
 	virtual void End_Backstep() = 0;
 };

@@ -29,6 +29,8 @@ public:
 		FEquipmentData EquipmentData;
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		FEquipmentData UnequipmentData;
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		FLinearColor EquipmentColor;
 
 public:
 	void BeginPlay(class ACharacter* InOwnerCharacter);

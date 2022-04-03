@@ -38,12 +38,14 @@ ACCountess::ACCountess()
 	Helpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/SungHoon/Projects/Characters/ABP_CCountess.ABP_CCountess_C'");
 	GetMesh()->SetAnimInstanceClass(animInstance);
 
-	SpringArm->SetRelativeLocation(FVector(0, 0, 140));
+	SpringArm->SetRelativeLocation(FVector(0, 0, 200));
 	SpringArm->SetRelativeRotation(FRotator(0, 90, 0));
 	SpringArm->TargetArmLength = 250.f;
 	SpringArm->bDoCollisionTest = false;
 	SpringArm->bEnableCameraLag = true;
 	SpringArm->bUsePawnControlRotation = true;
+	
+	Camera->SetRelativeRotation(FRotator(-10, 0, 0));
 
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
 	GetCharacterMovement()->bOrientRotationToMovement = true;
@@ -66,6 +68,8 @@ void ACCountess::BeginPlay()
 
 	GetMesh()->SetMaterial(1, BottomMaterial);
 	GetMesh()->SetMaterial(2, TopMaterial);
+
+	Action->SetUnarmedMode();
 }
 
 #pragma region Delegate
@@ -223,3 +227,9 @@ void ACCountess::OnDoAction()
 	Action->DoAction();
 }
 #pragma endregion
+
+void ACCountess::ChangeColor(FLinearColor InColor)
+{
+	TopMaterial->SetVectorParameterValue("LatexColor", InColor);
+	BottomMaterial->SetVectorParameterValue("LatexColor", InColor);
+}

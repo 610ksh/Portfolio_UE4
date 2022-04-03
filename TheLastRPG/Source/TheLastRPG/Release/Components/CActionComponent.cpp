@@ -35,6 +35,11 @@ void UCActionComponent::SetUnarmedMode_Begin()
 void UCActionComponent::SetUnarmedMode()
 { 
 	ChangeType(ECountessActionType::Unarmed);
+
+	CheckNull(Datas[(int32)Type]);
+	ACEquipment* equipment = Datas[(int32)Type]->GetEquipment();
+	CheckNull(equipment);
+	equipment->ChangeColor();
 }
 
 void UCActionComponent::SetOneHandMode()

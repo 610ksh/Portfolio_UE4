@@ -67,6 +67,9 @@ private:
 	/// Attack
 	void OnDoAction();
 
+public:
+	virtual void ChangeColor(FLinearColor InColor) override;
+
 private:
 	class UMaterialInstanceDynamic* TopMaterial;
 	class UMaterialInstanceDynamic* BottomMaterial;

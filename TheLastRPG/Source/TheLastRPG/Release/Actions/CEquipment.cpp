@@ -3,6 +3,7 @@
 #include "Release/Components/CActionComponent.h"
 #include "Release/Components/CStateComponent.h"
 #include "Release/Components/CStatusComponent.h"
+#include "Release/Characters/ICharacter.h"
 
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -34,6 +35,8 @@ void ACEquipment::Equip_Implementation()
 	/// player don't rotate when character equip
 	OwnerCharacter->bUseControllerRotationYaw = true;
 	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = false;
+
+	ChangeColor();
 }
 
 void ACEquipment::Begin_Equip_Implementation()
@@ -72,4 +75,11 @@ void ACEquipment::End_Unequip_Implementation()
 
 	if (OnUnequipmentDelegate.IsBound())
 		OnUnequipmentDelegate.Broadcast();
+}
+
+void ACEquipment::ChangeColor()
+{
+	IICharacter* character = Cast<IICharacter>(OwnerCharacter);
+	CheckNull(character);
+	character->ChangeColor(Color);
 }
