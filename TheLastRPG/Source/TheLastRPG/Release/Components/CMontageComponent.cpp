@@ -25,11 +25,11 @@ void UCMontageComponent::BeginPlay()
 	}
 
 	// find Montage data, O(n^2)
-	for (int32 i = 0; i < (int32)ECountessStateType::Max; ++i)
+	for (int32 i = 0; i < (int32)EStateType::Max; ++i)
 	{
 		for (FCountessMontageData* data : datas)
 		{
-			if ((ECountessStateType)i == data->Type)
+			if ((EStateType)i == data->Type)
 			{
 				Datas[i] = data;
 				continue;
@@ -38,7 +38,7 @@ void UCMontageComponent::BeginPlay()
 	}
 }
 
-void UCMontageComponent::PlayAnimMontage(ECountessStateType InState)
+void UCMontageComponent::PlayAnimMontage(EStateType InState)
 {
 	ACharacter* character = Cast<ACharacter>(GetOwner());
 	const FCountessMontageData* data = Datas[(int32)InState];
@@ -54,10 +54,10 @@ void UCMontageComponent::PlayAnimMontage(ECountessStateType InState)
 
 void UCMontageComponent::PlayRoll()
 {
-	PlayAnimMontage(ECountessStateType::Roll);
+	PlayAnimMontage(EStateType::Roll);
 }
 
 void UCMontageComponent::PlayBackstep()
 {
-	PlayAnimMontage(ECountessStateType::Backstep);
+	PlayAnimMontage(EStateType::Backstep);
 }

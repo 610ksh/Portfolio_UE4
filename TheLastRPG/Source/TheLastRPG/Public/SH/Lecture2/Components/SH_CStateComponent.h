@@ -10,7 +10,7 @@ enum class SH_EStateType : uint8
 	Idle, Roll, Backstep, Equip, Action, Hitted, Dead, Max,
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FStateTypeChanged, SH_EStateType, InPrevType, SH_EStateType, InNewType);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSH_StateTypeChanged, SH_EStateType, InPrevType, SH_EStateType, InNewType);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class THELASTRPG_API USH_CStateComponent : public UActorComponent
@@ -53,7 +53,7 @@ protected:
 
 public:
 	UPROPERTY(BlueprintAssignable)
-		FStateTypeChanged OnStateTypeChanged;
+		FSH_StateTypeChanged OnStateTypeChanged;
 private:
 	SH_EStateType Type;
 };

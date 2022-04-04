@@ -1,7 +1,7 @@
 #include "Release/Actions/CActionData.h"
-#include "Release/Actions/CDoAction.h"
 #include "Release/Actions/CAttachment.h"
 #include "Release/Actions/CEquipment.h"
+#include "Release/Actions/CDoAction.h"
 #include "Release/Global.h"
 
 #include "GameFramework/Character.h"
@@ -45,5 +45,11 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		DoAction->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
 		DoAction->SetDatas(DoActionDatas);
 		UGameplayStatics::FinishSpawningActor(DoAction, transform);
+
+		if (!!Attachment)
+		{
+			Attachment->OnAttachmentBeginOverlap.AddDynamic(DoAction, &ACDoAction::OnAttachmentBeginOverlap);
+			Attachment->OnAttachmentEndOverlap.AddDynamic(DoAction, &ACDoAction::OnAttachmentEndOverlap);
+		}
 	}
 }

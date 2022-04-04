@@ -4,10 +4,10 @@
 #include "GameFramework/Actor.h"
 #include "SH_CAttachment.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FAttachmentBeginOverlap, class ACharacter*, InAttacker, class AActor*, InAttackCauser, class ACharacter*, InOtherCharacter);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FAttachmentEndOverlap, class ACharacter*, InAttacker, class AActor*, InAttackCauser, class ACharacter*, InOtherCharacter);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FAttachmentBeginOverlap_SH, class ACharacter*, InAttacker, class AActor*, InAttackCauser, class ACharacter*, InOtherCharacter);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FAttachmentEndOverlap_SH, class ACharacter*, InAttacker, class AActor*, InAttackCauser, class ACharacter*, InOtherCharacter);
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAttachmentCollision);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAttachmentCollision_SH);
 
 UCLASS()
 class THELASTRPG_API ASH_CAttachment : public AActor
@@ -60,13 +60,13 @@ private:
 
 public:
 	UPROPERTY(BlueprintAssignable)
-		FAttachmentBeginOverlap OnAttachmentBeginOverlap;
+		FAttachmentBeginOverlap_SH OnAttachmentBeginOverlap;
 
 	UPROPERTY(BlueprintAssignable)
-		FAttachmentEndOverlap OnAttachmentEndOverlap;
+		FAttachmentEndOverlap_SH OnAttachmentEndOverlap;
 
 	UPROPERTY(BlueprintAssignable)
-		FAttachmentCollision OnAttachmentCollision;
+		FAttachmentCollision_SH OnAttachmentCollision;
 	UPROPERTY(BlueprintAssignable)
-		FAttachmentCollision OffAttachmentCollision;
+		FAttachmentCollision_SH OffAttachmentCollision;
 };

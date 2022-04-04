@@ -55,7 +55,7 @@ void ACCountess::BeginPlay()
 {
 	Super::BeginPlay();
 
-	State->OnCountessStateTypeChanged.AddDynamic(this, &ACCountess::OnStateTypeChanged);
+	State->OnStateTypeChanged.AddDynamic(this, &ACCountess::OnStateTypeChanged);
 
 	UMaterialInstanceConstant* top;
 	UMaterialInstanceConstant* bottom;
@@ -75,16 +75,16 @@ void ACCountess::BeginPlay()
 #pragma region Delegate
 /// DeleGate
 
-void ACCountess::OnStateTypeChanged(ECountessStateType InPrevType, ECountessStateType InNewType)
+void ACCountess::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 {
 	switch (InNewType)
 	{
-	case ECountessStateType::Idle:
+	case EStateType::Idle:
 		break;
-	case ECountessStateType::Roll:
+	case EStateType::Roll:
 		Begin_Roll();
 		break;
-	case ECountessStateType::Backstep:
+	case EStateType::Backstep:
 		Begin_Backstep();
 		break;
 	default:

@@ -13,39 +13,44 @@ void UCStateComponent::BeginPlay()
 
 void UCStateComponent::SetIdleMode()
 {
-	ChangeType(ECountessStateType::Idle);
+	ChangeType(EStateType::Idle);
 }
 
 void UCStateComponent::SetRollMode()
 {
-	ChangeType(ECountessStateType::Roll);
+	ChangeType(EStateType::Roll);
 }
 
 void UCStateComponent::SetBackstepMode()
 {
-	ChangeType(ECountessStateType::Backstep);
+	ChangeType(EStateType::Backstep);
 }
 
 void UCStateComponent::SetEquipMode()
 {
-	ChangeType(ECountessStateType::Equip);
+	ChangeType(EStateType::Equip);
 }
 
 void UCStateComponent::SetUnequipMode()
 {
-	ChangeType(ECountessStateType::Unequip);
+	ChangeType(EStateType::Unequip);
 }
 
 void UCStateComponent::SetActionMode()
 {
-	ChangeType(ECountessStateType::Action);
+	ChangeType(EStateType::Action);
 }
 
-void UCStateComponent::ChangeType(ECountessStateType InType)
+void UCStateComponent::SetHittedMode()
 {
-	ECountessStateType prevType = Type;
+	ChangeType(EStateType::Hitted);
+}
+
+void UCStateComponent::ChangeType(EStateType InType)
+{
+	EStateType prevType = Type;
 	Type = InType;
 
-	if (OnCountessStateTypeChanged.IsBound())
-		OnCountessStateTypeChanged.Broadcast(prevType, InType);
+	if (OnStateTypeChanged.IsBound())
+		OnStateTypeChanged.Broadcast(prevType, InType);
 }

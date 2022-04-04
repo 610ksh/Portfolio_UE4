@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Release/AI/IEnemy.h"
+#include "Release/Components/CStateComponent.h"
 #include "CEnemy.generated.h"
 
 UCLASS()
@@ -10,19 +11,46 @@ class THELASTRPG_API ACEnemy : public ACharacter, public IIEnemy
 {
 	GENERATED_BODY()
 
+protected: // Widget Component
+	UPROPERTY(VisibleDefaultsOnly)
+		class UWidgetComponent* NameWidget;
+	UPROPERTY(VisibleDefaultsOnly)
+		class UWidgetComponent* HealthWidget;
+
+protected: // Actor Component
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCActionComponent* Action;
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCStatusComponent* Status;
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCStateComponent* State;
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCMontageComponent* Montages;
+
 public:
 	ACEnemy();
+
+	float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
 protected:
 	virtual void BeginPlay() override;
 
 public:	
 	virtual void Tick(float DeltaTime) override;
-
-public:
 	virtual void ChangeColor(FLinearColor InColor) override;
+
+private:
+	UFUNCTION()
+		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
+
+private:
+	void Hitted();
 
 private:
 	class UMaterialInstanceDynamic* BodyMaterial;
 	class UMaterialInstanceDynamic* LogoMaterial;
+
+private:
+	class AController* DamageInstigator; // Other, opponent
+	float DamageValue;
 };

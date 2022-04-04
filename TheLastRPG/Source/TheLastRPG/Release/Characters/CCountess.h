@@ -47,7 +47,7 @@ private:
 
 private:
 	UFUNCTION()
-		void OnStateTypeChanged(ECountessStateType InPrevType, ECountessStateType InNewType);
+		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
 
 private:
 	/// Movement

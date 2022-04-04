@@ -13,7 +13,7 @@ struct FCountessMontageData : public FTableRowBase
 
 public:
 	UPROPERTY(EditAnywhere)
-		ECountessStateType Type;
+		EStateType Type;
 	UPROPERTY(EditAnywhere)
 		class UAnimMontage* AnimMontage;
 	UPROPERTY(EditAnywhere)
@@ -41,9 +41,9 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	void PlayAnimMontage(ECountessStateType InState);
+	void PlayAnimMontage(EStateType InState);
 
 private:
-	FCountessMontageData* Datas[(int32)ECountessStateType::Max];
+	FCountessMontageData* Datas[(int32)EStateType::Max];
 
 };

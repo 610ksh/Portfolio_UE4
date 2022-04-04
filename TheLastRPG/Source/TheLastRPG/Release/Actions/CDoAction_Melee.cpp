@@ -9,7 +9,7 @@ void ACDoAction_Melee::DoAction()
 {
 	Super::DoAction();
 	CheckFalse(Datas.Num() > 0);
-	
+
 	if (bEnableCombo)
 	{
 		bExistCombo = true;
@@ -17,7 +17,7 @@ void ACDoAction_Melee::DoAction()
 
 		return;
 	}
-	
+
 	CheckFalse(State->IsIdleMode());
 	State->SetActionMode();
 
@@ -55,4 +55,19 @@ void ACDoAction_Melee::End_DoAction()
 	Status->SetMove();
 
 	comboIndex = 0;
+}
+
+void ACDoAction_Melee::OnAttachmentBeginOverlap(ACharacter * InAttacker, AActor * InAttackCauser, ACharacter * InOtherCharacter)
+{
+	Super::OnAttachmentBeginOverlap(InAttacker, InAttackCauser, InOtherCharacter);
+	CheckNull(InOtherCharacter);
+	CLog::Log(InOtherCharacter->GetName() + "_BeginOverlap");
+
+	FDamageEvent e;
+	InOtherCharacter->TakeDamage(Datas[comboIndex].Power, e, OwnerCharacter->GetController(), this);
+}
+
+void ACDoAction_Melee::OnAttachmentEndOverlap(ACharacter * InAttacker, AActor * InAttackCauser, ACharacter * InOtherCharacter)
+{
+	CLog::Log(InOtherCharacter->GetName() + "_EndOverlap");
 }
