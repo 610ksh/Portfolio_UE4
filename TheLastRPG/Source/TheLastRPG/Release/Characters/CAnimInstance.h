@@ -16,7 +16,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		float Direction;
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-		ECountessActionType ActionType;
+		EActionType ActionType;
 
 public:
 	virtual void NativeBeginPlay() override;
@@ -24,5 +24,5 @@ public:
 
 private:
 	UFUNCTION()
-		void OnActionTypeChanged(ECountessActionType InPrevType, ECountessActionType InNewType);
+		void OnActionTypeChanged(EActionType InPrevType, EActionType InNewType);
 };

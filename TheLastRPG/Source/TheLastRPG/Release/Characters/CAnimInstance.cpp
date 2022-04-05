@@ -13,7 +13,7 @@ void UCAnimInstance::NativeBeginPlay()
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(character);
 	CheckNull(action);
 	
-	action->OnCountessActionTypeChanged.AddDynamic(this, &UCAnimInstance::OnActionTypeChanged);
+	action->OnActionTypeChanged.AddDynamic(this, &UCAnimInstance::OnActionTypeChanged);
 }
 
 void UCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
@@ -27,7 +27,7 @@ void UCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	Direction = CalculateDirection(character->GetVelocity(), character->GetControlRotation());
 }
 
-void UCAnimInstance::OnActionTypeChanged(ECountessActionType InPrevType, ECountessActionType InNewType)
+void UCAnimInstance::OnActionTypeChanged(EActionType InPrevType, EActionType InNewType)
 {
 	ActionType = InNewType;
 }

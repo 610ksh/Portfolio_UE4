@@ -18,7 +18,7 @@ protected:
 		float Direction;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-		EActionType ActionType;
+		ESH_ActionType ActionType;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		FFeetData FeetData;
@@ -29,5 +29,5 @@ public:
 
 private:
 	UFUNCTION()
-		void OnActionTypeChanged(EActionType InPrevType, EActionType InNewType);
+		void OnActionTypeChanged(ESH_ActionType InPrevType, ESH_ActionType InNewType);
 };

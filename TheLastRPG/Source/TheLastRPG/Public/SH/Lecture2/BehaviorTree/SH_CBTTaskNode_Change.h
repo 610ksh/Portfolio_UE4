@@ -12,7 +12,7 @@ class THELASTRPG_API USH_CBTTaskNode_Change : public UBTTaskNode
 
 private:
 	UPROPERTY(EditAnywhere)
-		EActionType Type;
+		ESH_ActionType Type;
 
 public:
 	USH_CBTTaskNode_Change();

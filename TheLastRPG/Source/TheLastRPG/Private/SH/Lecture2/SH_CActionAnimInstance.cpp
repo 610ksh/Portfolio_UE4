@@ -31,7 +31,7 @@ void USH_CActionAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		FeetData = feet->GetData();
 }
 
-void USH_CActionAnimInstance::OnActionTypeChanged(EActionType InPrevType, EActionType InNewType)
+void USH_CActionAnimInstance::OnActionTypeChanged(ESH_ActionType InPrevType, ESH_ActionType InNewType)
 {
 	ActionType = InNewType;
 }

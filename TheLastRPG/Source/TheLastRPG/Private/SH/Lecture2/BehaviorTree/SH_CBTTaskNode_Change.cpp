@@ -17,12 +17,12 @@ EBTNodeResult::Type USH_CBTTaskNode_Change::ExecuteTask(UBehaviorTreeComponent& 
 	ASH_CEnemy_AI* ai = Cast<ASH_CEnemy_AI>(controller->GetPawn());
 	USH_CActionComponent* action = SH_CHelpers::GetComponent<USH_CActionComponent>(ai);
 
-	if (Type == EActionType::Warp)
+	if (Type == ESH_ActionType::Warp)
 	{
 		if (action->IsWarpMode() == false)
 			action->SetWarpMode();
 	}
-	else if (Type == EActionType::IceBall)
+	else if (Type == ESH_ActionType::IceBall)
 	{
 		if (action->IsIceBallMode() == false)
 			action->SetIceBallMode();

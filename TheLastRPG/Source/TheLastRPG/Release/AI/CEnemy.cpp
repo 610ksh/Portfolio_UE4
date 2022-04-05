@@ -1,4 +1,5 @@
 #include "Release/AI/CEnemy.h"
+#include "Release/Actions/CActionData.h"
 #include "Release/Components/CActionComponent.h"
 #include "Release/Components/CStatusComponent.h"
 #include "Release/Components/CMontageComponent.h"
@@ -66,7 +67,8 @@ void ACEnemy::BeginPlay()
 	LogoMaterial = UMaterialInstanceDynamic::Create(logo, this);
 	GetMesh()->SetMaterial(0, BodyMaterial);
 	GetMesh()->SetMaterial(1, LogoMaterial);
-	
+	BodyMaterial->GetVectorParameterValue(L"BodyColor", originColor);
+
 	State->OnStateTypeChanged.AddDynamic(this, &ACEnemy::OnStateTypeChanged);
 
 	Super::BeginPlay();
@@ -118,11 +120,29 @@ void ACEnemy::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 	}
 }
 
+void ACEnemy::RestoreColor()
+{
+	//FLinearColor color = Action->GetCurrentActionData()->GetEquipmentColor();
+	ChangeColor(originColor);
+}
+
 void ACEnemy::Hitted()
 {
 	Status->SubHealth(DamageValue);
 	Cast<UCUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());
 	DamageValue = 0;
+
+	FVector start = GetActorLocation();
+	FVector target = DamageInstigator->GetPawn()->GetActorLocation();
+	SetActorRotation(UKismetMathLibrary::FindLookAtRotation(start, target));
+	DamageInstigator = NULL;
+	
+	FVector direction = target - start;
+	direction.Normalize();
+	LaunchCharacter(-direction * LaunchAmount, true, false);
+
+	ChangeColor(FLinearColor(1, 0, 0, 1));
+	UKismetSystemLibrary::K2_SetTimer(this, "RestoreColor", 0.1f, false);
 }
 
 float ACEnemy::TakeDamage(float Damage, FDamageEvent const & DamageEvent, AController* EventInstigator, AActor* DamageCauser)

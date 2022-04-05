@@ -18,7 +18,7 @@ void USH_CActionComponent::BeginPlay()
 	Super::BeginPlay();
 
 	ACharacter* character = Cast<ACharacter>(GetOwner());
-	for (int32 i = 0; i < (int32)EActionType::Max; ++i)
+	for (int32 i = 0; i < (int32)ESH_ActionType::Max; ++i)
 	{
 		if (!!DataAssets[i])
 			DataAssets[i]->BeginPlay(character, &Datas[i]);
@@ -27,35 +27,35 @@ void USH_CActionComponent::BeginPlay()
 
 void USH_CActionComponent::SetFistMode()
 {
-	SetMode(EActionType::Fist);
+	SetMode(ESH_ActionType::Fist);
 }
 
 void USH_CActionComponent::SetOneHandMode()
 {
-	SetMode(EActionType::OneHand);
+	SetMode(ESH_ActionType::OneHand);
 }
 
 void USH_CActionComponent::SetTwoHandMode()
 {
-	SetMode(EActionType::TwoHand);
+	SetMode(ESH_ActionType::TwoHand);
 }
 
 void USH_CActionComponent::SetWarpMode()
 {
-	SetMode(EActionType::Warp);
+	SetMode(ESH_ActionType::Warp);
 }
 
 void USH_CActionComponent::SetFireStormMode()
 {
-	SetMode(EActionType::FireStorm);
+	SetMode(ESH_ActionType::FireStorm);
 }
 
 void USH_CActionComponent::SetIceBallMode()
 {
-	SetMode(EActionType::IceBall);
+	SetMode(ESH_ActionType::IceBall);
 }
 
-void USH_CActionComponent::SetMode(EActionType InType)
+void USH_CActionComponent::SetMode(ESH_ActionType InType)
 {
 	if (Type == InType) // 같은 무기 장착
 	{
@@ -83,10 +83,10 @@ void USH_CActionComponent::SetMode(EActionType InType)
 	ChangeType(InType);
 }
 
-void USH_CActionComponent::ChangeType(EActionType InNewType)
+void USH_CActionComponent::ChangeType(ESH_ActionType InNewType)
 {
 	/// Q. 아래 InNewType으로 하던데, Type으로 미리 저장해두는게 맞지 않나?
-	EActionType prevType = Type; // 강의는 InNewType이었음.
+	ESH_ActionType prevType = Type; // 강의는 InNewType이었음.
 	Type = InNewType; // 새롭게 수정
 
 	if (OnActionTypeChanged.IsBound())
@@ -115,7 +115,7 @@ void USH_CActionComponent::SetUnarmedMode()
 	//equipment->Equip(); // Unarmed로 장착
 
 
-	ChangeType(EActionType::Unarmed);
+	ChangeType(ESH_ActionType::Unarmed);
 }
 
 void USH_CActionComponent::DoAction()

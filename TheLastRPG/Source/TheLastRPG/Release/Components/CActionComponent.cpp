@@ -14,7 +14,7 @@ void UCActionComponent::BeginPlay()
 	Super::BeginPlay();
 
 	ACharacter* character = Cast<ACharacter>(GetOwner());
-	for (int32 i = 0; i < (int32)ECountessActionType::Max; ++i)
+	for (int32 i = 0; i < (int32)EActionType::Max; ++i)
 	{
 		if (!!Datas[i])
 			Datas[i]->BeginPlay(character);
@@ -34,7 +34,7 @@ void UCActionComponent::SetUnarmedMode_Begin()
 /// Notice : SetUnarmedMode function called notify
 void UCActionComponent::SetUnarmedMode()
 { 
-	ChangeType(ECountessActionType::Unarmed);
+	ChangeType(EActionType::Unarmed);
 
 	CheckNull(Datas[(int32)Type]);
 	ACEquipment* equipment = Datas[(int32)Type]->GetEquipment();
@@ -44,12 +44,12 @@ void UCActionComponent::SetUnarmedMode()
 
 void UCActionComponent::SetOneHandMode()
 {
-	SetMode(ECountessActionType::OneHand);
+	SetMode(EActionType::OneHand);
 }
 
 void UCActionComponent::SetTwoHandMode()
 {
-	SetMode(ECountessActionType::TwoHand);
+	SetMode(EActionType::TwoHand);
 }
 
 void UCActionComponent::DoAction()
@@ -65,7 +65,7 @@ void UCActionComponent::DoAction()
 	}
 }
 
-void UCActionComponent::SetMode(ECountessActionType InType)
+void UCActionComponent::SetMode(EActionType InType)
 {
 	if (Type == InType) // 같은 무기 2번 선택
 	{
@@ -89,11 +89,11 @@ void UCActionComponent::SetMode(ECountessActionType InType)
 	ChangeType(InType);
 }
 
-void UCActionComponent::ChangeType(ECountessActionType InNewType)
+void UCActionComponent::ChangeType(EActionType InNewType)
 {
-	ECountessActionType prevType = Type;
+	EActionType prevType = Type;
 	Type = InNewType;
 
-	if (OnCountessActionTypeChanged.IsBound())
-		OnCountessActionTypeChanged.Broadcast(prevType, InNewType);
+	if (OnActionTypeChanged.IsBound())
+		OnActionTypeChanged.Broadcast(prevType, InNewType);
 }

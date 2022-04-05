@@ -11,6 +11,12 @@ class THELASTRPG_API ACEnemy : public ACharacter, public IIEnemy
 {
 	GENERATED_BODY()
 
+private:
+	UPROPERTY(EditAnywhere, Category = "Hitted")
+		float LaunchAmount = 200.0f;
+	UPROPERTY(VisibleAnywhere, Category = "Hitted")
+		FLinearColor originColor;
+
 protected: // Widget Component
 	UPROPERTY(VisibleDefaultsOnly)
 		class UWidgetComponent* NameWidget;
@@ -35,14 +41,15 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void ChangeColor(FLinearColor InColor) override;
 
 private:
 	UFUNCTION()
 		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
-
+	UFUNCTION()
+		void RestoreColor();
 private:
 	void Hitted();
 

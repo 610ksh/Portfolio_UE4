@@ -5,12 +5,12 @@
 #include "CActionComponent.generated.h"
 
 UENUM(BlueprintType)
-enum class ECountessActionType : uint8
+enum class EActionType : uint8
 {
 	Unarmed, OneHand, TwoHand, Max,
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FCountessActionTypeChanged, ECountessActionType, InPrevType, ECountessActionType, InNewType);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FActionTypeChanged, EActionType, InPrevType, EActionType, InNewType);
 
 UCLASS( ClassGroup=(GameProject), meta=(BlueprintSpawnableComponent) )
 class THELASTRPG_API UCActionComponent : public UActorComponent
@@ -19,7 +19,7 @@ class THELASTRPG_API UCActionComponent : public UActorComponent
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
-		class UCActionData* Datas[(int32)ECountessActionType::Max];
+		class UCActionData* Datas[(int32)EActionType::Max];
 
 public:
 	UFUNCTION(BlueprintPure)
@@ -27,11 +27,11 @@ public:
 
 public:
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsUnarmedMode() { return Type == ECountessActionType::Unarmed; }
+		FORCEINLINE bool IsUnarmedMode() { return Type == EActionType::Unarmed; }
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsOneHandMode() { return Type == ECountessActionType::OneHand; }
+		FORCEINLINE bool IsOneHandMode() { return Type == EActionType::OneHand; }
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsTwoHandMode() { return Type == ECountessActionType::TwoHand; }
+		FORCEINLINE bool IsTwoHandMode() { return Type == EActionType::TwoHand; }
 
 public:	
 	UCActionComponent();
@@ -48,14 +48,14 @@ protected:
 
 private:
 	void SetUnarmedMode_Begin();
-	void SetMode(ECountessActionType InType);
-	void ChangeType(ECountessActionType InNewType);
+	void SetMode(EActionType InType);
+	void ChangeType(EActionType InNewType);
 
 public:
-	FCountessActionTypeChanged OnCountessActionTypeChanged;
+	FActionTypeChanged OnActionTypeChanged;
 
 private:
 	UPROPERTY(VisibleAnywhere)
-		ECountessActionType Type;
+		EActionType Type;
 	/// TODO
 };
