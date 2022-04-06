@@ -7,7 +7,7 @@
 #include "SH_CMontagesComponent.generated.h"
 
 USTRUCT(BlueprintType)
-struct FMontageData : public FTableRowBase
+struct FSH_MontageData : public FTableRowBase
 {
 	GENERATED_BODY()
 
@@ -50,5 +50,5 @@ private:
 	void PlayAnimMontage(SH_EStateType InState);
 
 private:
-	FMontageData* Datas[(int32)SH_EStateType::Max];
+	FSH_MontageData* Datas[(int32)SH_EStateType::Max];
 };

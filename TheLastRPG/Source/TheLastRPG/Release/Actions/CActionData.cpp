@@ -12,11 +12,14 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 	FTransform transform;
 
 	// Attachment (Weapon)
-	if(!!AttachmentClass)
+	for (int32 i = 0; i < AttachmentClass.Num(); ++i)
 	{
-		Attachment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACAttachment>(AttachmentClass, transform, InOwnerCharacter);
-		Attachment->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Attachment");
-		UGameplayStatics::FinishSpawningActor(Attachment, transform);
+		if (!!AttachmentClass[i])
+		{
+			Attachment.Add(InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACAttachment>(AttachmentClass[i], transform, InOwnerCharacter));
+			Attachment[i]->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Attachment_" + FString::FromInt(i));
+			UGameplayStatics::FinishSpawningActor(Attachment[i], transform);
+		}
 	}
 
 	// Equipment (Action)
@@ -30,10 +33,14 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		Equipment->SetColor(EquipmentColor);
 		UGameplayStatics::FinishSpawningActor(Equipment, transform);
 
-		if (!!Attachment)
+
+		for (int32 i = 0; i < AttachmentClass.Num(); i++)
 		{
-			Equipment->OnEquipmentDelegate.AddDynamic(Attachment, &ACAttachment::OnEquip);
-			Equipment->OnUnequipmentDelegate.AddDynamic(Attachment, &ACAttachment::OnUnequip);
+			if (!!Attachment[i])
+			{
+				Equipment->OnEquipmentDelegate.AddDynamic(Attachment[i], &ACAttachment::OnEquip);
+				Equipment->OnUnequipmentDelegate.AddDynamic(Attachment[i], &ACAttachment::OnUnequip);
+			}
 		}
 	}
 
@@ -46,10 +53,23 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		DoAction->SetDatas(DoActionDatas);
 		UGameplayStatics::FinishSpawningActor(DoAction, transform);
 
-		if (!!Attachment)
+		for (int32 i = 0; i < AttachmentClass.Num(); ++i)
 		{
-			Attachment->OnAttachmentBeginOverlap.AddDynamic(DoAction, &ACDoAction::OnAttachmentBeginOverlap);
-			Attachment->OnAttachmentEndOverlap.AddDynamic(DoAction, &ACDoAction::OnAttachmentEndOverlap);
+			if (!!Attachment[i])
+			{
+				Attachment[i]->OnAttachmentBeginOverlap.AddDynamic(DoAction, &ACDoAction::OnAttachmentBeginOverlap);
+				Attachment[i]->OnAttachmentEndOverlap.AddDynamic(DoAction, &ACDoAction::OnAttachmentEndOverlap);
+
+				Attachment[i]->OnAttachmentCollision.AddDynamic(DoAction, &ACDoAction::OnAttachmentCollision);
+				Attachment[i]->OffAttachmentCollision.AddDynamic(DoAction, &ACDoAction::OffAttachmentCollision);
+			}
 		}
 	}
+}
+
+ACAttachment* UCActionData::GetAttachment(const int& idx)
+{
+	if (Attachment.IsValidIndex(idx))
+		return Attachment[idx];
+	return NULL;
 }

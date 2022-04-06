@@ -18,10 +18,24 @@ void UCAnimNotifyState_Collision::NotifyBegin(USkeletalMeshComponent * MeshComp,
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
-	ACAttachment* attachment = action->GetCurrentActionData()->GetAttachment();
-	CheckNull(attachment);
+	const auto& actionData = action->GetCurrentActionData();
+	CheckNull(actionData);
 
-	attachment->OnCollision();
+	if (action->IsTwoHandMode())
+	{
+		for (int32 i = 0; i < actionData->GetAttachmentCount(); ++i)
+		{
+			ACAttachment* attachment = actionData->GetAttachment(i);
+			CheckNull(attachment);
+			attachment->OnCollision();
+		}
+	}
+	else
+	{
+		ACAttachment* attachment = actionData->GetAttachment();
+		CheckNull(attachment);
+		attachment->OnCollision();
+	}
 }
 
 void UCAnimNotifyState_Collision::NotifyEnd(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation)
@@ -33,8 +47,22 @@ void UCAnimNotifyState_Collision::NotifyEnd(USkeletalMeshComponent * MeshComp, U
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
-	ACAttachment* attachment = action->GetCurrentActionData()->GetAttachment();
-	CheckNull(attachment);
+	const auto& actionData = action->GetCurrentActionData();
+	CheckNull(actionData);
 
-	attachment->OffCollision();
+	if (action->IsTwoHandMode())
+	{
+		for (int32 i = 0; i < actionData->GetAttachmentCount(); ++i)
+		{
+			ACAttachment* attachment = actionData->GetAttachment(i);
+			CheckNull(attachment);
+			attachment->OffCollision();
+		}
+	}
+	else
+	{
+		ACAttachment* attachment = actionData->GetAttachment();
+		CheckNull(attachment);
+		attachment->OffCollision();
+	}
 }

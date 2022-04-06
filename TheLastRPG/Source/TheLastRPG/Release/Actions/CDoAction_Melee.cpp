@@ -35,9 +35,9 @@ void ACDoAction_Melee::Begin_DoAction()
 	bExistCombo = false;
 
 	OwnerCharacter->StopAnimMontage();
-	comboIndex++;
+	ComboIndex++;
 
-	const FDoActionData& data = Datas[comboIndex];
+	const FDoActionData& data = Datas[ComboIndex];
 	CheckNull(data.AnimMontage);
 	OwnerCharacter->PlayAnimMontage(data.AnimMontage, data.PlayRatio, data.StartSection);
 
@@ -48,13 +48,13 @@ void ACDoAction_Melee::End_DoAction()
 {
 	Super::End_DoAction();
 
-	const FDoActionData& data = Datas[comboIndex];
+	const FDoActionData& data = Datas[ComboIndex];
 	OwnerCharacter->StopAnimMontage();
 
 	State->SetIdleMode();
 	Status->SetMove();
 
-	comboIndex = 0;
+	ComboIndex = 0;
 }
 
 void ACDoAction_Melee::OnAttachmentBeginOverlap(ACharacter * InAttacker, AActor * InAttackCauser, ACharacter * InOtherCharacter)
@@ -63,11 +63,56 @@ void ACDoAction_Melee::OnAttachmentBeginOverlap(ACharacter * InAttacker, AActor 
 	CheckNull(InOtherCharacter);
 	CLog::Log(InOtherCharacter->GetName() + "_BeginOverlap");
 
+	for (const ACharacter* other : HittedCharacters)
+	{
+		if (InOtherCharacter == other)
+			return;
+	}
+	HittedCharacters.Add(InOtherCharacter);
+
+	/// Hit particle
+	UParticleSystem* hitEffect = Datas[ComboIndex].Effect;
+	if (!!hitEffect)
+	{
+		FTransform transform = Datas[ComboIndex].EffectTransform;
+		transform.AddToTranslation(InOtherCharacter->GetActorLocation());
+
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), hitEffect, transform);
+	}
+
+	/// HitStop
+	float hitStop = Datas[ComboIndex].HitStop;
+	if (FMath::IsNearlyZero(hitStop) == false)
+	{
+		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1e-3f);
+		UKismetSystemLibrary::K2_SetTimer(this, "RestoreDilation", hitStop * 1e-3f, false);
+	}
+
+	/// CameraShake
+	TSubclassOf<UMatineeCameraShake> shake = Datas[ComboIndex].ShakeClass;
+	if (!!shake)
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager->StartMatineeCameraShake(shake);
+
 	FDamageEvent e;
-	InOtherCharacter->TakeDamage(Datas[comboIndex].Power, e, OwnerCharacter->GetController(), this);
+	InOtherCharacter->TakeDamage(Datas[ComboIndex].Power, e, OwnerCharacter->GetController(), this);
 }
 
 void ACDoAction_Melee::OnAttachmentEndOverlap(ACharacter * InAttacker, AActor * InAttackCauser, ACharacter * InOtherCharacter)
 {
 	CLog::Log(InOtherCharacter->GetName() + "_EndOverlap");
+}
+
+void ACDoAction_Melee::OnAttachmentCollision()
+{
+
+}
+
+void ACDoAction_Melee::OffAttachmentCollision()
+{
+	HittedCharacters.Empty();
+}
+
+void ACDoAction_Melee::RestoreDilation()
+{
+	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1.0f);
 }

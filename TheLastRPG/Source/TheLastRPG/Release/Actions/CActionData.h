@@ -9,17 +9,19 @@ UCLASS()
 class THELASTRPG_API UCActionData : public UDataAsset
 {
 	GENERATED_BODY()
-	
+
 public:
-	FORCEINLINE class ACAttachment* GetAttachment() { return Attachment; }
+	
+	FORCEINLINE class ACAttachment* GetAttachment() { return Attachment[0]; }
 	FORCEINLINE class ACEquipment* GetEquipment() { return Equipment; }
 	FORCEINLINE class ACDoAction* GetDoAction() { return DoAction; }
 
 	FORCEINLINE FLinearColor GetEquipmentColor() { return EquipmentColor; }
-	
+	FORCEINLINE int32 GetAttachmentCount() { return Attachment.Num(); }
+
 public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-		TSubclassOf<class ACAttachment> AttachmentClass;
+		TArray<TSubclassOf<class ACAttachment>> AttachmentClass;
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		TSubclassOf<class ACEquipment> EquipmentClass;
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
@@ -38,8 +40,10 @@ public:
 public:
 	void BeginPlay(class ACharacter* InOwnerCharacter);
 
+	class ACAttachment* GetAttachment(const int& idx);
+
 private:
-	class ACAttachment* Attachment;
+	TArray<class ACAttachment*> Attachment;
 	class ACEquipment* Equipment;
 	class ACDoAction* DoAction;
 };

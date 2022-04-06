@@ -14,10 +14,10 @@ void USH_CMontagesComponent::BeginPlay()
 	
 	CheckNull_SH(DataTable);
 
-	TArray<FMontageData*> datas;
-	DataTable->GetAllRows<FMontageData>("", datas);
+	TArray<FSH_MontageData*> datas;
+	DataTable->GetAllRows<FSH_MontageData>("", datas);
 
-	for (const FMontageData* data : datas)
+	for (const FSH_MontageData* data : datas)
 	{
 		if (!!data)
 		{
@@ -28,7 +28,7 @@ void USH_CMontagesComponent::BeginPlay()
 
 	for (int32 i = 0; i < (int32)SH_EStateType::Max; ++i)
 	{
-		for (FMontageData* data : datas) // 액셀 데이터
+		for (FSH_MontageData* data : datas) // 액셀 데이터
 		{
 			if ((SH_EStateType)i == data->Type) // 타입 같은것만
 			{
@@ -64,7 +64,7 @@ void USH_CMontagesComponent::PlayAnimMontage(SH_EStateType InState)
 {
 	ACharacter* character = Cast<ACharacter>(GetOwner());
 
-	const FMontageData* data = Datas[(int32)InState];
+	const FSH_MontageData* data = Datas[(int32)InState];
 
 	if (!!data)
 	{

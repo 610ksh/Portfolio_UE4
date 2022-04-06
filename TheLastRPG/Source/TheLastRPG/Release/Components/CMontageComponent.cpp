@@ -14,10 +14,10 @@ void UCMontageComponent::BeginPlay()
 	
 	CheckNull(DataTable);
 
-	TArray<FCountessMontageData*> datas;
-	DataTable->GetAllRows<FCountessMontageData>("", datas);
+	TArray<FMontageData*> datas;
+	DataTable->GetAllRows<FMontageData>("", datas);
 
-	for (const FCountessMontageData* data : datas)
+	for (const FMontageData* data : datas)
 	{
 		if (!!data)
 			CLog::Log(data->AnimMontage->GetPathName());
@@ -27,7 +27,7 @@ void UCMontageComponent::BeginPlay()
 	// find Montage data, O(n^2)
 	for (int32 i = 0; i < (int32)EStateType::Max; ++i)
 	{
-		for (FCountessMontageData* data : datas)
+		for (FMontageData* data : datas)
 		{
 			if ((EStateType)i == data->Type)
 			{
@@ -41,7 +41,7 @@ void UCMontageComponent::BeginPlay()
 void UCMontageComponent::PlayAnimMontage(EStateType InState)
 {
 	ACharacter* character = Cast<ACharacter>(GetOwner());
-	const FCountessMontageData* data = Datas[(int32)InState];
+	const FMontageData* data = Datas[(int32)InState];
 
 	if (!!data)
 	{
@@ -60,4 +60,9 @@ void UCMontageComponent::PlayRoll()
 void UCMontageComponent::PlayBackstep()
 {
 	PlayAnimMontage(EStateType::Backstep);
+}
+
+void UCMontageComponent::PlayHitted()
+{
+	PlayAnimMontage(EStateType::Hitted);
 }

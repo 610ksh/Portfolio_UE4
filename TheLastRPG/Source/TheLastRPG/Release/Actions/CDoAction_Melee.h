@@ -22,10 +22,18 @@ public:
 	virtual void OnAttachmentBeginOverlap(class ACharacter* InAttacker, class AActor* InAttackCauser, class ACharacter* InOtherCharacter) override;
 	virtual void OnAttachmentEndOverlap(class ACharacter* InAttacker, class AActor* InAttackCauser, class ACharacter* InOtherCharacter) override;
 
+	virtual void OnAttachmentCollision();
+	virtual void OffAttachmentCollision();
+
+private:
+	UFUNCTION()
+		void RestoreDilation();
+
 private:
 	bool bExistCombo;
 	bool bEnableCombo;
 	bool bLastCombo;
 
-	int32 comboIndex;
+	int32 ComboIndex;
+	TArray<class ACharacter*> HittedCharacters;
 };

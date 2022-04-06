@@ -7,7 +7,7 @@
 #include "CMontageComponent.generated.h"
 
 USTRUCT(BlueprintType)
-struct FCountessMontageData : public FTableRowBase
+struct FMontageData : public FTableRowBase
 {
 	GENERATED_BODY()
 
@@ -36,6 +36,7 @@ public:
 
 	void PlayRoll();
 	void PlayBackstep();
+	void PlayHitted();
 
 protected:
 	virtual void BeginPlay() override;
@@ -44,6 +45,6 @@ private:
 	void PlayAnimMontage(EStateType InState);
 
 private:
-	FCountessMontageData* Datas[(int32)EStateType::Max];
+	FMontageData* Datas[(int32)EStateType::Max];
 
 };

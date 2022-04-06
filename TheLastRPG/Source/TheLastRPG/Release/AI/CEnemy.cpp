@@ -32,11 +32,11 @@ ACEnemy::ACEnemy()
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
 
 	USkeletalMesh* mesh;
-	Helpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/SungHoon/Lectures/BP/Character/Character/Mesh/SH_SK_Mannequin.SH_SK_Mannequin'");
+	Helpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/SungHoon/Projects/AI/Dummy/Mesh/AI_Mannequin.AI_Mannequin'");
 	GetMesh()->SetSkeletalMesh(mesh);
 
 	TSubclassOf<UAnimInstance> animInstance;
-	Helpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/SungHoon/Lectures/BP/Character/SH_ABP2_Player.SH_ABP2_Player_C'");
+	Helpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/SungHoon/Projects/AI/Dummy/ABP_AI.ABP_AI_C'");
 	GetMesh()->SetAnimInstanceClass(animInstance);
 
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
@@ -132,6 +132,9 @@ void ACEnemy::Hitted()
 	Cast<UCUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());
 	DamageValue = 0;
 
+	Status->SetStop();
+	Montages->PlayHitted();
+
 	FVector start = GetActorLocation();
 	FVector target = DamageInstigator->GetPawn()->GetActorLocation();
 	SetActorRotation(UKismetMathLibrary::FindLookAtRotation(start, target));
@@ -152,7 +155,7 @@ float ACEnemy::TakeDamage(float Damage, FDamageEvent const & DamageEvent, AContr
 	CLog::Log(DamageValue);
 	CLog::Print(DamageValue);
 
-	State->SetHittedMode();
+	State->SetHittedMode(); // restore when called hitted notify
 
 	return Status->GetHealth();
 }

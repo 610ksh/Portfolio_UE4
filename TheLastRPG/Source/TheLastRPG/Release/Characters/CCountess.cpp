@@ -112,8 +112,9 @@ void ACCountess::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis("LookUp", this, &ACCountess::OnVerticalLook);
 
 	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &ACCountess::OnAvoid);
-	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ACCountess::OnOneHand);
 	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACCountess::OnDoAction);
+	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ACCountess::OnOneHand);
+	PlayerInputComponent->BindAction("TwoHand", EInputEvent::IE_Pressed, this, &ACCountess::OnTwoHand);
 }
 
 void ACCountess::OnMoveForward(float InAxis)
@@ -216,6 +217,13 @@ void ACCountess::OnOneHand()
 	CheckFalse(State->IsIdleMode());
 
 	Action->SetOneHandMode();
+}
+
+void ACCountess::OnTwoHand()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetTwoHandMode();
 }
 #pragma endregion
 
