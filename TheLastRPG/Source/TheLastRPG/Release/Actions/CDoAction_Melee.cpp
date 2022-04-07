@@ -49,7 +49,7 @@ void ACDoAction_Melee::End_DoAction()
 	Super::End_DoAction();
 
 	const FDoActionData& data = Datas[ComboIndex];
-	OwnerCharacter->StopAnimMontage();
+	OwnerCharacter->StopAnimMontage(data.AnimMontage);
 
 	State->SetIdleMode();
 	Status->SetMove();
@@ -61,7 +61,6 @@ void ACDoAction_Melee::OnAttachmentBeginOverlap(ACharacter * InAttacker, AActor 
 {
 	Super::OnAttachmentBeginOverlap(InAttacker, InAttackCauser, InOtherCharacter);
 	CheckNull(InOtherCharacter);
-	CLog::Log(InOtherCharacter->GetName() + "_BeginOverlap");
 
 	for (const ACharacter* other : HittedCharacters)
 	{
@@ -69,6 +68,7 @@ void ACDoAction_Melee::OnAttachmentBeginOverlap(ACharacter * InAttacker, AActor 
 			return;
 	}
 	HittedCharacters.Add(InOtherCharacter);
+	CLog::Log(InOtherCharacter->GetName() + "_BeginOverlap");
 
 	/// Hit particle
 	UParticleSystem* hitEffect = Datas[ComboIndex].Effect;
@@ -99,6 +99,8 @@ void ACDoAction_Melee::OnAttachmentBeginOverlap(ACharacter * InAttacker, AActor 
 
 void ACDoAction_Melee::OnAttachmentEndOverlap(ACharacter * InAttacker, AActor * InAttackCauser, ACharacter * InOtherCharacter)
 {
+	// 쌍검일때 한쪽 검은 없을수도 있음.
+	CheckNull(InOtherCharacter);
 	CLog::Log(InOtherCharacter->GetName() + "_EndOverlap");
 }
 

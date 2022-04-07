@@ -62,6 +62,7 @@ public:
 
 private:
 	/// Equip
+	void OnFist();
 	void OnOneHand();
 	void OnTwoHand();
 

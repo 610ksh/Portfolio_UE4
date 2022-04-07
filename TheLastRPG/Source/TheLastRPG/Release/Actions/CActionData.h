@@ -13,11 +13,12 @@ class THELASTRPG_API UCActionData : public UDataAsset
 public:
 	
 	FORCEINLINE class ACAttachment* GetAttachment() { return Attachment[0]; }
+	FORCEINLINE class ACAttachment* GetAttachment(const int& idx) { return Attachment[idx]; }
 	FORCEINLINE class ACEquipment* GetEquipment() { return Equipment; }
 	FORCEINLINE class ACDoAction* GetDoAction() { return DoAction; }
 
 	FORCEINLINE FLinearColor GetEquipmentColor() { return EquipmentColor; }
-	FORCEINLINE int32 GetAttachmentCount() { return Attachment.Num(); }
+	FORCEINLINE int32 GetAttachmentCount() { return AttachmentClass.Num(); }
 
 public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
@@ -40,10 +41,8 @@ public:
 public:
 	void BeginPlay(class ACharacter* InOwnerCharacter);
 
-	class ACAttachment* GetAttachment(const int& idx);
-
 private:
-	TArray<class ACAttachment*> Attachment;
+	class ACAttachment* Attachment[2];
 	class ACEquipment* Equipment;
 	class ACDoAction* DoAction;
 };

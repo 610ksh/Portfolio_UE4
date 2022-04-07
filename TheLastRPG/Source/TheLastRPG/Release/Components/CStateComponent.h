@@ -7,7 +7,7 @@
 UENUM(BlueprintType) // 각 캐릭터마다 만들어주면 됨
 enum class EStateType : uint8
 {
-	Idle, Roll, Backstep, Equip, Unequip, Action, Hitted, Max,
+	Idle, Roll, Backstep, Equip, Unequip, Action, Hitted, Dead, Max,
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FStateTypeChanged, EStateType, InPrevType, EStateType, InNewType);
@@ -32,6 +32,8 @@ public: // getter
 		FORCEINLINE bool IsActionMode() { return Type == EStateType::Action; }
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsHittedMode() { return Type == EStateType::Hitted; }
+	UFUNCTION(BlueprintPure)
+		FORCEINLINE bool IsDeadMode() { return Type == EStateType::Dead; }
 
 public: // setter
 	void SetIdleMode();
@@ -41,6 +43,7 @@ public: // setter
 	void SetUnequipMode();
 	void SetActionMode();
 	void SetHittedMode();
+	void SetDeadMode();
 
 private:
 	void ChangeType(EStateType InType);

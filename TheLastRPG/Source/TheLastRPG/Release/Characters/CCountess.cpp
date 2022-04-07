@@ -53,8 +53,6 @@ ACCountess::ACCountess()
 
 void ACCountess::BeginPlay()
 {
-	Super::BeginPlay();
-
 	State->OnStateTypeChanged.AddDynamic(this, &ACCountess::OnStateTypeChanged);
 
 	UMaterialInstanceConstant* top;
@@ -69,6 +67,9 @@ void ACCountess::BeginPlay()
 	GetMesh()->SetMaterial(1, BottomMaterial);
 	GetMesh()->SetMaterial(2, TopMaterial);
 
+	Super::BeginPlay();
+
+	// Begin 이후로 해야함. 설정다 된 다음
 	Action->SetUnarmedMode();
 }
 
@@ -113,6 +114,7 @@ void ACCountess::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &ACCountess::OnAvoid);
 	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACCountess::OnDoAction);
+	PlayerInputComponent->BindAction("Fist", EInputEvent::IE_Pressed, this, &ACCountess::OnFist);
 	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ACCountess::OnOneHand);
 	PlayerInputComponent->BindAction("TwoHand", EInputEvent::IE_Pressed, this, &ACCountess::OnTwoHand);
 }
@@ -211,6 +213,13 @@ void ACCountess::End_Backstep()
 
 #pragma region Equipment
 /// Equip State
+
+void ACCountess::OnFist()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetFistMode();
+}
 
 void ACCountess::OnOneHand()
 {

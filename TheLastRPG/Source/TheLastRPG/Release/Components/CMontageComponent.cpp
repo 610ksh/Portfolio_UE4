@@ -11,7 +11,7 @@ UCMontageComponent::UCMontageComponent()
 void UCMontageComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	CheckNull(DataTable);
 
 	TArray<FMontageData*> datas;
@@ -20,8 +20,10 @@ void UCMontageComponent::BeginPlay()
 	for (const FMontageData* data : datas)
 	{
 		if (!!data)
+		{
 			CLog::Log(data->AnimMontage->GetPathName());
 			CLog::Print(data->AnimMontage->GetPathName());
+		}
 	}
 
 	// find Montage data, O(n^2)

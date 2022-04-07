@@ -13,8 +13,8 @@ class THELASTRPG_API ACAttachment : public AActor
 {
 	GENERATED_BODY()
 	
-private:
-	UPROPERTY(VisibleDefaultsOnly)
+protected:
+	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
 		class USceneComponent* Scene;
 
 public:
@@ -26,6 +26,8 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 		void AttachTo(FName InSocketName);
+	UFUNCTION(BlueprintCallable)
+		void AttachToCollision(class UShapeComponent* InComponent, FName InSocketName);
 
 private:
 	UFUNCTION()

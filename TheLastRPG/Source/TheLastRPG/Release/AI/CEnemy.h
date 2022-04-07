@@ -13,7 +13,7 @@ class THELASTRPG_API ACEnemy : public ACharacter, public IIEnemy
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Hitted")
-		float LaunchAmount = 200.0f;
+		float LaunchAmount = 140.0f;
 	UPROPERTY(VisibleAnywhere, Category = "Hitted")
 		FLinearColor originColor;
 

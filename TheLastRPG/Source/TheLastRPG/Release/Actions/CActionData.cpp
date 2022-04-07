@@ -16,7 +16,7 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 	{
 		if (!!AttachmentClass[i])
 		{
-			Attachment.Add(InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACAttachment>(AttachmentClass[i], transform, InOwnerCharacter));
+			Attachment[i] = (InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACAttachment>(AttachmentClass[i], transform, InOwnerCharacter));
 			Attachment[i]->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Attachment_" + FString::FromInt(i));
 			UGameplayStatics::FinishSpawningActor(Attachment[i], transform);
 		}
@@ -28,8 +28,10 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		Equipment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACEquipment>(EquipmentClass, transform, InOwnerCharacter);
 		Equipment->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Equipment");
 		Equipment->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
-		Equipment->SetEquipData(EquipmentData);
-		Equipment->SetUnequipData(UnequipmentData);
+		if (!!EquipmentData.AnimMontage)
+			Equipment->SetEquipData(EquipmentData);
+		if (!!UnequipmentData.AnimMontage)
+			Equipment->SetUnequipData(UnequipmentData);
 		Equipment->SetColor(EquipmentColor);
 		UGameplayStatics::FinishSpawningActor(Equipment, transform);
 
@@ -65,11 +67,4 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 			}
 		}
 	}
-}
-
-ACAttachment* UCActionData::GetAttachment(const int& idx)
-{
-	if (Attachment.IsValidIndex(idx))
-		return Attachment[idx];
-	return NULL;
 }

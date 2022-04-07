@@ -15,13 +15,13 @@ public:
 	static void Print(const FRotator& InValue, int32 InKey = -1, float Duration = 10.0f, FColor InColor = FColor::Blue);
 
 	/// Print log
-	static void Log(int32 InValue);
-	static void Log(float InValue);
-	static void Log(const FString& InValue);
-	static void Log(const FVector& InValue);
-	static void Log(const FRotator& InValue);
+	static void Log(int32 InValue, bool Verbosity = false);
+	static void Log(float InValue, bool Verbosity = false);
+	static void Log(const FString& InValue, bool Verbosity = false);
+	static void Log(const FVector& InValue, bool Verbosity = false);
+	static void Log(const FRotator& InValue, bool Verbosity = false);
 
-	static void Log(const UObject* InObject);
-	static void Log(const FString& InFuncName, int32 InLineNumber);
+	static void Log(const UObject* InObject, bool Verbosity = false);
+	static void Log(const FString& InFuncName, int32 InLineNumber, bool Verbosity = false);
 
 };
