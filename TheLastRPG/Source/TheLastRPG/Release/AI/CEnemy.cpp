@@ -67,7 +67,7 @@ void ACEnemy::BeginPlay()
 	LogoMaterial = UMaterialInstanceDynamic::Create(logo, this);
 	GetMesh()->SetMaterial(0, BodyMaterial);
 	GetMesh()->SetMaterial(1, LogoMaterial);
-	BodyMaterial->GetVectorParameterValue(L"BodyColor", originColor);
+	BodyMaterial->GetVectorParameterValue(L"BodyColor", OriginColor);
 
 	State->OnStateTypeChanged.AddDynamic(this, &ACEnemy::OnStateTypeChanged);
 
@@ -123,7 +123,7 @@ void ACEnemy::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 void ACEnemy::RestoreColor()
 {
 	//FLinearColor color = Action->GetCurrentActionData()->GetEquipmentColor();
-	ChangeColor(originColor);
+	ChangeColor(OriginColor);
 }
 
 void ACEnemy::Hitted()

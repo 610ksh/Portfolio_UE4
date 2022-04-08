@@ -17,6 +17,7 @@ public:
 	FORCEINLINE void SetEquipData(const FEquipmentData& InData) { EquipData = InData; }
 	FORCEINLINE void SetUnequipData(const FEquipmentData& InData) { UnequipData = InData; }
 	FORCEINLINE void SetColor(const FLinearColor& InColor) { Color = InColor; }
+	FORCEINLINE const bool* GetEquipped() { return &bEquipped; }
 
 public:
 	ACEquipment();
@@ -71,6 +72,7 @@ protected:
 		class UCStatusComponent* Status;
 
 private:
+	bool bEquipped = false;
 	FEquipmentData EquipData;
 	FEquipmentData UnequipData;
 	FLinearColor Color;

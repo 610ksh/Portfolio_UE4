@@ -17,12 +17,12 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		if (!!AttachmentClass[i])
 		{
 			Attachment[i] = (InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACAttachment>(AttachmentClass[i], transform, InOwnerCharacter));
-			Attachment[i]->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Attachment_" + FString::FromInt(i));
+			Attachment[i]->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Attachment_" + GetAttachmentName(AttachmentClass[i]->GetName()));
 			UGameplayStatics::FinishSpawningActor(Attachment[i], transform);
 		}
 	}
 
-	// Equipment (Action)
+	// Equipment (Equip, Unequip)
 	if (!!EquipmentClass)
 	{
 		Equipment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACEquipment>(EquipmentClass, transform, InOwnerCharacter);
@@ -46,7 +46,7 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		}
 	}
 
-	// DoAction
+	// DoAction (Attack)
 	if (!!DoActionClass)
 	{
 		DoAction = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACDoAction>(DoActionClass, transform, InOwnerCharacter);
@@ -54,6 +54,11 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		DoAction->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
 		DoAction->SetDatas(DoActionDatas);
 		UGameplayStatics::FinishSpawningActor(DoAction, transform);
+
+		if (!!Equipment)
+		{
+			DoAction->SetEquipped(Equipment->GetEquipped());
+		}
 
 		for (int32 i = 0; i < AttachmentClass.Num(); ++i)
 		{
@@ -67,4 +72,25 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 			}
 		}
 	}
+}
+
+FString UCActionData::GetAttachmentName(const FString& name)
+{
+	int32 underbarCount = 0;
+	FString ret = "";
+	ret.Reserve(10);
+
+	for (int32 i = 0; i < name.Len() - 2; ++i)
+	{
+		if (name[i] == '_' && underbarCount < 2)
+		{
+			underbarCount++;
+			continue;
+		}
+
+		if (underbarCount == 2)
+			ret.AppendChar(name[i]);
+	}
+
+	return ret;
 }

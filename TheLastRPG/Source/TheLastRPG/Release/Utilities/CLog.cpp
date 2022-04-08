@@ -53,6 +53,20 @@ void CLog::Log(float InValue, bool Verbosity)
 	}
 }
 
+void CLog::Log(const bool* InValue, bool Verbosity)
+{
+	if (Verbosity)
+	{
+		if (*InValue) { UE_LOG(LOG_GameProject, Warning, L"True"); }
+		else { UE_LOG(LOG_GameProject, Warning, L"False"); }
+	}
+	else
+	{
+		if (*InValue) { UE_LOG(LOG_GameProject, Display, L"True"); }
+		else { UE_LOG(LOG_GameProject, Display, L"False"); }
+	}
+}
+
 void CLog::Log(const FString& InValue, bool Verbosity)
 {
 	if (Verbosity)

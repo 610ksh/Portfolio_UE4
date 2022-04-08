@@ -49,6 +49,7 @@ public:
 		FAttachmentBeginOverlap OnAttachmentBeginOverlap;
 	UPROPERTY(BlueprintAssignable)
 		FAttachmentEndOverlap OnAttachmentEndOverlap;
+
 	UPROPERTY(BlueprintAssignable)
 		FAttachmentCollision OnAttachmentCollision;
 	UPROPERTY(BlueprintAssignable)

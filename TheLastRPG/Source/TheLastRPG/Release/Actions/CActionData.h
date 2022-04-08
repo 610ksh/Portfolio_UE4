@@ -42,6 +42,9 @@ public:
 	void BeginPlay(class ACharacter* InOwnerCharacter);
 
 private:
+	FString GetAttachmentName(const FString& name);
+
+private:
 	class ACAttachment* Attachment[2];
 	class ACEquipment* Equipment;
 	class ACDoAction* DoAction;

@@ -15,7 +15,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Hitted")
 		float LaunchAmount = 140.0f;
 	UPROPERTY(VisibleAnywhere, Category = "Hitted")
-		FLinearColor originColor;
+		FLinearColor OriginColor;
 
 protected: // Widget Component
 	UPROPERTY(VisibleDefaultsOnly)

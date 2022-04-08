@@ -106,17 +106,19 @@ void ACCountess::Tick(float DeltaTime)
 void ACCountess::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	/// Movement
 	PlayerInputComponent->BindAxis("MoveForward", this, &ACCountess::OnMoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ACCountess::OnMoveRight);
 	PlayerInputComponent->BindAxis("Turn", this, &ACCountess::OnHorizontalLook);
 	PlayerInputComponent->BindAxis("LookUp", this, &ACCountess::OnVerticalLook);
-
+	/// Action
 	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &ACCountess::OnAvoid);
 	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACCountess::OnDoAction);
+	/// Equip
 	PlayerInputComponent->BindAction("Fist", EInputEvent::IE_Pressed, this, &ACCountess::OnFist);
 	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ACCountess::OnOneHand);
 	PlayerInputComponent->BindAction("TwoHand", EInputEvent::IE_Pressed, this, &ACCountess::OnTwoHand);
+	PlayerInputComponent->BindAction("Warp", EInputEvent::IE_Pressed, this, &ACCountess::OnWarp);
 }
 
 void ACCountess::OnMoveForward(float InAxis)
@@ -187,7 +189,7 @@ void ACCountess::End_Roll()
 	}
 
 	State->SetIdleMode();
-	CLog::Log(L"End_Roll");
+	CLog::Log("End_Roll");
 }
 
 void ACCountess::Begin_Backstep()
@@ -207,7 +209,7 @@ void ACCountess::End_Backstep()
 	}
 
 	State->SetIdleMode();
-	CLog::Log(L"End_Backstep");
+	CLog::Log("End_Backstep");
 }
 #pragma endregion
 
@@ -233,6 +235,13 @@ void ACCountess::OnTwoHand()
 	CheckFalse(State->IsIdleMode());
 
 	Action->SetTwoHandMode();
+}
+
+void ACCountess::OnWarp()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetWarpMode();
 }
 #pragma endregion
 

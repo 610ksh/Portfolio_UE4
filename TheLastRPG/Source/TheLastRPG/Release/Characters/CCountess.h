@@ -65,6 +65,7 @@ private:
 	void OnFist();
 	void OnOneHand();
 	void OnTwoHand();
+	void OnWarp();
 
 	/// Attack
 	void OnDoAction();

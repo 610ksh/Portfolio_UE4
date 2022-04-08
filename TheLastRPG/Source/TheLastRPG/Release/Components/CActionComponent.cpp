@@ -65,17 +65,9 @@ void UCActionComponent::SetTwoHandMode()
 	SetMode(EActionType::TwoHand);
 }
 
-void UCActionComponent::DoAction()
+void UCActionComponent::SetWarpMode()
 {
-	CheckTrue(IsUnarmedMode());
-
-	if (!!Datas[(int32)Type])
-	{
-		ACDoAction* action = Datas[(int32)Type]->GetDoAction();
-
-		if (!!action)
-			action->DoAction();
-	}
+	SetMode(EActionType::Warp);
 }
 
 void UCActionComponent::SetMode(EActionType InType)
@@ -113,4 +105,18 @@ void UCActionComponent::ChangeType(EActionType InNewType)
 
 	if (OnActionTypeChanged.IsBound())
 		OnActionTypeChanged.Broadcast(prevType, InNewType);
+}
+
+/// Attack
+void UCActionComponent::DoAction()
+{
+	CheckTrue(IsUnarmedMode());
+
+	if (!!Datas[(int32)Type])
+	{
+		ACDoAction* action = Datas[(int32)Type]->GetDoAction();
+
+		if (!!action)
+			action->DoAction();
+	}
 }
