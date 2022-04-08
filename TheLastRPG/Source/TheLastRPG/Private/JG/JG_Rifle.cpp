@@ -17,6 +17,7 @@
 
 AJG_Rifle* AJG_Rifle::Spawn(class UWorld* InWorld, class ACharacter* InOwner)
 {
+
 	FActorSpawnParameters params;
 	params.Owner = InOwner;
 
@@ -31,9 +32,11 @@ AJG_Rifle::AJG_Rifle()
 
 	JG_Helpers::CreateComponent<USkeletalMeshComponent>(this, &Mesh, "Mesh");
 
+
 	USkeletalMesh* mesh;
 	JG_Helpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/Lectures/Weapons/Meshes/AR4/SK_AR4.SK_AR4'");
 	Mesh->SetSkeletalMesh(mesh);
+
 
 	JG_Helpers::GetAsset<UAnimMontage>(&GrabMontage, "AnimMontage'/Game/JongGyun/Character/Animation/Montage/Rifle_Grab_Montage.Rifle_Grab_Montage'");
 	JG_Helpers::GetAsset<UAnimMontage>(&UngrabMontage, "AnimMontage'/Game/JongGyun/Character/Animation/Montage/Rifle_Ungrab_Montage.Rifle_Ungrab_Montage'");
@@ -51,6 +54,7 @@ void AJG_Rifle::Equip()
 {
 	JG_CheckTrue(bEquipped);
 	JG_CheckTrue(bEquipping);
+
 
 	bEquipping = true;
 	OwnerCharacter->PlayAnimMontage(GrabMontage);

@@ -13,6 +13,7 @@ void UJG_CAnimInstance::NativeBeginPlay()
 
 void UJG_CAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
+
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
 	ACharacter* character = Cast<ACharacter>(TryGetPawnOwner());

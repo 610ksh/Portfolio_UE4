@@ -16,6 +16,7 @@ AJG05_SweepTrigger::AJG05_SweepTrigger()
 	Box->SetRelativeScale3D(FVector(3));
 	Box->bHiddenInGame = false;
 
+
 	Text->SetRelativeLocation(FVector(0, 0, 100));
 	Text->SetRelativeRotation(FRotator(0, 180, 0));
 	Text->SetRelativeScale3D(FVector(2));

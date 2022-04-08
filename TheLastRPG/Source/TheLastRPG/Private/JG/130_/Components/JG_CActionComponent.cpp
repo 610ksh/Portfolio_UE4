@@ -15,6 +15,7 @@ UJG_CActionComponent::UJG_CActionComponent()
 }
 
 
+
 // Called when the game starts
 void UJG_CActionComponent::BeginPlay()
 {

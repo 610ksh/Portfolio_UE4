@@ -1,34 +1,38 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "JG/130_/Actions/JG_CAttachment.h"
+#include "JG/130_/Actions/JG_CDoAction.h"
+#include "JG/JG_Global.h"
 
 #include "JG/130_/Components/JG_CStateComponent.h"
 #include "JG/130_/Components/JG_CStatusComponent.h"
-#include "JG/JG_Global.h"
-#include "GameFramework/Character.h" 
-#include "Components/SkeletalMeshComponent.h"
-//
-// 
-// Sets default values
-AJG_CAttachment::AJG_CAttachment()
-{
 
+#include "GameFramework/Character.h"
+
+// Sets default values
+AJG_CDoAction::AJG_CDoAction()
+{
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
 
 }
 
 // Called when the game starts or when spawned
-void AJG_CAttachment::BeginPlay()
+void AJG_CDoAction::BeginPlay()
 {
 	OwnerCharacter = Cast<ACharacter>(GetOwner());
 	State = JG_Helpers::GetComponent<UJG_CStateComponent>(OwnerCharacter);
 	Status = JG_Helpers::GetComponent<UJG_CStatusComponent>(OwnerCharacter);
 
+	//beginPlay가 블프를 호출하기 때문에 순서때문에 아래쪽에 배치함
 	Super::BeginPlay();
 	
 }
 
-void AJG_CAttachment::AttachTo(FName InSocketName)
+// Called every frame
+void AJG_CDoAction::Tick(float DeltaTime)
 {
-	AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true), InSocketName);
+	Super::Tick(DeltaTime);
+
 }
+

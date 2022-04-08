@@ -18,6 +18,7 @@
 #include "JG/130_/Components/JG_CMontagesComponent.h"
 #include "JG/130_/Components/JG_CActionComponent.h"
 
+
 // Sets default values
 AJG_CPlayer::AJG_CPlayer()
 {
