@@ -31,8 +31,8 @@ void UCActionComponent::SetUnarmedMode_Begin()
 		if (!!equipment)
 			equipment->Unequip(); // 장비 해제
 
-		if (IsFistMode()) 
-		{ // Fist는 애니메이션이 없어서 직접 불러줌
+		if (IsFistMode() || IsWarpMode() || IsFireStormMode()) 
+		{ // Fist, Warp, FireStorm 애니메이션이 없어서 직접 불러줌
 			SetUnarmedMode();
 			return;
 		}
@@ -68,6 +68,11 @@ void UCActionComponent::SetTwoHandMode()
 void UCActionComponent::SetWarpMode()
 {
 	SetMode(EActionType::Warp);
+}
+
+void UCActionComponent::SetFireStormMode()
+{
+	SetMode(EActionType::FireStorm);
 }
 
 void UCActionComponent::SetMode(EActionType InType)

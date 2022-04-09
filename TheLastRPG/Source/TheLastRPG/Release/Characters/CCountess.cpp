@@ -119,6 +119,7 @@ void ACCountess::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ACCountess::OnOneHand);
 	PlayerInputComponent->BindAction("TwoHand", EInputEvent::IE_Pressed, this, &ACCountess::OnTwoHand);
 	PlayerInputComponent->BindAction("Warp", EInputEvent::IE_Pressed, this, &ACCountess::OnWarp);
+	PlayerInputComponent->BindAction("FireStorm", EInputEvent::IE_Pressed, this, &ACCountess::OnFireStorm);
 }
 
 void ACCountess::OnMoveForward(float InAxis)
@@ -242,6 +243,13 @@ void ACCountess::OnWarp()
 	CheckFalse(State->IsIdleMode());
 
 	Action->SetWarpMode();
+}
+
+void ACCountess::OnFireStorm()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetFireStormMode();
 }
 #pragma endregion
 

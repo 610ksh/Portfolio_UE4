@@ -42,6 +42,7 @@ public:
 	void BeginPlay(class ACharacter* InOwnerCharacter);
 
 private:
+	FString GetLableName(class ACharacter* InOwnerCharacter, const FString& InName, const FString& InAttachmentClassName = "");
 	FString GetAttachmentName(const FString& name);
 
 private:

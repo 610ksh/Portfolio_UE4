@@ -17,7 +17,8 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		if (!!AttachmentClass[i])
 		{
 			Attachment[i] = (InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACAttachment>(AttachmentClass[i], transform, InOwnerCharacter));
-			Attachment[i]->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Attachment_" + GetAttachmentName(AttachmentClass[i]->GetName()));
+			//Attachment[i]->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Attachment_" + GetAttachmentName(AttachmentClass[i]->GetName()));
+			Attachment[i]->SetActorLabel(GetLableName(InOwnerCharacter, "Attachment", AttachmentClass[i]->GetName()));
 			UGameplayStatics::FinishSpawningActor(Attachment[i], transform);
 		}
 	}
@@ -26,7 +27,7 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 	if (!!EquipmentClass)
 	{
 		Equipment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACEquipment>(EquipmentClass, transform, InOwnerCharacter);
-		Equipment->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Equipment");
+		Equipment->SetActorLabel(GetLableName(InOwnerCharacter, "Equipment"));
 		Equipment->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
 		if (!!EquipmentData.AnimMontage)
 			Equipment->SetEquipData(EquipmentData);
@@ -50,7 +51,7 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 	if (!!DoActionClass)
 	{
 		DoAction = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACDoAction>(DoActionClass, transform, InOwnerCharacter);
-		DoAction->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_DoAction");
+		DoAction->SetActorLabel(GetLableName(InOwnerCharacter, "DoAction"));
 		DoAction->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
 		DoAction->SetDatas(DoActionDatas);
 		UGameplayStatics::FinishSpawningActor(DoAction, transform);
@@ -72,6 +73,20 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 			}
 		}
 	}
+}
+
+FString UCActionData::GetLableName(class ACharacter* InOwnerCharacter, const FString& InName, const FString& InAttachmentClassName)
+{
+	FString str;
+	str.Append(InOwnerCharacter->GetActorLabel());
+	str.Append("_");
+	str.Append(InName);
+	str.Append("_");
+	if (InName == "Attachment")
+		str.Append(GetAttachmentName(InAttachmentClassName));
+	else
+		str.Append(GetName().Replace(L"DA_Countess_", L""));
+	return str;
 }
 
 FString UCActionData::GetAttachmentName(const FString& name)
