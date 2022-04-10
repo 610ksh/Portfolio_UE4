@@ -102,7 +102,6 @@ void ACCountess::Tick(float DeltaTime)
 
 #pragma region InputComponent
 /// InputComponent, Bind function
-
 void ACCountess::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -111,15 +110,19 @@ void ACCountess::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis("MoveRight", this, &ACCountess::OnMoveRight);
 	PlayerInputComponent->BindAxis("Turn", this, &ACCountess::OnHorizontalLook);
 	PlayerInputComponent->BindAxis("LookUp", this, &ACCountess::OnVerticalLook);
-	/// Action
-	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &ACCountess::OnAvoid);
-	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACCountess::OnDoAction);
 	/// Equip
 	PlayerInputComponent->BindAction("Fist", EInputEvent::IE_Pressed, this, &ACCountess::OnFist);
 	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ACCountess::OnOneHand);
 	PlayerInputComponent->BindAction("TwoHand", EInputEvent::IE_Pressed, this, &ACCountess::OnTwoHand);
 	PlayerInputComponent->BindAction("Warp", EInputEvent::IE_Pressed, this, &ACCountess::OnWarp);
 	PlayerInputComponent->BindAction("FireStorm", EInputEvent::IE_Pressed, this, &ACCountess::OnFireStorm);
+	/// Basic attack, Skill
+	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACCountess::OnDoAction);
+	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &ACCountess::OnAvoid);
+	PlayerInputComponent->BindAction("Skill_Q", EInputEvent::IE_Pressed, this, &ACCountess::OnSkillQ);
+	PlayerInputComponent->BindAction("Skill_E", EInputEvent::IE_Pressed, this, &ACCountess::OnSkillE);
+	PlayerInputComponent->BindAction("Skill_R", EInputEvent::IE_Pressed, this, &ACCountess::OnSkillR);
+	PlayerInputComponent->BindAction("Skill_F", EInputEvent::IE_Pressed, this, &ACCountess::OnSkillF);
 }
 
 void ACCountess::OnMoveForward(float InAxis)
@@ -155,7 +158,6 @@ void ACCountess::OnVerticalLook(float InAxis)
 
 #pragma region Movement
 /// Movement, Roll, Backstep
-
 void ACCountess::OnAvoid()
 {
 	CheckFalse(Status->CanMove());
@@ -216,7 +218,6 @@ void ACCountess::End_Backstep()
 
 #pragma region Equipment
 /// Equip State
-
 void ACCountess::OnFist()
 {
 	CheckFalse(State->IsIdleMode());
@@ -255,10 +256,25 @@ void ACCountess::OnFireStorm()
 
 #pragma region Attack
 /// Attack
-
 void ACCountess::OnDoAction()
 {
 	Action->DoAction();
+}
+void ACCountess::OnSkillQ()
+{
+	Action->DoSkillAction(ESkillType::Q);
+}
+void ACCountess::OnSkillE()
+{
+	Action->DoSkillAction(ESkillType::E);
+}
+void ACCountess::OnSkillR()
+{
+	Action->DoSkillAction(ESkillType::R);
+}
+void ACCountess::OnSkillF()
+{
+	Action->DoSkillAction(ESkillType::F);
 }
 #pragma endregion
 

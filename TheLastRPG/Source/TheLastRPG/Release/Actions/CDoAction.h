@@ -11,7 +11,8 @@ class THELASTRPG_API ACDoAction : public AActor
 	GENERATED_BODY()
 
 public:
-	FORCEINLINE void SetDatas(const TArray<FDoActionData>& InDatas) { Datas = InDatas; }
+	FORCEINLINE void SetAttackDatas(const TArray<FDoActionData>& InDatas) { AttackDatas = InDatas; }
+	FORCEINLINE void SetSkillDatas(const TArray<FDoActionData>& InDatas) { SkillDatas = InDatas; }
 	FORCEINLINE void SetEquipped(const bool* InEquipped) { bEquipped = InEquipped; }
 
 public:
@@ -49,5 +50,6 @@ protected:
 
 protected:
 	const bool* bEquipped;
-	TArray<FDoActionData> Datas;
+	TArray<FDoActionData> AttackDatas;
+	TArray<FDoActionData> SkillDatas;
 };

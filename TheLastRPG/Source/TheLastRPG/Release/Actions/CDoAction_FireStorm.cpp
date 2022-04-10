@@ -42,6 +42,16 @@ void ACDoAction_FireStorm::Tick(float DeltaTime)
 	Box->SetWorldLocation(location);
 }
 
+void ACDoAction_FireStorm::OnAttachmentBeginOverlap(ACharacter * InAttacker, AActor * InAttackCauser, ACharacter * InOtherCharacter)
+{
+	HittedCharacter.Emplace(InOtherCharacter);
+}
+
+void ACDoAction_FireStorm::OnAttachmentEndOverlap(ACharacter * InAttacker, AActor * InAttackCauser, ACharacter * InOtherCharacter)
+{
+	HittedCharacter.Remove(InOtherCharacter);
+}
+
 void ACDoAction_FireStorm::DoAction()
 {
 	CheckFalse(*bEquipped);
@@ -49,18 +59,29 @@ void ACDoAction_FireStorm::DoAction()
 	CheckFalse(State->IsIdleMode());
 	State->SetActionMode();
 
-	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
-	Datas[0].bCanMove ? Status->SetMove() : Status->SetStop();
+	OwnerCharacter->PlayAnimMontage(AttackDatas[0].AnimMontage, AttackDatas[0].PlayRatio, AttackDatas[0].StartSection);
+	AttackDatas[0].bCanMove ? Status->SetMove() : Status->SetStop();
 }
 
 void ACDoAction_FireStorm::Begin_DoAction()
 {
-	Attached = UGameplayStatics::SpawnEmitterAttached(Datas[0].Effect, Box, "");
-	Attached->SetRelativeLocation(Datas[0].EffectTransform.GetLocation());
-	Attached->SetRelativeScale3D(Datas[0].EffectTransform.GetScale3D());
+	Angle = UKismetMathLibrary::RandomFloatInRange(0.f, 360.f);
 
-	//ACAttachment* attachment = Cast<ACAttachment>(Box->GetOwner());
-	//attachment->OnCollision();
+	Attached = UGameplayStatics::SpawnEmitterAttached(AttackDatas[0].Effect, Box, "");
+	Attached->SetRelativeLocation(AttackDatas[0].EffectTransform.GetLocation());
+	Attached->SetRelativeScale3D(AttackDatas[0].EffectTransform.GetScale3D());
+
+	ACAttachment* attachment = Cast<ACAttachment>(Box->GetOwner());
+	attachment->OnCollision();
+
+	UKismetSystemLibrary::K2_SetTimer(this, "Hitted", HittedTime, true);
+}
+
+void ACDoAction_FireStorm::Hitted()
+{
+	FDamageEvent e;
+	for (ACharacter* character : HittedCharacter)
+		character->TakeDamage(AttackDatas[0].Power, e, OwnerCharacter->GetController(), this);
 }
 
 void ACDoAction_FireStorm::End_DoAction()
@@ -70,13 +91,14 @@ void ACDoAction_FireStorm::End_DoAction()
 	FTimerDynamicDelegate timerDelegate;
 	timerDelegate.BindUFunction(this, "Finish");
 	UKismetSystemLibrary::K2_SetTimerDelegate(timerDelegate, Time, false);
-
-	//ACAttachment* attachment = Cast<ACAttachment>(Box->GetOwner());
-	//attachment->OffCollision();
 }
 
 void ACDoAction_FireStorm::Finish()
 {
 	State->SetIdleMode();
 	Attached->DestroyComponent();
+
+	ACAttachment* attachment = Cast<ACAttachment>(Box->GetOwner());
+	attachment->OffCollision();
+	UKismetSystemLibrary::K2_ClearTimer(this, "Hitted");
 }

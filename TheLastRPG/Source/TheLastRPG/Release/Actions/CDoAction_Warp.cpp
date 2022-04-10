@@ -71,14 +71,14 @@ void ACDoAction_Warp::DoAction()
 	Decal->SetWorldLocation(Location);
 	Decal->SetWorldRotation(rotator);
 
-	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);
-	Datas[0].bCanMove ? Status->SetMove() : Status->SetStop();
+	OwnerCharacter->PlayAnimMontage(AttackDatas[0].AnimMontage, AttackDatas[0].PlayRatio, AttackDatas[0].StartSection);
+	AttackDatas[0].bCanMove ? Status->SetMove() : Status->SetStop();
 }
 
 void ACDoAction_Warp::Begin_DoAction()
 {
-	FTransform transform = Datas[0].EffectTransform;
-	UGameplayStatics::SpawnEmitterAttached(Datas[0].Effect, OwnerCharacter->GetMesh(), "", transform.GetLocation(), FRotator(transform.GetRotation()), transform.GetScale3D());
+	FTransform transform = AttackDatas[0].EffectTransform;
+	UGameplayStatics::SpawnEmitterAttached(AttackDatas[0].Effect, OwnerCharacter->GetMesh(), "", transform.GetLocation(), FRotator(transform.GetRotation()), transform.GetScale3D());
 }
 
 void ACDoAction_Warp::End_DoAction()

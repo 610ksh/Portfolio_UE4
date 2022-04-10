@@ -10,6 +10,12 @@ enum class EActionType : uint8
 	Unarmed, Fist, OneHand, TwoHand, Warp, FireStorm, Max,
 };
 
+UENUM(BlueprintType)
+enum class ESkillType : uint8
+{
+	Q, E, R, F, Max,
+};
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FActionTypeChanged, EActionType, InPrevType, EActionType, InNewType);
 
 UCLASS( ClassGroup=(GameProject), meta=(BlueprintSpawnableComponent) )
@@ -39,7 +45,7 @@ public:
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsFireStormMode() { return Type == EActionType::FireStorm; }
 
-public:	
+public:
 	UCActionComponent();
 
 	void SetUnarmedMode();
@@ -51,6 +57,7 @@ public:
 
 public: // Attack
 	void DoAction();
+	void DoSkillAction(ESkillType InType);
 
 protected:
 	virtual void BeginPlay() override;

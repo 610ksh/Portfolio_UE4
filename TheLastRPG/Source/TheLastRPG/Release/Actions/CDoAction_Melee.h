@@ -34,6 +34,7 @@ private:
 	bool bEnableCombo;
 	bool bLastCombo;
 
+protected:
 	int32 ComboIndex;
 	TArray<class ACharacter*> HittedCharacters;
 };

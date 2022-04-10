@@ -16,6 +16,8 @@ private:
 		float Distance = 200.0f;
 	UPROPERTY(EditAnywhere)
 		float Speed = 100.0f;
+	UPROPERTY(EditAnywhere)
+		float HittedTime = 0.25f;
 
 protected:
 	virtual void BeginPlay() override;
@@ -28,11 +30,18 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
+	virtual void OnAttachmentBeginOverlap(class ACharacter* InAttacker, class AActor* InAttackCauser, class ACharacter* InOtherCharacter) override;
+	virtual void OnAttachmentEndOverlap(class ACharacter* InAttacker, class AActor* InAttackCauser, class ACharacter* InOtherCharacter) override;
+
+private:
 	UFUNCTION()
 		void Finish();
+	UFUNCTION()
+		void Hitted();
 
 private:
 	class UBoxComponent* Box;
 	class UParticleSystemComponent* Attached;
 	float Angle;
+	TSet<class ACharacter*> HittedCharacter;
 };

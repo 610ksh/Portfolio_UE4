@@ -8,7 +8,7 @@
 void ACDoAction_Melee::DoAction()
 {
 	Super::DoAction();
-	CheckFalse(Datas.Num() > 0);
+	CheckFalse(AttackDatas.Num() > 0);
 
 	if (bEnableCombo)
 	{
@@ -21,7 +21,7 @@ void ACDoAction_Melee::DoAction()
 	CheckFalse(State->IsIdleMode());
 	State->SetActionMode();
 
-	const FDoActionData& data = Datas[0];
+	const FDoActionData& data = AttackDatas[0];
 	OwnerCharacter->PlayAnimMontage(data.AnimMontage, data.PlayRatio, data.StartSection);
 
 	data.bCanMove ? Status->SetMove() : Status->SetStop();
@@ -37,7 +37,7 @@ void ACDoAction_Melee::Begin_DoAction()
 	OwnerCharacter->StopAnimMontage();
 	ComboIndex++;
 
-	const FDoActionData& data = Datas[ComboIndex];
+	const FDoActionData& data = AttackDatas[ComboIndex];
 	CheckNull(data.AnimMontage);
 	OwnerCharacter->PlayAnimMontage(data.AnimMontage, data.PlayRatio, data.StartSection);
 
@@ -48,7 +48,7 @@ void ACDoAction_Melee::End_DoAction()
 {
 	Super::End_DoAction();
 
-	const FDoActionData& data = Datas[ComboIndex];
+	const FDoActionData& data = AttackDatas[ComboIndex];
 	OwnerCharacter->StopAnimMontage(data.AnimMontage);
 
 	State->SetIdleMode();
@@ -71,17 +71,17 @@ void ACDoAction_Melee::OnAttachmentBeginOverlap(ACharacter * InAttacker, AActor 
 	CLog::Log(InOtherCharacter->GetName() + "_BeginOverlap");
 
 	/// Hit particle
-	UParticleSystem* hitEffect = Datas[ComboIndex].Effect;
+	UParticleSystem* hitEffect = AttackDatas[ComboIndex].Effect;
 	if (!!hitEffect)
 	{
-		FTransform transform = Datas[ComboIndex].EffectTransform;
+		FTransform transform = AttackDatas[ComboIndex].EffectTransform;
 		transform.AddToTranslation(InOtherCharacter->GetActorLocation());
 
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), hitEffect, transform);
 	}
 
 	/// HitStop
-	float hitStop = Datas[ComboIndex].HitStop;
+	float hitStop = AttackDatas[ComboIndex].HitStop;
 	if (FMath::IsNearlyZero(hitStop) == false)
 	{
 		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1e-3f);
@@ -89,12 +89,12 @@ void ACDoAction_Melee::OnAttachmentBeginOverlap(ACharacter * InAttacker, AActor 
 	}
 
 	/// CameraShake
-	TSubclassOf<UMatineeCameraShake> shake = Datas[ComboIndex].ShakeClass;
+	TSubclassOf<UMatineeCameraShake> shake = AttackDatas[ComboIndex].ShakeClass;
 	if (!!shake)
 		UGameplayStatics::GetPlayerController(GetWorld(), 0)->PlayerCameraManager->StartMatineeCameraShake(shake);
 
 	FDamageEvent e;
-	InOtherCharacter->TakeDamage(Datas[ComboIndex].Power, e, OwnerCharacter->GetController(), this);
+	InOtherCharacter->TakeDamage(AttackDatas[ComboIndex].Power, e, OwnerCharacter->GetController(), this);
 }
 
 void ACDoAction_Melee::OnAttachmentEndOverlap(ACharacter * InAttacker, AActor * InAttackCauser, ACharacter * InOtherCharacter)

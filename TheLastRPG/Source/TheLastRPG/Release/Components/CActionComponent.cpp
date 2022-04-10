@@ -125,3 +125,24 @@ void UCActionComponent::DoAction()
 			action->DoAction();
 	}
 }
+
+void UCActionComponent::DoSkillAction(ESkillType InType)
+{
+	CheckTrue(IsUnarmedMode());
+
+
+
+	switch (InType)
+	{
+	case ESkillType::Q:
+		break;
+	case ESkillType::E:
+		break;
+	case ESkillType::R:
+		break;
+	case ESkillType::F:
+		break;
+	default:
+		break;
+	}
+}

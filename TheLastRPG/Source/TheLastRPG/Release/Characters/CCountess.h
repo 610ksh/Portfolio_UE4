@@ -71,6 +71,12 @@ private:
 	/// Attack
 	void OnDoAction();
 
+	/// Skill
+	void OnSkillQ();
+	void OnSkillE();
+	void OnSkillR();
+	void OnSkillF();
+
 public:
 	virtual void ChangeColor(FLinearColor InColor) override;
 

@@ -17,7 +17,6 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		if (!!AttachmentClass[i])
 		{
 			Attachment[i] = (InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACAttachment>(AttachmentClass[i], transform, InOwnerCharacter));
-			//Attachment[i]->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Attachment_" + GetAttachmentName(AttachmentClass[i]->GetName()));
 			Attachment[i]->SetActorLabel(GetLableName(InOwnerCharacter, "Attachment", AttachmentClass[i]->GetName()));
 			UGameplayStatics::FinishSpawningActor(Attachment[i], transform);
 		}
@@ -36,7 +35,6 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		Equipment->SetColor(EquipmentColor);
 		UGameplayStatics::FinishSpawningActor(Equipment, transform);
 
-
 		for (int32 i = 0; i < AttachmentClass.Num(); i++)
 		{
 			if (!!Attachment[i])
@@ -53,7 +51,8 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		DoAction = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACDoAction>(DoActionClass, transform, InOwnerCharacter);
 		DoAction->SetActorLabel(GetLableName(InOwnerCharacter, "DoAction"));
 		DoAction->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
-		DoAction->SetDatas(DoActionDatas);
+		DoAction->SetAttackDatas(AttackDatas);
+		DoAction->SetSkillDatas(SkillDatas);
 		UGameplayStatics::FinishSpawningActor(DoAction, transform);
 
 		if (!!Equipment)

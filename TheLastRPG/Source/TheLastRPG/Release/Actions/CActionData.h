@@ -11,7 +11,6 @@ class THELASTRPG_API UCActionData : public UDataAsset
 	GENERATED_BODY()
 
 public:
-	
 	FORCEINLINE class ACAttachment* GetAttachment() { return Attachment[0]; }
 	FORCEINLINE class ACAttachment* GetAttachment(const int& idx) { return Attachment[idx]; }
 	FORCEINLINE class ACEquipment* GetEquipment() { return Equipment; }
@@ -29,7 +28,9 @@ public:
 		TSubclassOf<class ACDoAction> DoActionClass;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-		TArray<FDoActionData> DoActionDatas;
+		TArray<FDoActionData> AttackDatas;
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		TArray<FDoActionData> SkillDatas;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		FEquipmentData EquipmentData;
