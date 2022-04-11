@@ -39,6 +39,9 @@ public:
 	virtual void End_Skill_F() {}
 	virtual void Begin_Skill_F() {}
 
+	virtual void OnAim() {}
+	virtual void OffAim() {}
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -68,4 +71,5 @@ protected:
 	const bool* bEquipped;
 	TArray<FDoActionData> AttackDatas;
 	TArray<FDoActionData> SkillDatas;
+	
 };

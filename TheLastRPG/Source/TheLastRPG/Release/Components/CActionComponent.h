@@ -7,7 +7,7 @@
 UENUM(BlueprintType)
 enum class EActionType : uint8
 {
-	Unarmed, Fist, OneHand, TwoHand, Warp, FireStorm, Max,
+	Unarmed, Fist, OneHand, TwoHand, Warp, FireStorm, Throw, Max,
 };
 
 UENUM(BlueprintType)
@@ -44,6 +44,8 @@ public:
 		FORCEINLINE bool IsWarpMode() { return Type == EActionType::Warp; }
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsFireStormMode() { return Type == EActionType::FireStorm; }
+	UFUNCTION(BlueprintPure)
+		FORCEINLINE bool IsThrowMode() { return Type == EActionType::Throw; }
 
 public:
 	UCActionComponent();
@@ -54,10 +56,14 @@ public:
 	void SetTwoHandMode();
 	void SetWarpMode();
 	void SetFireStormMode();
+	void SetThrowMode();
 
 public: // Attack
 	void DoAction();
 	void DoSkillAction(ESkillType InType);
+
+	void DoAim();
+	void UndoAim();
 
 protected:
 	virtual void BeginPlay() override;
@@ -65,7 +71,9 @@ protected:
 private:
 	void SetUnarmedMode_Begin();
 	void SetMode(EActionType InType);
+	void SetAimMode(bool InAim);
 	void ChangeType(EActionType InNewType);
+
 
 public:
 	FActionTypeChanged OnActionTypeChanged;

@@ -67,8 +67,9 @@ private:
 	void OnTwoHand();
 	void OnWarp();
 	void OnFireStorm();
+	void OnThrow();
 
-	/// Attack
+	/// Basic attack
 	void OnDoAction();
 
 	/// Skill
@@ -76,6 +77,14 @@ private:
 	void OnSkillE();
 	void OnSkillR();
 	void OnSkillF();
+
+	/// Etc
+	void OnTarget();
+	void OnTargetLeft();
+	void OnTargetRight();
+
+	void OnAim();
+	void OffAim();
 
 public:
 	virtual void ChangeColor(FLinearColor InColor) override;

@@ -116,6 +116,7 @@ void ACCountess::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction("TwoHand", EInputEvent::IE_Pressed, this, &ACCountess::OnTwoHand);
 	PlayerInputComponent->BindAction("Warp", EInputEvent::IE_Pressed, this, &ACCountess::OnWarp);
 	PlayerInputComponent->BindAction("FireStorm", EInputEvent::IE_Pressed, this, &ACCountess::OnFireStorm);
+	PlayerInputComponent->BindAction("Throw", EInputEvent::IE_Pressed, this, &ACCountess::OnThrow);
 	/// Basic attack, Skill
 	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACCountess::OnDoAction);
 	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &ACCountess::OnAvoid);
@@ -123,6 +124,9 @@ void ACCountess::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction("Skill_E", EInputEvent::IE_Pressed, this, &ACCountess::OnSkillE);
 	PlayerInputComponent->BindAction("Skill_R", EInputEvent::IE_Pressed, this, &ACCountess::OnSkillR);
 	PlayerInputComponent->BindAction("Skill_F", EInputEvent::IE_Pressed, this, &ACCountess::OnSkillF);
+
+	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Pressed, this, &ACCountess::OnAim);
+	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &ACCountess::OffAim);
 }
 
 void ACCountess::OnMoveForward(float InAxis)
@@ -252,6 +256,13 @@ void ACCountess::OnFireStorm()
 
 	Action->SetFireStormMode();
 }
+
+void ACCountess::OnThrow()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetThrowMode();
+}
 #pragma endregion
 
 #pragma region Attack
@@ -277,6 +288,16 @@ void ACCountess::OnSkillF()
 	Action->DoSkillAction(ESkillType::F);
 }
 #pragma endregion
+
+void ACCountess::OnAim()
+{
+	Action->DoAim();
+}
+
+void ACCountess::OffAim()
+{
+	Action->UndoAim();
+}
 
 void ACCountess::ChangeColor(FLinearColor InColor)
 {

@@ -75,6 +75,11 @@ void UCActionComponent::SetFireStormMode()
 	SetMode(EActionType::FireStorm);
 }
 
+void UCActionComponent::SetThrowMode()
+{
+	SetMode(EActionType::Throw);
+}
+
 void UCActionComponent::SetMode(EActionType InType)
 {
 	if (Type == InType) // 같은 무기 2번 선택
@@ -151,5 +156,27 @@ void UCActionComponent::DoSkillAction(ESkillType InType)
 		CLog::Log(this->GetName(), 151, true);
 		CLog::Print(this->GetName(), 151, true);
 		break;
+	}
+}
+
+void UCActionComponent::DoAim()
+{
+	SetAimMode(true);
+}
+
+void UCActionComponent::UndoAim()
+{
+	SetAimMode(false);
+}
+
+void UCActionComponent::SetAimMode(bool InAim)
+{
+	CheckTrue(IsUnarmedMode());
+
+	if (!!Datas[(int32)Type])
+	{
+		ACDoAction* action = Datas[(int32)Type]->GetDoAction();
+		if (!!action)
+			InAim ? action->OnAim() : action->OffAim();
 	}
 }
