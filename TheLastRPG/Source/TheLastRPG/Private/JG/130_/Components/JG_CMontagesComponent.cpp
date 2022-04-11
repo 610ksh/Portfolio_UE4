@@ -31,6 +31,8 @@ void UJG_CMontagesComponent::BeginPlay()
 	//		JG_Log::Print(data->AnimMontage->GetPathName());
 	//}
 
+
+	// 이해가 쉽지 않음
 	for(int32 i=0; i<(int32)EStateType_JG::Max; i++)
 		for(FMontageData_JG* data : datas)
 			if ((EStateType_JG)i == data->Type)

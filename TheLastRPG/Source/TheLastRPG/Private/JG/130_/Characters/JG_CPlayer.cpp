@@ -92,6 +92,9 @@ void AJG_CPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAxis("LookUp", this, &AJG_CPlayer::OnVerticalLook);
 
 
+	PlayerInputComponent->BindAction("Running", EInputEvent::IE_Pressed, this, &AJG_CPlayer::OnRunning);
+	PlayerInputComponent->BindAction("Running", EInputEvent::IE_Released, this, &AJG_CPlayer::OffRunning);
+
 	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &AJG_CPlayer::OnAvoid);
 	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &AJG_CPlayer::OnOneHand);
 
@@ -125,6 +128,17 @@ void AJG_CPlayer::OnVerticalLook(float InAxis)
 {
 	float rate = Option->GetVecticalLookRate();
 	AddControllerPitchInput(InAxis * rate * GetWorld()->GetDeltaSeconds());
+}
+
+void AJG_CPlayer::OnRunning()
+{
+	GetCharacterMovement()->MaxWalkSpeed = 1200.0f;
+}
+
+void AJG_CPlayer::OffRunning()
+{
+	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+
 }
 
 void AJG_CPlayer::OnAvoid()

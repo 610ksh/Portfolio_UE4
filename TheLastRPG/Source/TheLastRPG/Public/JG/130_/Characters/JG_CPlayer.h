@@ -58,6 +58,8 @@ private:
 
 
 private:
+	void OnRunning();
+	void OffRunning();
 	void OnAvoid();
 
 private:
