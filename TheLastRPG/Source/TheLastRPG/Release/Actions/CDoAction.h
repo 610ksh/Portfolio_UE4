@@ -23,6 +23,22 @@ public:
 	virtual void Begin_DoAction() {}
 	virtual void End_DoAction() {}
 
+	virtual void DoSkill_Q() {}
+	virtual void Begin_Skill_Q() {}
+	virtual void End_Skill_Q() {}
+	
+	virtual void DoSkill_E() {}
+	virtual void End_Skill_E() {}
+	virtual void Begin_Skill_E() {}
+	
+	virtual void DoSkill_R() {}
+	virtual void Begin_Skill_R() {}
+	virtual void End_Skill_R() {}
+
+	virtual void DoSkill_F() {}
+	virtual void End_Skill_F() {}
+	virtual void Begin_Skill_F() {}
+
 protected:
 	virtual void BeginPlay() override;
 

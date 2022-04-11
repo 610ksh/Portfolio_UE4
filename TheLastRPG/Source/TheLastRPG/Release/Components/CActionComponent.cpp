@@ -130,19 +130,26 @@ void UCActionComponent::DoSkillAction(ESkillType InType)
 {
 	CheckTrue(IsUnarmedMode());
 
-
+	ACDoAction* action = Datas[(int32)Type]->GetDoAction();
+	CheckNull(action);
 
 	switch (InType)
 	{
 	case ESkillType::Q:
+		action->DoSkill_Q();
 		break;
 	case ESkillType::E:
+		action->DoSkill_E();
 		break;
 	case ESkillType::R:
+		action->DoSkill_R();
 		break;
 	case ESkillType::F:
+		action->DoSkill_F();
 		break;
 	default:
+		CLog::Log(this->GetName(), 151, true);
+		CLog::Print(this->GetName(), 151, true);
 		break;
 	}
 }
