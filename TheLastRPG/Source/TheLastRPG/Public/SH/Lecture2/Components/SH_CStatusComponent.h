@@ -5,13 +5,12 @@
 #include "SH_CStatusComponent.generated.h"
 
 UENUM(BlueprintType)
-enum class ECharacterSpeed : uint8
+enum class ESH_CharacterSpeed : uint8
 {
 	Walk, Run, Sprint, Max,
 };
 
-
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class THELASTRPG_API USH_CStatusComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -21,19 +20,19 @@ private:
 		float MaxHealth = 100.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Speed")
-		float Speed[(int32)ECharacterSpeed::Max] = { 200,400,600 };
+		float Speed[(int32)ESH_CharacterSpeed::Max] = { 200,400,600 };
 
 public:
 	FORCEINLINE float GetMaxHealth() { return MaxHealth; }
 	FORCEINLINE float GetHealth() { return Health; }
 
-	FORCEINLINE float GetWalkSpeed() { return Speed[(int32)ECharacterSpeed::Walk]; }
-	FORCEINLINE float GetRunSpeed() { return Speed[(int32)ECharacterSpeed::Run]; }
-	FORCEINLINE float GetSprintSpeed() { return Speed[(int32)ECharacterSpeed::Sprint]; }
+	FORCEINLINE float GetWalkSpeed() { return Speed[(int32)ESH_CharacterSpeed::Walk]; }
+	FORCEINLINE float GetRunSpeed() { return Speed[(int32)ESH_CharacterSpeed::Run]; }
+	FORCEINLINE float GetSprintSpeed() { return Speed[(int32)ESH_CharacterSpeed::Sprint]; }
 
 	FORCEINLINE bool CanMove() { return bCanMove; }
 
-public:	
+public:
 	USH_CStatusComponent();
 
 	void AddHealth(float InAmount);
@@ -42,7 +41,7 @@ public:
 	void SetMove();
 	void SetStop();
 
-	void SetSpeed(ECharacterSpeed InType);
+	void SetSpeed(ESH_CharacterSpeed InType);
 
 protected:
 	virtual void BeginPlay() override;

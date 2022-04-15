@@ -5,12 +5,12 @@
 #include "SH_CBehaviorComponent.generated.h"
 
 UENUM(BlueprintType)
-enum class EBehaviorType : uint8
+enum class ESH_BehaviorType : uint8
 {
 	Wait, Approach, Action, Patrol, Hitted, Avoid,
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FBehaviorTypeChanged, EBehaviorType, InPrevType, EBehaviorType, InNewType);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSH_BehaviorTypeChanged, ESH_BehaviorType, InPrevType, ESH_BehaviorType, InNewType);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class THELASTRPG_API USH_CBehaviorComponent : public UActorComponent
@@ -59,12 +59,12 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	void ChangeType(EBehaviorType InType);
-	EBehaviorType GetType();
+	void ChangeType(ESH_BehaviorType InType);
+	ESH_BehaviorType GetType();
 
 public:
 	UPROPERTY(BlueprintAssignable)
-		FBehaviorTypeChanged OnBehaviorTypeChanged;
+		FSH_BehaviorTypeChanged OnBehaviorTypeChanged;
 
 private:
 	class UBlackboardComponent* Blackboard;

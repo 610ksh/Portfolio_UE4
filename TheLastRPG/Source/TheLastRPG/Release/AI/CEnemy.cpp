@@ -32,11 +32,11 @@ ACEnemy::ACEnemy()
 	GetMesh()->SetRelativeRotation(FRotator(0, -90, 0));
 
 	USkeletalMesh* mesh;
-	Helpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/SungHoon/Projects/AI/Dummy/Mesh/AI_Mannequin.AI_Mannequin'");
+	Helpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/SungHoon/Projects/AI/Mesh/AI_Mannequin.AI_Mannequin'");
 	GetMesh()->SetSkeletalMesh(mesh);
 
 	TSubclassOf<UAnimInstance> animInstance;
-	Helpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/SungHoon/Projects/AI/Dummy/ABP_AI.ABP_AI_C'");
+	Helpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/SungHoon/Projects/AI/ABP_AI.ABP_AI_C'");
 	GetMesh()->SetAnimInstanceClass(animInstance);
 
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
@@ -60,8 +60,8 @@ void ACEnemy::BeginPlay()
 {
 	UMaterialInstanceConstant* body;
 	UMaterialInstanceConstant* logo;
-	Helpers::GetAssetDynamic<UMaterialInstanceConstant>(&body, "MaterialInstanceConstant'/Game/SungHoon/Projects/AI/Dummy/Materials/Dummy_Body.Dummy_Body'");
-	Helpers::GetAssetDynamic<UMaterialInstanceConstant>(&logo, "MaterialInstanceConstant'/Game/SungHoon/Projects/AI/Dummy/Materials/Dummy_ChestLogo.Dummy_ChestLogo'");
+	Helpers::GetAssetDynamic<UMaterialInstanceConstant>(&body, "MaterialInstanceConstant'/Game/SungHoon/Projects/AI/Materials/Dummy_Body.Dummy_Body'");
+	Helpers::GetAssetDynamic<UMaterialInstanceConstant>(&logo, "MaterialInstanceConstant'/Game/SungHoon/Projects/AI/Materials/Dummy_ChestLogo.Dummy_ChestLogo'");
 
 	BodyMaterial = UMaterialInstanceDynamic::Create(body, this);
 	LogoMaterial = UMaterialInstanceDynamic::Create(logo, this);
@@ -78,20 +78,12 @@ void ACEnemy::BeginPlay()
 
 	HealthWidget->InitWidget();
 	Cast<UCUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());
-
-	// Action-> UnarmedMode로 바꾸는것. 일단 빼놓음.
 }
 
 void ACEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-}
-
-void ACEnemy::ChangeColor(FLinearColor InColor)
-{
-	BodyMaterial->SetVectorParameterValue("BodyColor", InColor);
-	LogoMaterial->SetVectorParameterValue("BodyColor", InColor);
 }
 
 void ACEnemy::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
@@ -126,6 +118,25 @@ void ACEnemy::RestoreColor()
 	ChangeColor(OriginColor);
 }
 
+void ACEnemy::ChangeColor(FLinearColor InColor)
+{
+	BodyMaterial->SetVectorParameterValue("BodyColor", InColor);
+	LogoMaterial->SetVectorParameterValue("BodyColor", InColor);
+}
+
+float ACEnemy::TakeDamage(float Damage, FDamageEvent const & DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	DamageInstigator = EventInstigator;
+	DamageValue = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+	CLog::Log(DamageValue);
+	CLog::Print(DamageValue);
+
+	State->SetHittedMode(); // restore when called hitted notify
+
+	return Status->GetHealth();
+}
+
+// Called Hitted Notify of Hitted Montage
 void ACEnemy::Hitted()
 {
 	Status->SubHealth(DamageValue);
@@ -139,23 +150,11 @@ void ACEnemy::Hitted()
 	FVector target = DamageInstigator->GetPawn()->GetActorLocation();
 	SetActorRotation(UKismetMathLibrary::FindLookAtRotation(start, target));
 	DamageInstigator = NULL;
-	
+
 	FVector direction = target - start;
 	direction.Normalize();
 	LaunchCharacter(-direction * LaunchAmount, true, false);
 
 	ChangeColor(FLinearColor(1, 0, 0, 1));
 	UKismetSystemLibrary::K2_SetTimer(this, "RestoreColor", 0.1f, false);
-}
-
-float ACEnemy::TakeDamage(float Damage, FDamageEvent const & DamageEvent, AController* EventInstigator, AActor* DamageCauser)
-{
-	DamageInstigator = EventInstigator;
-	DamageValue = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
-	CLog::Log(DamageValue);
-	CLog::Print(DamageValue);
-
-	State->SetHittedMode(); // restore when called hitted notify
-
-	return Status->GetHealth();
 }

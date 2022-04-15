@@ -2,76 +2,88 @@
 #include "Release/Actions/CAttachment.h"
 #include "Release/Actions/CEquipment.h"
 #include "Release/Actions/CDoAction.h"
+#include "Release/Actions/CAction.h"
 #include "Release/Global.h"
 
 #include "GameFramework/Character.h"
 #include "Components/SkeletalMeshComponent.h"
 
-void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
+void UCActionData::BeginPlay(ACharacter* InOwnerCharacter, UCAction** OutAction)
 {
 	FTransform transform;
 
 	// Attachment (Weapon)
+	ACAttachment* attachment[2] = {}; // 최대 2개 (양손검)
 	for (int32 i = 0; i < AttachmentClass.Num(); ++i)
 	{
 		if (!!AttachmentClass[i])
 		{
-			Attachment[i] = (InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACAttachment>(AttachmentClass[i], transform, InOwnerCharacter));
-			Attachment[i]->SetActorLabel(GetLableName(InOwnerCharacter, "Attachment", AttachmentClass[i]->GetName()));
-			UGameplayStatics::FinishSpawningActor(Attachment[i], transform);
+			attachment[i] = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACAttachment>(AttachmentClass[i], transform, InOwnerCharacter);
+			attachment[i]->SetActorLabel(GetLableName(InOwnerCharacter, "Attachment", AttachmentClass[i]->GetName()));
+			UGameplayStatics::FinishSpawningActor(attachment[i], transform);
 		}
 	}
 
 	// Equipment (Equip, Unequip)
+	ACEquipment* equipment = NULL;
 	if (!!EquipmentClass)
 	{
-		Equipment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACEquipment>(EquipmentClass, transform, InOwnerCharacter);
-		Equipment->SetActorLabel(GetLableName(InOwnerCharacter, "Equipment"));
-		Equipment->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
+		equipment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACEquipment>(EquipmentClass, transform, InOwnerCharacter);
+		equipment->SetActorLabel(GetLableName(InOwnerCharacter, "Equipment"));
+		equipment->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
 		if (!!EquipmentData.AnimMontage)
-			Equipment->SetEquipData(EquipmentData);
+			equipment->SetEquipData(EquipmentData);
 		if (!!UnequipmentData.AnimMontage)
-			Equipment->SetUnequipData(UnequipmentData);
-		Equipment->SetColor(EquipmentColor);
-		UGameplayStatics::FinishSpawningActor(Equipment, transform);
+			equipment->SetUnequipData(UnequipmentData);
+		equipment->SetColor(EquipmentColor);
+		UGameplayStatics::FinishSpawningActor(equipment, transform);
 
 		for (int32 i = 0; i < AttachmentClass.Num(); i++)
 		{
-			if (!!Attachment[i])
+			if (!!attachment[i])
 			{
-				Equipment->OnEquipmentDelegate.AddDynamic(Attachment[i], &ACAttachment::OnEquip);
-				Equipment->OnUnequipmentDelegate.AddDynamic(Attachment[i], &ACAttachment::OnUnequip);
+				equipment->OnEquipmentDelegate.AddDynamic(attachment[i], &ACAttachment::OnEquip);
+				equipment->OnUnequipmentDelegate.AddDynamic(attachment[i], &ACAttachment::OnUnequip);
 			}
 		}
 	}
 
 	// DoAction (Attack)
+	ACDoAction* doAction = NULL;
 	if (!!DoActionClass)
 	{
-		DoAction = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACDoAction>(DoActionClass, transform, InOwnerCharacter);
-		DoAction->SetActorLabel(GetLableName(InOwnerCharacter, "DoAction"));
-		DoAction->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
-		DoAction->SetAttackDatas(AttackDatas);
-		DoAction->SetSkillDatas(SkillDatas);
-		UGameplayStatics::FinishSpawningActor(DoAction, transform);
+		doAction = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACDoAction>(DoActionClass, transform, InOwnerCharacter);
+		doAction->SetActorLabel(GetLableName(InOwnerCharacter, "DoAction"));
+		doAction->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
+		doAction->SetAttackDatas(AttackDatas);
+		doAction->SetSkillDatas(SkillDatas);
+		UGameplayStatics::FinishSpawningActor(doAction, transform);
 
-		if (!!Equipment)
+		if (!!equipment)
 		{
-			DoAction->SetEquipped(Equipment->GetEquipped());
+			doAction->SetEquipped(equipment->GetEquipped());
 		}
 
 		for (int32 i = 0; i < AttachmentClass.Num(); ++i)
 		{
-			if (!!Attachment[i])
+			if (!!attachment[i])
 			{
-				Attachment[i]->OnAttachmentBeginOverlap.AddDynamic(DoAction, &ACDoAction::OnAttachmentBeginOverlap);
-				Attachment[i]->OnAttachmentEndOverlap.AddDynamic(DoAction, &ACDoAction::OnAttachmentEndOverlap);
+				attachment[i]->OnAttachmentBeginOverlap.AddDynamic(doAction, &ACDoAction::OnAttachmentBeginOverlap);
+				attachment[i]->OnAttachmentEndOverlap.AddDynamic(doAction, &ACDoAction::OnAttachmentEndOverlap);
 
-				Attachment[i]->OnAttachmentCollision.AddDynamic(DoAction, &ACDoAction::OnAttachmentCollision);
-				Attachment[i]->OffAttachmentCollision.AddDynamic(DoAction, &ACDoAction::OffAttachmentCollision);
+				attachment[i]->OnAttachmentCollision.AddDynamic(doAction, &ACDoAction::OnAttachmentCollision);
+				attachment[i]->OffAttachmentCollision.AddDynamic(doAction, &ACDoAction::OffAttachmentCollision);
 			}
 		}
-	}
+	} // DoAction
+
+	*OutAction = NewObject<UCAction>(); // 런타임중 동적할당
+	for (int32 i = 0; i < AttachmentClass.Num(); ++i)
+		(*OutAction)->Attachment[i] = attachment[i];
+	(*OutAction)->Equipment = equipment;
+	(*OutAction)->DoAction = doAction;
+	(*OutAction)->EquipmentColor = EquipmentColor;
+	(*OutAction)->AttachCount = AttachmentClass.Num();
 }
 
 FString UCActionData::GetLableName(class ACharacter* InOwnerCharacter, const FString& InName, const FString& InAttachmentClassName)

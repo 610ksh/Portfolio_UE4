@@ -1,6 +1,6 @@
 #include "Release/Notifies/CAnimNotifyState_Unequip.h"
 #include "Release/Components/CActionComponent.h"
-#include "Release/Actions/CActionData.h"
+#include "Release/Actions/CAction.h"
 #include "Release/Actions/CEquipment.h"
 #include "Release/Global.h"
 
@@ -17,8 +17,8 @@ void UCAnimNotifyState_Unequip::NotifyBegin(USkeletalMeshComponent * MeshComp, U
 
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
-	
-	action->GetCurrentActionData()->GetEquipment()->Begin_Unequip();
+
+	action->GetCurrentAction()->GetEquipment()->Begin_Unequip();
 }
 
 void UCAnimNotifyState_Unequip::NotifyEnd(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation)
@@ -30,6 +30,6 @@ void UCAnimNotifyState_Unequip::NotifyEnd(USkeletalMeshComponent * MeshComp, UAn
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
-	action->GetCurrentActionData()->GetEquipment()->End_Unequip();
+	action->GetCurrentAction()->GetEquipment()->End_Unequip();
 	action->SetUnarmedMode();
 }

@@ -22,5 +22,4 @@ void ACDoAction::BeginPlay()
 void ACDoAction::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }

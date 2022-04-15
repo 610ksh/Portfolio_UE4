@@ -1,6 +1,6 @@
 #include "Release/Notifies/CAnimNotifyState_Equip.h"
 #include "Release/Components/CActionComponent.h"
-#include "Release/Actions/CActionData.h"
+#include "Release/Actions/CAction.h"
 #include "Release/Actions/CEquipment.h"
 #include "Release/Global.h"
 
@@ -18,7 +18,7 @@ void UCAnimNotifyState_Equip::NotifyBegin(USkeletalMeshComponent * MeshComp, UAn
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
-	action->GetCurrentActionData()->GetEquipment()->Begin_Equip();
+	action->GetCurrentAction()->GetEquipment()->Begin_Equip();
 }
 
 void UCAnimNotifyState_Equip::NotifyEnd(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation)
@@ -30,5 +30,5 @@ void UCAnimNotifyState_Equip::NotifyEnd(USkeletalMeshComponent * MeshComp, UAnim
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
-	action->GetCurrentActionData()->GetEquipment()->End_Equip();
+	action->GetCurrentAction()->GetEquipment()->End_Equip();
 }

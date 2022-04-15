@@ -1,6 +1,8 @@
 #include "Release/Components/CStatusComponent.h"
 #include "Release/Global.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
+
 UCStatusComponent::UCStatusComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
@@ -20,6 +22,12 @@ void UCStatusComponent::SetMove()
 void UCStatusComponent::SetStop()
 {
 	bCanMove = false;
+}
+
+void UCStatusComponent::SetSpeed(ECharacterSpeed InType)
+{
+	UCharacterMovementComponent* movement = Helpers::GetComponent<UCharacterMovementComponent>(GetOwner());
+	movement->MaxWalkSpeed = Speed[(int32)InType];
 }
 
 void UCStatusComponent::AddHealth(float InAmount)

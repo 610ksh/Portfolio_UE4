@@ -18,7 +18,7 @@ void UCAnimNotifyState_Countess_Q::NotifyBegin(USkeletalMeshComponent * MeshComp
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
-	action->GetCurrentActionData()->GetDoAction()->Begin_Skill_Q();
+	action->GetCurrentAction()->GetDoAction()->Begin_Skill_Q();
 }
 
 void UCAnimNotifyState_Countess_Q::NotifyEnd(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation)
@@ -30,5 +30,5 @@ void UCAnimNotifyState_Countess_Q::NotifyEnd(USkeletalMeshComponent * MeshComp, 
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
-	action->GetCurrentActionData()->GetDoAction()->End_Skill_Q();
+	action->GetCurrentAction()->GetDoAction()->End_Skill_Q();
 }

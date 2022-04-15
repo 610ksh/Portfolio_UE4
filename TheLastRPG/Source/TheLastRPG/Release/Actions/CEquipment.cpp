@@ -4,6 +4,7 @@
 #include "Release/Components/CStateComponent.h"
 #include "Release/Components/CStatusComponent.h"
 #include "Release/Characters/ICharacter.h"
+#include "Release/AI/IEnemy.h"
 
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -81,6 +82,17 @@ void ACEquipment::End_Unequip_Implementation()
 
 void ACEquipment::ChangeColor()
 {
+	/// if enemy
+	IIEnemy* enemy = Cast<IIEnemy>(OwnerCharacter);
+	if (!!enemy)
+	{
+		if (Color.IsAlmostBlack())
+			return;
+		enemy->ChangeColor(Color);
+		return;
+	}
+
+	/// if player
 	IICharacter* character = Cast<IICharacter>(OwnerCharacter);
 	CheckNull(character);
 	character->ChangeColor(Color);

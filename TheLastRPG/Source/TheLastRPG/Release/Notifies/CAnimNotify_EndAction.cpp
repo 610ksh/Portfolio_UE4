@@ -1,6 +1,6 @@
 #include "Release/Notifies/CAnimNotify_EndAction.h"
 #include "Release/Components/CActionComponent.h"
-#include "Release/Actions/CActionData.h"
+#include "Release/Actions/CAction.h"
 #include "Release/Actions/CDoAction.h"
 #include "Release/Global.h"
 
@@ -18,5 +18,5 @@ void UCAnimNotify_EndAction::Notify(USkeletalMeshComponent * MeshComp, UAnimSequ
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
-	action->GetCurrentActionData()->GetDoAction()->End_DoAction();
+	action->GetCurrentAction()->GetDoAction()->End_DoAction();
 }

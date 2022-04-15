@@ -1,6 +1,6 @@
 #include "Release/Notifies/CAnimNotify_BeginAction.h"
 #include "Release/Components/CActionComponent.h"
-#include "Release/Actions/CActionData.h"
+#include "Release/Actions/CAction.h"
 #include "Release/Actions/CDoAction.h"
 #include "Release/Global.h"
 
@@ -18,5 +18,5 @@ void UCAnimNotify_BeginAction::Notify(USkeletalMeshComponent * MeshComp, UAnimSe
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
-	action->GetCurrentActionData()->GetDoAction()->Begin_DoAction();
+	action->GetCurrentAction()->GetDoAction()->Begin_DoAction();
 }

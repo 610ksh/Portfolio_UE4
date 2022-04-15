@@ -37,7 +37,7 @@ void CLog::Log(int32 InValue, bool Verbosity)
 	}
 	else
 	{
-		UE_LOG(LOG_GameProject, Display, L"%d", InValue);
+		UE_LOG(LOG_GameProject, Log, L"%d", InValue);
 	}
 }
 

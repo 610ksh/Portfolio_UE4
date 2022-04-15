@@ -16,67 +16,67 @@ void USH_CBehaviorComponent::BeginPlay()
 
 bool USH_CBehaviorComponent::IsWaitMode()
 {
-	return GetType() == EBehaviorType::Wait;
+	return GetType() == ESH_BehaviorType::Wait;
 }
 
 bool USH_CBehaviorComponent::IsApproachMode()
 {
-	return GetType() == EBehaviorType::Approach;
+	return GetType() == ESH_BehaviorType::Approach;
 }
 
 bool USH_CBehaviorComponent::IsActionMode()
 {
-	return GetType() == EBehaviorType::Action;
+	return GetType() == ESH_BehaviorType::Action;
 }
 
 bool USH_CBehaviorComponent::IsPatrolMode()
 {
-	return GetType() == EBehaviorType::Patrol;
+	return GetType() == ESH_BehaviorType::Patrol;
 }
 
 bool USH_CBehaviorComponent::IsHittedMode()
 {
-	return GetType() == EBehaviorType::Hitted;
+	return GetType() == ESH_BehaviorType::Hitted;
 }
 
 bool USH_CBehaviorComponent::IsAvoidMode()
 {
-	return GetType() == EBehaviorType::Avoid;
+	return GetType() == ESH_BehaviorType::Avoid;
 }
 
 void USH_CBehaviorComponent::SetWaitMode()
 {
-	ChangeType(EBehaviorType::Wait);
+	ChangeType(ESH_BehaviorType::Wait);
 }
 
 void USH_CBehaviorComponent::SetApproachMode()
 {
-	ChangeType(EBehaviorType::Approach);
+	ChangeType(ESH_BehaviorType::Approach);
 }
 
 void USH_CBehaviorComponent::SetActionMode()
 {
-	ChangeType(EBehaviorType::Action);
+	ChangeType(ESH_BehaviorType::Action);
 }
 
 void USH_CBehaviorComponent::SetPatrolMode()
 {
-	ChangeType(EBehaviorType::Patrol);
+	ChangeType(ESH_BehaviorType::Patrol);
 }
 
 void USH_CBehaviorComponent::SetHittedMode()
 {
-	ChangeType(EBehaviorType::Hitted);
+	ChangeType(ESH_BehaviorType::Hitted);
 }
 
 void USH_CBehaviorComponent::SetAvoidMode()
 {
-	ChangeType(EBehaviorType::Avoid);
+	ChangeType(ESH_BehaviorType::Avoid);
 }
 
-void USH_CBehaviorComponent::ChangeType(EBehaviorType InType)
+void USH_CBehaviorComponent::ChangeType(ESH_BehaviorType InType)
 {
-	EBehaviorType type = GetType();
+	ESH_BehaviorType type = GetType();
 	Blackboard->SetValueAsEnum(BehaviorKey, (uint8)InType);
 
 	if (OnBehaviorTypeChanged.IsBound())
@@ -93,7 +93,7 @@ FVector USH_CBehaviorComponent::GetWarpLocation()
 	return Blackboard->GetValueAsVector(WarpKey);
 }
 
-EBehaviorType USH_CBehaviorComponent::GetType()
+ESH_BehaviorType USH_CBehaviorComponent::GetType()
 {
-	return (EBehaviorType)Blackboard->GetValueAsEnum(BehaviorKey);
+	return (ESH_BehaviorType)Blackboard->GetValueAsEnum(BehaviorKey);
 }

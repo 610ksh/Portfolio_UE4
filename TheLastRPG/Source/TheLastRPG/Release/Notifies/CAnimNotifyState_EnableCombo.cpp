@@ -1,7 +1,7 @@
 #include "Release/Notifies/CAnimNotifyState_EnableCombo.h"
 #include "Release/Components/CActionComponent.h"
 #include "Release/Actions/CDoAction_Melee.h"
-#include "Release/Actions/CActionData.h"
+#include "Release/Actions/CAction.h"
 #include "Release/Global.h"
 
 FString UCAnimNotifyState_EnableCombo::GetNotifyName_Implementation() const
@@ -18,7 +18,7 @@ void UCAnimNotifyState_EnableCombo::NotifyBegin(USkeletalMeshComponent * MeshCom
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
-	ACDoAction_Melee* melee = Cast<ACDoAction_Melee>(action->GetCurrentActionData()->GetDoAction());
+	ACDoAction_Melee* melee = Cast<ACDoAction_Melee>(action->GetCurrentAction()->GetDoAction());
 	CheckNull(melee);
 
 	melee->EnableCombo();
@@ -33,7 +33,7 @@ void UCAnimNotifyState_EnableCombo::NotifyEnd(USkeletalMeshComponent * MeshComp,
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
-	ACDoAction_Melee* melee = Cast<ACDoAction_Melee>(action->GetCurrentActionData()->GetDoAction());
+	ACDoAction_Melee* melee = Cast<ACDoAction_Melee>(action->GetCurrentAction()->GetDoAction());
 	CheckNull(melee);
 
 	melee->DisableCombo();

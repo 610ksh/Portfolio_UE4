@@ -12,7 +12,7 @@ class THELASTRPG_API USH_CBTTaskNode_SetSpeed : public UBTTaskNode
 	
 private:
 	UPROPERTY(EditAnywhere)
-		ECharacterSpeed SpeedType;
+		ESH_CharacterSpeed SpeedType;
 
 public:
 	USH_CBTTaskNode_SetSpeed();

@@ -25,7 +25,7 @@ void USH_CStatusComponent::SetStop()
 	bCanMove = false;
 }
 
-void USH_CStatusComponent::SetSpeed(ECharacterSpeed InType)
+void USH_CStatusComponent::SetSpeed(ESH_CharacterSpeed InType)
 {
 	UCharacterMovementComponent* movement = SH_CHelpers::GetComponent<UCharacterMovementComponent>(GetOwner());
 	movement->MaxWalkSpeed = Speed[(int32)InType];

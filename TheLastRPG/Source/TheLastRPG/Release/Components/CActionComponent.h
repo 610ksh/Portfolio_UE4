@@ -18,18 +18,18 @@ enum class ESkillType : uint8
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FActionTypeChanged, EActionType, InPrevType, EActionType, InNewType);
 
-UCLASS( ClassGroup=(GameProject), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (GameProject), meta = (BlueprintSpawnableComponent))
 class THELASTRPG_API UCActionComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
-		class UCActionData* Datas[(int32)EActionType::Max];
+		class UCActionData* DataAssets[(int32)EActionType::Max];
 
 public:
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE class UCActionData* GetCurrentActionData() { return Datas[(int32)Type]; }
+		FORCEINLINE class UCAction* GetCurrentAction() { return Datas[(int32)Type]; }
 
 public:
 	UFUNCTION(BlueprintPure)
@@ -50,10 +50,14 @@ public:
 public:
 	UCActionComponent();
 
-	void SetUnarmedMode();
+	UFUNCTION(BlueprintCallable)
+		void SetUnarmedMode();
+	UFUNCTION(BlueprintCallable)
+		void SetOneHandMode();
+	UFUNCTION(BlueprintCallable)
+		void SetTwoHandMode();
+
 	void SetFistMode();
-	void SetOneHandMode();
-	void SetTwoHandMode();
 	void SetWarpMode();
 	void SetFireStormMode();
 	void SetThrowMode();
@@ -74,12 +78,12 @@ private:
 	void SetAimMode(bool InAim);
 	void ChangeType(EActionType InNewType);
 
-
 public:
 	FActionTypeChanged OnActionTypeChanged;
 
 private:
 	UPROPERTY(VisibleAnywhere)
 		EActionType Type;
-	/// TODO
+
+	class UCAction* Datas[(int32)EActionType::Max];
 };

@@ -1,4 +1,5 @@
 #include "Release/Components/CActionComponent.h"
+#include "Release/Actions/CAction.h"
 #include "Release/Actions/CActionData.h"
 #include "Release/Actions/CDoAction.h"
 #include "Release/Actions/CEquipment.h"
@@ -18,20 +19,20 @@ void UCActionComponent::BeginPlay()
 	ACharacter* character = Cast<ACharacter>(GetOwner());
 	for (int32 i = 0; i < (int32)EActionType::Max; ++i)
 	{
-		if (!!Datas[i])
-			Datas[i]->BeginPlay(character);
+		if (!!DataAssets[i])
+			DataAssets[i]->BeginPlay(character, &Datas[i]);
 	}
 }
 
 void UCActionComponent::SetUnarmedMode_Begin()
 {
-	if (!!Datas[(int32)Type])
+	if (!!DataAssets[(int32)Type])
 	{ // 현재 액션 타입에 대한 DataAsset이 존재한다면
 		ACEquipment* equipment = Datas[(int32)Type]->GetEquipment();
 		if (!!equipment)
 			equipment->Unequip(); // 장비 해제
 
-		if (IsFistMode() || IsWarpMode() || IsFireStormMode()) 
+		if (IsFistMode() || IsWarpMode() || IsFireStormMode() || IsThrowMode())
 		{ // Fist, Warp, FireStorm 애니메이션이 없어서 직접 불러줌
 			SetUnarmedMode();
 			return;
@@ -43,40 +44,45 @@ void UCActionComponent::SetUnarmedMode_Begin()
 void UCActionComponent::SetUnarmedMode()
 { 
 	ChangeType(EActionType::Unarmed);
-
 	CheckNull(Datas[(int32)Type]);
+	
 	ACEquipment* equipment = Datas[(int32)Type]->GetEquipment();
-	CheckNull(equipment);
 	equipment->ChangeColor();
 }
 
 void UCActionComponent::SetFistMode()
 {
+	CheckNull(Datas[(int32)EActionType::Fist]);
 	SetMode(EActionType::Fist);
 }
 
 void UCActionComponent::SetOneHandMode()
 {
+	CheckNull(Datas[(int32)EActionType::OneHand]);
 	SetMode(EActionType::OneHand);
 }
 
 void UCActionComponent::SetTwoHandMode()
 {
+	CheckNull(Datas[(int32)EActionType::TwoHand]);
 	SetMode(EActionType::TwoHand);
 }
 
 void UCActionComponent::SetWarpMode()
 {
+	CheckNull(Datas[(int32)EActionType::Warp]);
 	SetMode(EActionType::Warp);
 }
 
 void UCActionComponent::SetFireStormMode()
 {
+	CheckNull(Datas[(int32)EActionType::FireStorm]);
 	SetMode(EActionType::FireStorm);
 }
 
 void UCActionComponent::SetThrowMode()
 {
+	CheckNull(Datas[(int32)EActionType::Throw]);
 	SetMode(EActionType::Throw);
 }
 
@@ -153,8 +159,6 @@ void UCActionComponent::DoSkillAction(ESkillType InType)
 		action->DoSkill_F();
 		break;
 	default:
-		CLog::Log(this->GetName(), 151, true);
-		CLog::Print(this->GetName(), 151, true);
 		break;
 	}
 }

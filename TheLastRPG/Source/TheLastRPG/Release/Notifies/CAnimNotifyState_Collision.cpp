@@ -1,5 +1,5 @@
 #include "Release/Notifies/CAnimNotifyState_Collision.h"
-#include "Release/Actions/CActionData.h"
+#include "Release/Actions/CAction.h"
 #include "Release/Actions/CAttachment.h"
 #include "Release/Components/CActionComponent.h"
 #include "Release/Global.h"
@@ -18,7 +18,7 @@ void UCAnimNotifyState_Collision::NotifyBegin(USkeletalMeshComponent * MeshComp,
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
-	const auto& actionData = action->GetCurrentActionData();
+	const auto& actionData = action->GetCurrentAction();
 	CheckNull(actionData);
 
 	if (action->IsTwoHandMode())
@@ -47,7 +47,7 @@ void UCAnimNotifyState_Collision::NotifyEnd(USkeletalMeshComponent * MeshComp, U
 	UCActionComponent* action = Helpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
-	const auto& actionData = action->GetCurrentActionData();
+	const auto& actionData = action->GetCurrentAction();
 	CheckNull(actionData);
 
 	if (action->IsTwoHandMode())

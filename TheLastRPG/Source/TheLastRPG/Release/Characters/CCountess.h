@@ -1,15 +1,22 @@
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Release/Components/CStateComponent.h"
 #include "Release/Characters/ICharacter.h"
+#include "GenericTeamAgentInterface.h"
+
+#include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "CCountess.generated.h"
 
 UCLASS()
-class THELASTRPG_API ACCountess : public ACharacter, public IICharacter
+class THELASTRPG_API ACCountess : public ACharacter, public IICharacter, public IGenericTeamAgentInterface
 {
 	GENERATED_BODY()
+
+
+private:
+	UPROPERTY(EditDefaultsOnly)
+		uint8 TeamId = 0;
 
 private: // Scene component
 	UPROPERTY(VisibleDefaultsOnly)
@@ -38,6 +45,7 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual FGenericTeamId GetGenericTeamId() const override;
 
 private:
 	void OnMoveForward(float InAxis);

@@ -58,4 +58,23 @@ class THELASTRPG_API UCAction : public UObject
 {
 	GENERATED_BODY()
 	
+public:
+	friend class UCActionData;
+
+public:
+	FORCEINLINE class ACAttachment* GetAttachment() { return Attachment[0]; }
+	FORCEINLINE class ACAttachment* GetAttachment(const int& idx) { return Attachment[idx]; }
+	FORCEINLINE class ACEquipment* GetEquipment() { return Equipment; }
+	FORCEINLINE class ACDoAction* GetDoAction() { return DoAction; }
+
+	FORCEINLINE FLinearColor GetEquipmentColor() { return EquipmentColor; }
+	FORCEINLINE int32 GetAttachmentCount() { return AttachCount; }
+
+private:
+	class ACAttachment* Attachment[2];
+	class ACEquipment* Equipment;
+	class ACDoAction* DoAction;
+
+	FLinearColor EquipmentColor;
+	int32 AttachCount;
 };

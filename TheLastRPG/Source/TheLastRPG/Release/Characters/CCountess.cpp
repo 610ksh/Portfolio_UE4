@@ -129,6 +129,11 @@ void ACCountess::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &ACCountess::OffAim);
 }
 
+FGenericTeamId ACCountess::GetGenericTeamId() const
+{
+	return FGenericTeamId(TeamId);
+}
+
 void ACCountess::OnMoveForward(float InAxis)
 {
 	CheckFalse(Status->CanMove());
