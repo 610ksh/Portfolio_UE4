@@ -76,7 +76,6 @@ void ACDoAction_Countess::Begin_Skill_Q()
 
 	TArray<FHitResult> hitResults;
 	FDamageEvent e;
-	CLog::Log("before Trace");
 	bool bHitted = false;
 	FTransform transform;
 

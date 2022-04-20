@@ -15,7 +15,7 @@ void USH_CAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
-	CheckNull_SH(OwnerCharacter); // NULL이면 return함
+	SH_CheckNull(OwnerCharacter); // NULL이면 return함
 
 	Speed = OwnerCharacter->GetVelocity().Size2D();
 	Direction = CalculateDirection(OwnerCharacter->GetVelocity(), OwnerCharacter->GetControlRotation());

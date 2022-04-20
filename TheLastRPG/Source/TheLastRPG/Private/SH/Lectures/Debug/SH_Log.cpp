@@ -14,7 +14,7 @@ ASH_Log::ASH_Log()
 void ASH_Log::BeginPlay()
 {
 	Super::BeginPlay();
-
+	/*
 	SH_CLog::Print(10);
 
 	SH_CLog::Print(20, 1);
@@ -34,13 +34,14 @@ void ASH_Log::BeginPlay()
 	SH_CLog::Log(this);
 	//SH_CLog::Log(__FUNCTION__, __LINE__); // PrintLine_SH와 동일함
 	PrintLine_SH();
+	*/
 }
 
 void ASH_Log::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+/*
 	Time += DeltaTime;
 	SH_CLog::Print(Time, 3); // 3번째 위치에 출력.
-
+*/
 }

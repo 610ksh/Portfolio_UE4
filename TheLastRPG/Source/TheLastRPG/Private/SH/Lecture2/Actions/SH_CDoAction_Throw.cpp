@@ -18,9 +18,9 @@ void ASH_CDoAction_Throw::BeginPlay()
 void ASH_CDoAction_Throw::DoAction()
 {
 	if (Aim->IsAvailable())
-		CheckFalse_SH(Aim->IsZoom()); // 줌을 하고 있을때만
+		SH_CheckFalse(Aim->IsZoom()); // 줌을 하고 있을때만
 
-	CheckFalse_SH(State->IsIdleMode());
+	SH_CheckFalse(State->IsIdleMode());
 	State->SetActionMode();
 
 	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRatio, Datas[0].StartSection);

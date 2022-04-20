@@ -67,7 +67,7 @@ void USH_CActionComponent::SetMode(ESH_ActionType InType)
 	{
 		/// TODO : 현재 장비를 바꾸기전에 먼저 벗겨준다.
 		ASH_CEquipment* equipment = Datas[(int32)Type]->GetEquipment();
-		CheckNull_SH(equipment);
+		SH_CheckNull(equipment);
 
 		equipment->Unequip();
 	}
@@ -75,7 +75,7 @@ void USH_CActionComponent::SetMode(ESH_ActionType InType)
 	if (!!Datas[(int32)InType]) // 데이터가 없을 수도 있기 때문에
 	{
 		ASH_CEquipment* equipment = Datas[(int32)InType]->GetEquipment();
-		CheckNull_SH(equipment);
+		SH_CheckNull(equipment);
 
 		equipment->Equip(); // 장비 장착
 	}
@@ -99,7 +99,7 @@ void USH_CActionComponent::SetUnarmedMode()
 	{
 		// 현재 자신의 타입의 장비에 대한 ActionData 정보를 가져온다.
 		ASH_CEquipment* equipment = Datas[(int32)Type]->GetEquipment();
-		CheckNull_SH(equipment);
+		SH_CheckNull(equipment);
 
 		equipment->Unequip(); // Unequip로 풀어준다. 
 	}
@@ -120,7 +120,7 @@ void USH_CActionComponent::SetUnarmedMode()
 
 void USH_CActionComponent::DoAction()
 {
-	CheckTrue_SH(IsUnarmedMode()); // 무기를 들지 않았을때만 통과
+	SH_CheckTrue(IsUnarmedMode()); // 무기를 들지 않았을때만 통과
 
 	if (!!Datas[(int32)Type])
 	{
@@ -143,7 +143,7 @@ void USH_CActionComponent::UndoAim()
 
 void USH_CActionComponent::SetAimMode(bool InAim)
 {
-	CheckTrue_SH(IsUnarmedMode());
+	SH_CheckTrue(IsUnarmedMode());
 
 	if (!!Datas[(int32)Type])
 	{

@@ -39,7 +39,7 @@ void ASH_CEquipment::Equip_Implementation()
 
 	/// 무기 장착시 색상 변경
 	ISH_ICharacter* character = Cast<ISH_ICharacter>(OwnerCharacter);
-	CheckNull_SH(character);
+	SH_CheckNull(character);
 	character->ChangeColor(Color);
 }
 

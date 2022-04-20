@@ -25,13 +25,13 @@ void ASH_CDoAction_Warp::BeginPlay()
 
 void ASH_CDoAction_Warp::DoAction()
 {
-	CheckFalse_SH(*bEquipped);
-	CheckFalse_SH(State->IsIdleMode());
+	SH_CheckFalse(*bEquipped);
+	SH_CheckFalse(State->IsIdleMode());
 
 	if (UseCursorLocation()) // Player
 	{
 		FRotator rotator;
-		CheckFalse_SH(GetCursorLocationAndRotation(Location, rotator));
+		SH_CheckFalse(GetCursorLocationAndRotation(Location, rotator));
 	}
 	else // AI
 	{
@@ -67,7 +67,7 @@ void ASH_CDoAction_Warp::End_DoActin()
 void ASH_CDoAction_Warp::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	CheckFalse_SH(*bEquipped);
+	SH_CheckFalse(*bEquipped);
 
 	if (UseCursorLocation() == false)
 	{

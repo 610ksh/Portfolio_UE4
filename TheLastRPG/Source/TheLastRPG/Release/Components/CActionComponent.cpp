@@ -95,11 +95,7 @@ void UCActionComponent::SetMode(EActionType InType)
 	}
 	else if (IsUnarmedMode() == false)
 	{ // 현재 Unarmed가 아니면서 && 이전과 다른 무기를 눌렀다면
-		//ACEquipment* equipment = Datas[(int32)Type]->GetEquipment(); // 기존걸 벗고
-		//CheckNull(equipment);
-		//equipment->Unequip();
-
-		/// 다른 장비를 끼려고 하면 지금 낀걸 넣으려고 함.
+		/// 다른 장비를 끼려고 하면 지금 끼고 있던걸 넣도록 한다.
 		SetUnarmedMode_Begin();
 		return;
 	}

@@ -29,8 +29,8 @@ void USH_CAim::BeginPlay(ACharacter * InCharacter)
 
 void USH_CAim::OnZoom()
 {
-	CheckFalse_SH(IsAvailable()); // 이용할 수 있다면
-	CheckTrue_SH(bInZoom); // 줌 중이면 종료
+	SH_CheckFalse(IsAvailable()); // 이용할 수 있다면
+	SH_CheckTrue(bInZoom); // 줌 중이면 종료
 	SH_CLog::Print("OnAim");
 
 	bInZoom = true;
@@ -46,7 +46,7 @@ void USH_CAim::OnZoom()
 
 void USH_CAim::OffZoom()
 {
-	CheckFalse_SH(bInZoom); // 줌이 아니라면 종료
+	SH_CheckFalse(bInZoom); // 줌이 아니라면 종료
 	SH_CLog::Print("OffAim");
 
 	// 원상 복구

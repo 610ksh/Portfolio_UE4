@@ -8,7 +8,7 @@ void ASH_CDoAction_Melee::DoAction()
 {
 	Super::DoAction();
 
-	CheckFalse_SH(Datas.Num() > 0); // 데이터가 없으면 리턴
+	SH_CheckFalse(Datas.Num() > 0); // 데이터가 없으면 리턴
 
 	if (bEnable == true)
 	{
@@ -18,7 +18,7 @@ void ASH_CDoAction_Melee::DoAction()
 		return;
 	}
 
-	CheckFalse_SH(State->IsIdleMode()); // Idle모드가 아니라면(리턴)
+	SH_CheckFalse(State->IsIdleMode()); // Idle모드가 아니라면(리턴)
 
 	State->SetActionMode();
 
@@ -32,7 +32,7 @@ void ASH_CDoAction_Melee::Begin_DoAction()
 {
 	Super::Begin_DoAction();
 
-	CheckFalse_SH(bExist); // 콤보 공격이 없으면 return
+	SH_CheckFalse(bExist); // 콤보 공격이 없으면 return
 	bExist = false;
 
 	OwnerCharacter->StopAnimMontage();
@@ -60,7 +60,7 @@ void ASH_CDoAction_Melee::End_DoActin()
 void ASH_CDoAction_Melee::OnAttachmentBeginOverlap(ACharacter * InAttacker, AActor * InAttackCauser, ACharacter * InOtherCharacter)
 {
 	Super::OnAttachmentBeginOverlap(InAttacker, InAttackCauser, InOtherCharacter);
-	CheckNull_SH(InOtherCharacter); // 적이 없으면 무시
+	SH_CheckNull(InOtherCharacter); // 적이 없으면 무시
 
 	for (const ACharacter* other : HittedCharacters)
 	{

@@ -19,7 +19,7 @@ class THELASTRPG_API USH_CActionComponent : public UActorComponent
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
-		class USH_CActionData* DataAssets[(int32)ESH_ActionType::Max]; // Player BP 에디터에서 넣어줄 ActionData를 받는 배열
+		class USH_CActionData* DataAssets[(int32)ESH_ActionType::Max];
 
 public:
 	UFUNCTION(BlueprintPure)

@@ -135,7 +135,7 @@ FGenericTeamId ASH_CActionPlayer::GetGenericTeamId() const
 
 void ASH_CActionPlayer::OnMoveForward(float Axis)
 {
-	CheckFalse_SH(Status->CanMove());
+	SH_CheckFalse(Status->CanMove());
 
 	FRotator rotator = FRotator(0, GetControlRotation().Yaw, 0);
 	FVector direction = FQuat(rotator).GetForwardVector();
@@ -145,7 +145,7 @@ void ASH_CActionPlayer::OnMoveForward(float Axis)
 
 void ASH_CActionPlayer::OnMoveRight(float Axis)
 {
-	CheckFalse_SH(Status->CanMove());
+	SH_CheckFalse(Status->CanMove());
 
 	FRotator rotator = FRotator(0, GetControlRotation().Yaw, 0);
 	FVector direction = FQuat(rotator).GetRightVector();
@@ -173,8 +173,8 @@ void ASH_CActionPlayer::OnZoom(float Axis)
 
 void ASH_CActionPlayer::OnAvoid()
 {
-	CheckFalse_SH(Status->CanMove()); // 움직일수 없으면 return
-	CheckFalse_SH(State->IsIdleMode()); // Idle 모드가 아니라면 return
+	SH_CheckFalse(Status->CanMove()); // 움직일수 없으면 return
+	SH_CheckFalse(State->IsIdleMode()); // Idle 모드가 아니라면 return
 
 	if (InputComponent->GetAxisValue("MoveForward") < 0.0f)
 	{
@@ -231,7 +231,7 @@ void ASH_CActionPlayer::Hitted()
 
 void ASH_CActionPlayer::Dead()
 {
-	CheckFalse_SH(State->IsDeadMode());
+	SH_CheckFalse(State->IsDeadMode());
 	Montages->PlayDead();
 }
 
@@ -290,42 +290,42 @@ void ASH_CActionPlayer::End_Backstep()
 
 void ASH_CActionPlayer::OnFist()
 {
-	CheckFalse_SH(State->IsIdleMode());
+	SH_CheckFalse(State->IsIdleMode());
 
 	Action->SetFistMode();
 }
 
 void ASH_CActionPlayer::OnOneHand()
 {
-	CheckFalse_SH(State->IsIdleMode());
+	SH_CheckFalse(State->IsIdleMode());
 
 	Action->SetOneHandMode();
 }
 
 void ASH_CActionPlayer::OnTwoHand()
 {
-	CheckFalse_SH(State->IsIdleMode());
+	SH_CheckFalse(State->IsIdleMode());
 
 	Action->SetTwoHandMode();
 }
 
 void ASH_CActionPlayer::OnWarp()
 {
-	CheckFalse_SH(State->IsIdleMode());
+	SH_CheckFalse(State->IsIdleMode());
 
 	Action->SetWarpMode();
 }
 
 void ASH_CActionPlayer::OnFireStorm()
 {
-	CheckFalse_SH(State->IsIdleMode());
+	SH_CheckFalse(State->IsIdleMode());
 
 	Action->SetFireStormMode();
 }
 
 void ASH_CActionPlayer::OnIceBall()
 {
-	CheckFalse_SH(State->IsIdleMode());
+	SH_CheckFalse(State->IsIdleMode());
 
 	Action->SetIceBallMode();
 }
@@ -362,7 +362,7 @@ void ASH_CActionPlayer::OffAim()
 
 void ASH_CActionPlayer::OnViewActionList()
 {
-	CheckFalse_SH(State->IsIdleMode());
+	SH_CheckFalse(State->IsIdleMode());
 
 	ActionList->SetVisibility(ESlateVisibility::Visible);
 

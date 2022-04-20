@@ -32,8 +32,8 @@ void ASH_CAttachment::BeginPlay()
 
 void ASH_CAttachment::OnComponentBeginOverlap(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
-	CheckTrue_SH(OwnerCharacter == OtherActor); // 캐릭터와 같으면 무시 (적이 아니라면)
-	CheckTrue_SH(OtherActor->GetClass() == OwnerCharacter->GetClass()); // 같은 적 무시
+	SH_CheckTrue(OwnerCharacter == OtherActor); // 캐릭터와 같으면 무시 (적이 아니라면)
+	SH_CheckTrue(OtherActor->GetClass() == OwnerCharacter->GetClass()); // 같은 적 무시
 	
 	if (OnAttachmentBeginOverlap.IsBound())
 		OnAttachmentBeginOverlap.Broadcast(OwnerCharacter, this, Cast<ACharacter>(OtherActor));

@@ -79,7 +79,7 @@ void ASH_CEnemy::BeginPlay()
 	HealthWidget->InitWidget();
 	Cast<USH_CUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());
 
-	//Action->SetUnarmedMode();
+	Action->SetUnarmedMode();
 }
 
 void ASH_CEnemy::Tick(float DeltaTime)
@@ -150,7 +150,7 @@ void ASH_CEnemy::Hitted()
 
 void ASH_CEnemy::Dead()
 {
-	CheckFalse_SH(State->IsDeadMode());
+	SH_CheckFalse(State->IsDeadMode());
 	Montages->PlayDead();
 }
 

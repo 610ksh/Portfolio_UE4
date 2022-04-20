@@ -19,7 +19,6 @@ private:
 	UPROPERTY(VisibleDefaultsOnly)
 		class UParticleSystem* HitParticle;
 
-
 public:
 	ACDoAction_Countess();
 

@@ -13,8 +13,8 @@ void ASH_CHUD::DrawHUD()
 {
 	Super::DrawHUD();
 
-	CheckFalse_SH(bDraw);
-	CheckNull_SH(Texture);
+	SH_CheckFalse(bDraw);
+	SH_CheckNull(Texture);
 
 	FVector2D center(Canvas->ClipX*0.5f, Canvas->ClipY*0.5f);
 	FVector2D size(Texture->GetSurfaceWidth()*0.5f, Texture->GetSurfaceHeight()*0.5f);

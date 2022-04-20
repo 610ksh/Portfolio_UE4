@@ -28,7 +28,7 @@ bool USH_CPatrolComponent::GetMoveTo(FVector & OutLocation, float & OutAcceptanc
 
 void USH_CPatrolComponent::UpdateNextIndex()
 {
-	CheckNull_SH(Path);
+	SH_CheckNull(Path);
 
 	int32 count = Path->GetSpline()->GetNumberOfSplinePoints();
 

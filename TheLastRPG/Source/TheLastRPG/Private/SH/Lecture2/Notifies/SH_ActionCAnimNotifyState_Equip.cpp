@@ -10,11 +10,11 @@ FString USH_ActionCAnimNotifyState_Equip::GetNotifyName_Implementation() const
 void USH_ActionCAnimNotifyState_Equip::NotifyBegin(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation, float TotalDuration)
 {
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
-	CheckNull_SH(MeshComp);
-	CheckNull_SH(MeshComp->GetOwner());
+	SH_CheckNull(MeshComp);
+	SH_CheckNull(MeshComp->GetOwner());
 
 	USH_CActionComponent* action = SH_CHelpers::GetComponent<USH_CActionComponent>(MeshComp->GetOwner());
-	CheckNull_SH(action);
+	SH_CheckNull(action);
 
 	action->GetCurrent()->GetEquipment()->Begin_Equip();
 }
@@ -22,11 +22,11 @@ void USH_ActionCAnimNotifyState_Equip::NotifyBegin(USkeletalMeshComponent * Mesh
 void USH_ActionCAnimNotifyState_Equip::NotifyEnd(USkeletalMeshComponent * MeshComp, UAnimSequenceBase * Animation)
 {
 	Super::NotifyEnd(MeshComp, Animation);
-	CheckNull_SH(MeshComp);
-	CheckNull_SH(MeshComp->GetOwner());
+	SH_CheckNull(MeshComp);
+	SH_CheckNull(MeshComp->GetOwner());
 
 	USH_CActionComponent* action = SH_CHelpers::GetComponent<USH_CActionComponent>(MeshComp->GetOwner());
-	CheckNull_SH(action);
+	SH_CheckNull(action);
 
 	action->GetCurrent()->GetEquipment()->End_Equip();
 }

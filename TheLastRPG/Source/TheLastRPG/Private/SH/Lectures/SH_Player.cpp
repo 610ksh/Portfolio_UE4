@@ -3,25 +3,18 @@
 #include "SH/Lectures/SH_CRifle.h"
 #include "SH/Lectures/Widgets/SH_CUserWidget_CrossHair.h"
 #include "SH/SH_Global.h"
+
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Camera/CameraShake.h"
-#include "Components/CapsuleComponent.h" // for GetCapsuleComponent
+#include "Components/CapsuleComponent.h"
 #include "Materials/MaterialInstanceConstant.h"
 #include "Materials/MaterialInstanceDynamic.h"
 
-// Sets default values
 ASH_Player::ASH_Player()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	//SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
-	//SpringArm->SetupAttachment(GetCapsuleComponent());
-
-	//Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
-	//Camera->SetupAttachment(SpringArm);
 
 	SH_CHelpers::CreateComponent<USpringArmComponent>(this, &SpringArm, "SpringArm", GetCapsuleComponent());
 	SH_CHelpers::CreateComponent<UCameraComponent>(this, &Camera, "Camera", SpringArm);
@@ -77,15 +70,15 @@ void ASH_Player::BeginPlay()
 
 	BodyMaterial = UMaterialInstanceDynamic::Create(bodyMaterial, this);
 	LogoMaterial = UMaterialInstanceDynamic::Create(logoMaterial, this);
-	GetMesh()->SetMaterial(0, BodyMaterial); // 0번째 인덱스에 우리가 만든 머티리얼을 할당한다.
-	GetMesh()->SetMaterial(1, LogoMaterial); // 1번째 인덱스에 우리가 만든 머티리얼을 할당한다.
+	GetMesh()->SetMaterial(0, BodyMaterial);
+	GetMesh()->SetMaterial(1, LogoMaterial);
 
 	CrossHair = CreateWidget<USH_CUserWidget_CrossHair, APlayerController>(GetController<APlayerController>(), CrossHairClass);
 	CrossHair->AddToViewport();
 	CrossHair->SetVisibility(ESlateVisibility::Hidden);
 
 	Rifle = ASH_CRifle::Spawn(GetWorld(), this);
-	OnRifle(); // 시작하자마자 총을 장착하도록 함수 실행
+	OnRifle();
 }
 
 void ASH_Player::Tick(float DeltaTime)
@@ -190,11 +183,11 @@ void ASH_Player::OnRifle()
 
 void ASH_Player::OnAim()
 {
-	CheckFalse_SH(Rifle->GetEquipped()); // 장착하지 않으면
-	CheckTrue_SH(Rifle->GetEquipping()); // 쥐고 있는 도중이어도 pass
+	SH_CheckFalse(Rifle->GetEquipped());
+	SH_CheckTrue(Rifle->GetEquipping());
 
-	bUseControllerRotationYaw = true; // 조준모드가 시작되면, 카메라의 방향으로 됨.
-	GetCharacterMovement()->bOrientRotationToMovement = false; // 이동방향으로 회전하는거 막음
+	bUseControllerRotationYaw = true;
+	GetCharacterMovement()->bOrientRotationToMovement = false;
 
 	SpringArm->TargetArmLength = 100; // 길이 당김
 	SpringArm->SocketOffset = FVector(0, 30, 10); // 소켓 위치 변경
@@ -207,8 +200,8 @@ void ASH_Player::OnAim()
 
 void ASH_Player::OffAim()
 {
-	CheckFalse_SH(Rifle->GetEquipped()); // 장착하지 않으면
-	CheckTrue_SH(Rifle->GetEquipping()); // 쥐고 있는 도중이어도 pass
+	SH_CheckFalse(Rifle->GetEquipped());
+	SH_CheckTrue(Rifle->GetEquipping());
 
 	/// 전부 기본으로 돌림. 초기값 셋팅으로.
 	bUseControllerRotationYaw = false;

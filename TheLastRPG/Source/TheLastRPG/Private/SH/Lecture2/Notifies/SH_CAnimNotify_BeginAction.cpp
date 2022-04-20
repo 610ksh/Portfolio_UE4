@@ -13,11 +13,11 @@ FString USH_CAnimNotify_BeginAction::GetNotifyName_Implementation() const
 void USH_CAnimNotify_BeginAction::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
 	Super::Notify(MeshComp, Animation);
-	CheckNull_SH(MeshComp); // 메시 유무
-	CheckNull_SH(MeshComp->GetOwner()); // 캐릭터 유무(Actor)
+	SH_CheckNull(MeshComp); // 메시 유무
+	SH_CheckNull(MeshComp->GetOwner()); // 캐릭터 유무(Actor)
 
 	USH_CActionComponent* action = SH_CHelpers::GetComponent<USH_CActionComponent>(MeshComp->GetOwner());
-	CheckNull_SH(action);
+	SH_CheckNull(action);
 
 	action->GetCurrent()->GetDoAction()->Begin_DoAction();
 }
